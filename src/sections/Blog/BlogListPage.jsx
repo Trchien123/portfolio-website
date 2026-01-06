@@ -69,17 +69,8 @@ const BlogListPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-navy pt-28 pb-20 px-4 animate-fade-in">
-      <div className="max-w-352 mx-auto">
-
-        {/* BACK BUTTON */}
-        <button 
-            onClick={() => navigate(-1)}
-            className="group flex items-center gap-2 text-sage/60 hover:text-neon mb-5 transition-colors"
-        >
-            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform"/>
-            Back to Home Page
-        </button>
+    <div className="min-h-screen bg-navy pt-28 pb-20">
+      <div className="max-w-368 mx-auto pb-20 px-4 md:px-6 lg:px-8 scroll-mt-20">
 
         {/* HEADER SECTION */}
         <div className="text-center mb-16 space-y-4" data-aos="fade-up">

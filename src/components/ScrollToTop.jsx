@@ -8,8 +8,16 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     if (navType !== "POP") {
-      window.scrollTo(0, 0);
-    }
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant", 
+    });
+  } else {
+    window.scrollTo({
+      behavior: "instant"
+    });
+  }
     
     setTimeout(() => {
       AOS.refresh();

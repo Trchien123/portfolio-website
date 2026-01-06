@@ -51,9 +51,9 @@ const Blog = () => {
   };
 
   return (
-    <section 
-      id="blog" 
-      className="w-full max-w-352 mx-auto pb-20 md:pb-40 px-4 md:px-6 lg:px-8"
+    <section  
+      id="blogs"
+      className="w-full max-w-368 mx-auto pb-20 md:pb-40 px-4 md:px-6 lg:px-8 scroll-mt-20"
     >
       
       {/* Header */}

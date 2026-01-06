@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import BlogDetailPage from './sections/Blog/BlogDetailPage';
 import BlogListPage from './sections/Blog/BlogListPage';
 import ScrollToTop from './components/ScrollToTop';
+import Contact from './sections/Contact';
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
               <Skill/>
               <Project/>
               <Blog/>
+              <Contact/>
             </main>
           }/>
 

@@ -45,9 +45,9 @@ const Skill = () => {
     ];
 
     return (
-        <div className="w-full min-h-fit pb-20 md:pb-40 max-w-352 mx-auto animate-fade-in space-y-12 px-4 md:px-6 lg:px-8">
+        <div id="skills" className="w-full min-h-fit pb-20 md:pb-40 max-w-368 mx-auto space-y-12 px-4 md:px-6 lg:px-8 scroll-mt-20">
             
-            <div className="text-left mx-auto mb-10" data-aos="fade-up">
+            <div className="text-left mx-auto mb-12" data-aos="fade-up">
                 <div className="flex gap-3">
                     <Cpu className='text-neon' size={40}/>
                     <h2 className="text-4xl md:text-5xl text-sage mb-4">Skills</h2>

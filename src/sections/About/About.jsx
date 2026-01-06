@@ -27,7 +27,7 @@ const About = () => {
         }
     }
     return (
-        <section id="about" className="min-h-fit max-w-368 w-full flex flex-col mx-auto pb-20 md:pb-40 px-4 md:px-6 lg:px-8">
+        <section id="about" className="min-h-fit max-w-368 w-full flex flex-col mx-auto pb-20 md:pb-40 px-4 md:px-6 lg:px-8 scroll-mt-20">
             {/* Title */}
             <div className="mb-10 flex gap-3" data-aos="fade-up">
                 <ScanFace className="text-neon" size={40} />

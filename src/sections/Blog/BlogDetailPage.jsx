@@ -55,18 +55,8 @@ const BlogDetailPage = () => {
   if (!post) return <div className="text- white text-center pt-32">Post not found</div>;
 
   return (
-    <div className="min-h-screen bg-navy pt-28 pb-20 px-4">
-      <div className="max-w-352 mx-auto">
-        
-        {/* BACK BUTTON */}
-        <button 
-            onClick={() => navigate(-1)}
-            className="group flex items-center gap-2 text-sage/60 hover:text-neon mb-5 transition-colors"
-        >
-            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform"/>
-            Back to Articles
-        </button>
-
+    <div className="min-h-screen bg-navy pt-28">
+      <div className="max-w-368 py-5 mx-auto pb-20 px-4 md:px-6 lg:px-8 scroll-mt-20">
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
             
@@ -200,8 +190,6 @@ const BlogDetailPage = () => {
                             </div>
                         ))}
                     </div>
-
-                    {/* Optional: "Back to Top" or "Share" could go here later */}
                 </div>
             </aside>
 
