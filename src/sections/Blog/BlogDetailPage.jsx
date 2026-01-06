@@ -136,15 +136,16 @@ const BlogDetailPage = () => {
                         <h3 className="text-3xl font-bold text-white mb-8">Comments</h3>
                         <Giscus
                             id="comments"
-                            repo="YOUR_GITHUB_USERNAME/YOUR_REPO_NAME"
-                            repoId="YOUR_REPO_ID"
+                            repo="Trchien123/portfolio-website"
+                            repoId="R_kgDOQ0tcFw"
                             category="Announcements"
-                            categoryId="YOUR_CATEGORY_ID"
+                            categoryId="DIC_kwDOQ0tcF84C0o84"
                             mapping="pathname"
+                            term="Welcome to @giscus/react component!"
                             reactionsEnabled="1"
                             emitMetadata="0"
                             inputPosition="top"
-                            theme="dark_dimmed"
+                            theme="dark"
                             lang="en"
                             loading="lazy"
                         />
