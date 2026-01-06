@@ -1,0 +1,213 @@
+import React, { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { ArrowLeft, Calendar, Clock, ArrowRight, User } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import Giscus from '@giscus/react';
+
+// MOCK DATA
+const BLOG_POSTS = [
+  {
+    id: 1,
+    title: "Building an Anti-Spoofing Face ID System",
+    date: "Jan 05, 2026",
+    readTime: "8 min read",
+    category: "AI Engineering",
+    image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=1000",
+    content: `# Introduction\nFace recognition is widely used...\n\n(This is a long article placeholder to demonstrate the sticky sidebar effect...)\n\n`.repeat(20) 
+  },
+  {
+    id: 2,
+    title: "Optimizing YOLOv8 for Edge Devices",
+    date: "Dec 22, 2025",
+    readTime: "5 min read",
+    category: "Computer Vision",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000",
+    content: `# Introduction\nRunning AI on Raspberry Pi...`
+  },
+  {
+    id: 3,
+    title: "Why I Learned React as an AI Engineer",
+    date: "Nov 15, 2025",
+    readTime: "4 min read",
+    category: "Web Development",
+    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1000",
+    content: `# The Gap\nAI models need a UI...`
+  },
+];
+
+const BlogDetailPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  
+  const post = BLOG_POSTS.find(p => p.id === parseInt(id));
+  
+  // Get 2 recommendations
+  const recommendedPosts = BLOG_POSTS
+    .filter(p => p.id !== parseInt(id))
+    .slice(0, 2);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
+
+  if (!post) return <div className="text- white text-center pt-32">Post not found</div>;
+
+  return (
+    <div className="min-h-screen bg-navy pt-28 pb-20 px-4">
+      <div className="max-w-352 mx-auto">
+        
+        {/* BACK BUTTON */}
+        <button 
+            onClick={() => navigate(-1)}
+            className="group flex items-center gap-2 text-sage/60 hover:text-neon mb-5 transition-colors"
+        >
+            <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform"/>
+            Back to Articles
+        </button>
+
+        {/* Main Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
+            
+            {/* Post Content */}
+            <div className="lg:col-span-8"  data-aos="fade-up">
+                <article>
+                    {/* Header */}
+                    <div className="mb-8 space-y-4">
+                        <span className="text-xs font-bold text-navy bg-neon px-3 py-1 rounded-full">
+                            {post.category}
+                        </span>
+                        <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+                            {post.title}
+                        </h1>
+                        <div className="flex items-center gap-6 text-sm text-sage/60 border-b border-white/10 pb-8">
+                            <span className="flex items-center gap-2"><Calendar size={16}/> {post.date}</span>
+                            <span className="flex items-center gap-2"><Clock size={16}/> {post.readTime}</span>
+                            <span className="hidden md:flex items-center gap-2"><User size={16}/>Huynh Trung Chien</span>
+                        </div>
+                    </div>
+
+                    {/* Image */}
+                    <div className="w-full h-64 md:h-100 rounded-2xl overflow-hidden mb-12 border border-white/10">
+                        <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+                    </div>
+
+                    {/* Markdown Content */}
+                    <div className="markdown-content text-sage/90 text-lg leading-relaxed space-y-6">
+                        <ReactMarkdown
+                            components={{
+                                h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-white mt-10 mb-4" {...props} />,
+                                h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-neon mt-8 mb-4 border-l-4 border-neon pl-4" {...props} />,
+                                p: ({node, ...props}) => <p className="mb-6 text-base" {...props} />,
+                                ul: ({node, ...props}) => <ul className="list-disc text-base list-inside mb-6 space-y-2 marker:text-neon" {...props} />,
+                                strong: ({node, ...props}) => <strong className="text-white font-bold" {...props} />,
+                                code({node, inline, className, children, ...props}) {
+                                    const match = /language-(\w+)/.exec(className || '')
+                                    return !inline && match ? (
+                                    <div className="rounded-xl overflow-hidden my-8 border border-white/10 shadow-2xl">
+                                        <div className="bg-[#282a36] px-4 py-2 text-xs text-white/50 flex justify-between font-mono border-b border-white/5">
+                                            <span>{match[1].toUpperCase()}</span>
+                                        </div>
+                                        <SyntaxHighlighter
+                                            style={dracula}
+                                            language={match[1]}
+                                            PreTag="div"
+                                            customStyle={{ margin: 0, borderRadius: 0 }}
+                                            {...props}
+                                        >
+                                            {String(children).replace(/\n$/, '')}
+                                        </SyntaxHighlighter>
+                                    </div>
+                                    ) : (
+                                    <code className="bg-white/10 text-neon px-1.5 py-0.5 rounded font-mono text-sm" {...props}>
+                                        {children}
+                                    </code>
+                                    )
+                                }
+                            }}
+                        >
+                            {post.content}
+                        </ReactMarkdown>
+                    </div>
+
+                    {/* Comments */}
+                    <div className="mt-16 pt-10 border-t border-white/10">
+                        <h3 className="text-3xl font-bold text-white mb-8">Comments</h3>
+                        <Giscus
+                            id="comments"
+                            repo="YOUR_GITHUB_USERNAME/YOUR_REPO_NAME"
+                            repoId="YOUR_REPO_ID"
+                            category="Announcements"
+                            categoryId="YOUR_CATEGORY_ID"
+                            mapping="pathname"
+                            reactionsEnabled="1"
+                            emitMetadata="0"
+                            inputPosition="top"
+                            theme="dark_dimmed"
+                            lang="en"
+                            loading="lazy"
+                        />
+                    </div>
+                </article>
+            </div>
+
+
+            {/* Recommended Blogs */}
+            <aside className="hidden lg:block lg:col-span-4"  data-aos="fade-up" data-aos-delay={100}>
+                <div className="sticky top-32 space-y-8">
+                    
+                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2 border-l-4 border-neon pl-3">
+                         Recommended
+                    </h3>
+
+                    <div className="flex flex-col gap-6">
+                        {recommendedPosts.map((recPost) => (
+                            <div 
+                                key={recPost.id}
+                                onClick={() => navigate(`/blog/${recPost.id}`)}
+                                className="group cursor-pointer bg-navy/30 border border-white/5 rounded-xl overflow-hidden hover:border-neon/50 transition-all duration-300 shadow-lg"
+                            >
+                                {/* Sidebar Card Image */}
+                                <div className="h-40 overflow-hidden relative">
+                                    <div className="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors z-10"></div>
+                                    <img 
+                                        src={recPost.image} 
+                                        alt={recPost.title} 
+                                        className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+                                    />
+                                    {/* Category Overlay */}
+                                    <div className="absolute top-3 left-3 z-20">
+                                        <span className="text-[12px] font-bold text-navy bg-neon px-2 py-1 rounded-full">
+                                            {recPost.category}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                {/* Sidebar Card Content */}
+                                <div className="p-5">
+                                    <h4 className="text-xl font-bold text-white mb-3 group-hover:text-neon transition-colors leading-snug">
+                                        {recPost.title}
+                                    </h4>
+                                    <div className="flex items-center justify-between text-sm text-sage/50">
+                                        <span>{recPost.date}</span>
+                                        <span className="flex items-center gap-1">
+                                            Read <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Optional: "Back to Top" or "Share" could go here later */}
+                </div>
+            </aside>
+
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BlogDetailPage;
