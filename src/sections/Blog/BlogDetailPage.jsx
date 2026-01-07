@@ -140,7 +140,7 @@ const BlogDetailPage = () => {
                             <div 
                                 key={recPost.id}
                                 onClick={() => navigate(`/blog/${recPost.id}`)}
-                                className="group cursor-pointer bg-bg-main/30 border border-text-main/5 rounded-xl overflow-hidden hover:border-text-button/50 transition-all duration-300 shadow-lg"
+                                className="group cursor-pointer bg-bg-surface/30 border border-text-main/5 rounded-xl overflow-hidden hover:border-text-button/50 transition-all duration-300 shadow-lg"
                             >
                                 {/* Sidebar Card Image */}
                                 <div className="h-40 overflow-hidden relative">

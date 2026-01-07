@@ -83,7 +83,7 @@ const Blog = () => {
         {posts.map((post, index) => (
           <article 
             key={post.id} 
-            className="group cursor-pointer bg-bg-main/30 border border-text-main/10 rounded-2xl flex flex-col md:flex-row hover:border-text-button/50 hover:-translate-y-1 transition-all duration-300 shadow-lg relative overflow-hidden h-auto md:h-52"
+            className="group cursor-pointer bg-bg-surface/30 border border-text-main/10 rounded-2xl flex flex-col md:flex-row hover:border-text-button/50 hover:-translate-y-1 transition-all duration-300 shadow-lg relative overflow-hidden h-auto md:h-52"
             onClick={() => handlePostClick(post.id)} // When the users click on the blog, move to the blog page.
             data-aos="fade-up"
             data-aos-delay={index * 100 + 100}

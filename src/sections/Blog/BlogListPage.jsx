@@ -128,7 +128,7 @@ const BlogListPage = () => {
             {filteredPosts.map((post, index) => (
               <Link to={`/blog/${post.id}`} key={post.id} className="group h-full" data-aos="fade-up" data-aos-delay={(index % 3) * 100}>
                 <article 
-                  className="bg-bg-main/30 border border-text-main/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-text-button/50 hover:-translate-y-2 transition-all duration-300 shadow-lg relative"
+                  className="bg-bg-surface/30 border border-text-main/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-text-button/50 hover:-translate-y-2 transition-all duration-300 shadow-lg relative"
                 >
                   
                   {/* Image */}
