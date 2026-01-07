@@ -49,7 +49,7 @@ const PhotoPagination = ({
               onClick={page === 1 ? undefined : handlePrev}
               className={cn(
                 "cursor-pointer",
-                "hover:bg-white/10 hover:text-neon hover:border-neon/50",
+                "hover:bg-bg-main/10 hover:text-text-button hover:border-text-button/50",
                 page === 1 && "pointer-events-none opacity-50"
               )}
             />
@@ -69,9 +69,9 @@ const PhotoPagination = ({
                     "cursor-pointer transition-all duration-300 border-transparent",
                     // 1. ACTIVE STATE (Current Page)
                     p === page
-                      ? "bg-neon text-navy font-bold hover:bg-neon/80 hover:text-navy"
+                      ? "bg-text-button text-bg-main font-bold hover:bg-text-button/80 hover:text-bg-main"
                       : // 2. INACTIVE STATE (Other Pages)
-                        "text-white/70 hover:bg-white/10 hover:text-neon hover:border-white/10"
+                        "text-text-main/70 hover:bg-text-main/10 hover:text-text-button hover:border-text-main/10"
                   )}
                 >
                   {p}
@@ -86,7 +86,7 @@ const PhotoPagination = ({
               onClick={page === totalPages ? undefined : handleNext}
               className={cn(
                 "cursor-pointer",
-                "hover:bg-white/10 hover:text-neon hover:border-neon/50",
+                "hover:bg-text-main/10 hover:text-text-button hover:border-text-button/50",
                 page === totalPages && "pointer-events-none opacity-50"
               )}
             />

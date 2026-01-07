@@ -26,7 +26,7 @@ function App() {
   return (
     <Router>
       <ScrollToTop />
-      <div className="min-h-screen bg-linear-to-r from-navy via-navy to-dusk">
+      <div className="min-h-screen">
         {/* Header */}
         <Header/>
 

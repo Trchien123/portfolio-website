@@ -69,16 +69,16 @@ const BlogListPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-navy pt-28 pb-20">
+    <div className="min-h-screen pt-28 pb-20">
       <div className="max-w-368 mx-auto pb-20 px-4 md:px-6 lg:px-8 scroll-mt-20">
 
         {/* HEADER SECTION */}
         <div className="text-center mb-16 space-y-4" data-aos="fade-up">
-          <h1 className="text-4xl md:text-5xl font-bold text-white flex items-center justify-center gap-3">
-            <BookOpen className="text-neon" size={40} />
+          <h1 className="text-4xl md:text-5xl font-bold text-text-main flex items-center justify-center gap-3">
+            <BookOpen className="text-text-button" size={40} />
             Blogs
           </h1>
-          <p className="text-sage/60 text-base max-w-2xl mx-auto">
+          <p className="text-text-muted/60 text-base max-w-2xl mx-auto">
             Insights on Artificial Intelligence, Software Engineering, and my learning journey.
           </p>
         </div>
@@ -95,11 +95,11 @@ const BlogListPage = () => {
             <input 
               type="text" 
               placeholder="Search articles (e.g., 'YOLO', 'React')..." 
-              className="w-full bg-navy/50 border border-white/10 rounded-full py-4 px-12 text-white focus:border-neon focus:ring-1 focus:ring-neon outline-none transition-all placeholder:text-sage/30"
+              className="w-full bg-bg-main/50 border border-text-main/10 rounded-full py-4 px-12 text-text-main focus:border-text-button focus:ring-1 focus:ring-text-button outline-none transition-all placeholder:text-text-muted/30"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-sage/50" size={20}/>
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted/50" size={20}/>
           </div>
 
           {/* Category Tabs */}
@@ -110,8 +110,8 @@ const BlogListPage = () => {
                 onClick={() => setSelectedCategory(cat)}
                 className={`shadow-none rounded-full text-sm font-medium transition-all duration-300 border ${
                   selectedCategory === cat 
-                    ? "bg-neon text-navy border-neon font-bold hover:bg-neon/90"
-                    : "bg-transparent text-sage/70 border-white/10 hover:border-white/30 hover:text-navy"
+                    ? "bg-neon text-navy border-text-button font-bold hover:bg-neon/90"
+                    : "bg-transparent text-text-muted/70 border-text-main/10 hover:border-text-main/30 hover:text-navy"
                 }`}
                 data-aos="fade-up"
                 data-aos-delay={200}
@@ -128,12 +128,12 @@ const BlogListPage = () => {
             {filteredPosts.map((post, index) => (
               <Link to={`/blog/${post.id}`} key={post.id} className="group h-full" data-aos="fade-up" data-aos-delay={(index % 3) * 100}>
                 <article 
-                  className="bg-navy/30 border border-white/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-neon/50 hover:-translate-y-2 transition-all duration-300 shadow-lg relative"
+                  className="bg-bg-main/30 border border-text-main/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-text-button/50 hover:-translate-y-2 transition-all duration-300 shadow-lg relative"
                 >
                   
                   {/* Image */}
                   <div className="h-48 overflow-hidden relative">
-                    <div className="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors z-10"></div>
+                    <div className="absolute inset-0 bg-bg-main/20 group-hover:bg-transparent transition-colors z-10"></div>
                     <img 
                       src={post.image} 
                       alt={post.title} 
@@ -141,7 +141,7 @@ const BlogListPage = () => {
                     />
                     {/* Category Badge overlay on image */}
                     <div className="absolute top-4 left-4 z-20">
-                      <span className="text-xs font-bold text-navy bg-neon px-3 py-1 rounded-full">
+                      <span className="text-xs font-bold text-text-main bg-neon px-3 py-1 rounded-full">
                         {post.category}
                       </span>
                     </div>
@@ -149,20 +149,20 @@ const BlogListPage = () => {
 
                   {/* Content */}
                   <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-3 text-sm text-sage/50 mb-3">
+                    <div className="flex items-center gap-3 text-sm text-text-muted/50 mb-3">
                       <span className="flex items-center gap-1"><Calendar size={12}/> {post.date}</span>
                       <span className="flex items-center gap-1"><Clock size={12}/> {post.readTime}</span>
                     </div>
 
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-neon transition-colors line-clamp-2">
+                    <h3 className="text-2xl font-bold text-text-main mb-3 group-hover:text-text-button transition-colors line-clamp-2">
                       {post.title}
                     </h3>
 
-                    <p className="text-sage/70 text-base mb-6 line-clamp-3 leading-relaxed flex-1">
+                    <p className="text-text-muted/70 text-base mb-6 line-clamp-3 leading-relaxed flex-1">
                       {post.excerpt}
                     </p>
 
-                    <div className="pt-4 border-t border-white/5 flex items-center text-neon text-base font-bold gap-2">
+                    <div className="pt-4 border-t border-text-main/5 flex items-center text-text-button text-base font-bold gap-2">
                       Read Article <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform"/>
                     </div>
                   </div>
@@ -173,10 +173,10 @@ const BlogListPage = () => {
           </div>
         ) : (
           /* EMPTY STATE (No results) */
-          <div className="text-center py-20 border border-dashed border-white/40 rounded-3xl">
-            <Filter size={48} className="mx-auto text-sage/20 mb-4" />
-            <h3 className="text-xl font-bold text-white mb-2">No articles found</h3>
-            <p className="text-sage/60">Try adjusting your search or category filter.</p>
+          <div className="text-center py-20 border border-dashed border-text-main/40 rounded-3xl">
+            <Filter size={48} className="mx-auto text-text-muted/20 mb-4" />
+            <h3 className="text-xl font-bold text-text-main mb-2">No articles found</h3>
+            <p className="text-text-muted/60">Try adjusting your search or category filter.</p>
             <div className="flex justify-center items-center mt-5">
               <Button 
                 onClick={() => {setSearchTerm(""); setSelectedCategory("All")}}

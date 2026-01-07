@@ -58,7 +58,7 @@ const Photo = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 
                 {/* LEFT: Image Section */}
-                <div className="relative group w-full aspect-square md:aspect-4/3 rounded-2xl overflow-hidden border border-white/10 bg-black">
+                <div className="relative group w-full aspect-square md:aspect-4/3 rounded-2xl overflow-hidden border border-text-main/10 bg-bg-main">
                     {/* The 'key' ensures the image fades in again when page changes */}
                     <img 
                         key={currentPage} 
@@ -67,27 +67,27 @@ const Photo = () => {
                         className="w-full h-full object-cover animate-fade-in zoom-in-95 duration-500"
                     />
                     
-                    {/* Optional: Overlay gradient */}
-                    <div className="absolute inset-0 bg-linear-to-t from-navy/60 to-transparent opacity-50"></div>
+                    {/* Overlay gradient */}
+                    <div className="absolute inset-0 bg-linear-to-t from-bg-main/60 to-transparent opacity-50"></div>
                 </div>
 
-                {/* RIGHT: Description Section */}
+                {/* Description Section */}
                 <div key={`${currentPage}-text`} className="space-y-4 animate-fade-in duration-500">
-                    <div className="inline-block px-3 py-1 rounded-full bg-neon/10 border border-neon/20 text-neon text-xs font-bold uppercase tracking-wider">
+                    <div className="inline-block px-3 py-1 rounded-full bg-text-button/10 border border-text-button/20 text-text-button text-xs font-bold uppercase tracking-wider">
                         {currentPhoto.location}
                     </div>
                     
-                    <h3 className="md:text-3xl text-2xl font-bold text-white font-spartan">
+                    <h3 className="md:text-3xl text-2xl font-bold text-text-main font-spartan">
                         {currentPhoto.title}
                     </h3>
                     
-                    <p className="text-sage/80 leading-relaxed text-base">
+                    <p className="text-text-muted/80 leading-relaxed text-base">
                         {currentPhoto.description}
                     </p>
 
-                    <div className="pt-4 flex items-center gap-2 text-sm text-sage/50">
+                    <div className="pt-4 flex items-center gap-2 text-sm text-text-muted/50">
                         <span>Photo {currentPage} of {totalPages}</span>
-                        <div className="h-px bg-white/10 flex-1"></div>
+                        <div className="h-px bg-bg-main/20 flex-1"></div>
                     </div>
                 </div>
             </div>

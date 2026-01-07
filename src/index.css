@@ -18,20 +18,65 @@
 
   /* Monsterrat font */
   --font-montserrat: "Montserrat", sans-serif;
+
+  /* Color background main */
+  --color-bg-main: var(--main-bg);
+
+  /* Color background surface */
+  --color-bg-surface: var(--surface-bg);
+
+  /* Color text main*/
+  --color-text-main: var(--main-text);
+
+  /* Color text muted */
+  --color-text-muted: var(--muted-text);
+
+  /* Button color */
+  --color-text-button: var(--button-text);
+} 
+
+:root{
+    /* Dark theme */
+    --main-bg: var(--color-navy);
+    --surface-bg: var(--color-dusk);
+    --main-text: #ffffff;
+    --muted-text: var(--color-sage);
+    --button-text: var(--color-neon);
+}
+
+html.light {
+    /* Light theme */
+    --main-bg: var(--color-sage);
+    --surface-bg: #ffffff;
+    --main-text: var(--color-navy);
+    --muted-text: var(--color-dusk);
+    --button-text: var(--color-navy);
 }
 
 @layer base {
+
+  html {
+    background-color: var(--main-bg);
+    transition: background-color 0.3s ease;
+  }
+
   body {
-    /* Navy color */
-    background-color: var(--color-navy);
+    /* Main background color */
+    background-color: var(--main-bg);
     
     /* Gradient from left to right or vice versa */
-    background-image: linear-gradient(to right, var(--color-navy), var(--color-dusk));
+    background-image: linear-gradient(to right, var(--main-bg), var(--surface-bg));
     
     /* choose the default color to be sage */
-    color: var(--color-sage); 
+    color: var(--muted-text); 
 
     font-family: var(--font-montserrat);
+
+    /* Smooth transition */
+    transition: background-color 0.5s ease-in-out, 
+                color 0.5s ease-in-out, 
+                border-color 0.5s ease-in-out,
+                background-image 0.5s ease-in-out;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -67,16 +112,16 @@
     }
 
     ::-webkit-scrollbar-track {
-        background: rgba(0, 11, 24, 0.5); /* Navy with opacity */
+        background: var(--color-text-surface); /* Navy with opacity */
         border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: rgba(191, 206, 204, 0.2); /* Sage with opacity */
+        background: var(--color-text-muted); /* Sage with opacity */
         border-radius: 10px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 255, 130, 0.5); /* Neon hover */
+        background: var(--button-text); /* Neon hover */
     }
 }

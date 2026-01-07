@@ -30,8 +30,8 @@ const About = () => {
         <section id="about" className="min-h-fit max-w-368 w-full flex flex-col mx-auto pb-20 md:pb-40 px-4 md:px-6 lg:px-8 scroll-mt-20">
             {/* Title */}
             <div className="mb-10 flex gap-3" data-aos="fade-up">
-                <ScanFace className="text-neon" size={40} />
-                <h2 className="text-4xl md:text-5xl font-bold text-sage">About Me</h2>
+                <ScanFace className="text-text-button" size={40} />
+                <h2 className="text-4xl md:text-5xl font-bold text-text-muted">About Me</h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-12">
@@ -40,45 +40,45 @@ const About = () => {
                     <div className="md:sticky md:top-32">
                         <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab}/>
                         
-                        <div className="mt-6 pt-6 border-t border-white/10">
-                            <h4 className="text-xs font-bold text-sage/40 uppercase tracking-widest mb-4 px-2">
+                        <div className="mt-6 pt-6 border-t border-text-muted/10">
+                            <h4 className="text-xs font-bold text-text-muted/40 uppercase tracking-widest mb-4 px-2">
                                 Connect
                             </h4>
                             
                             <div className="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-3 px-1">
                                 
                                 {/* Facebook */}
-                                <a href="https://www.facebook.com/huynh.trung.chien.2025" className="p-2 md:p-3 bg-navy/50 rounded-xl text-sage/60 border border-white/10 hover:text-blue-500 hover:border-blue-500 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
+                                <a href="https://www.facebook.com/huynh.trung.chien.2025" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-blue-500 hover:border-blue-500 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
                                     <FaFacebook size={20} />
                                     <span className="font-bold text-[12px] md:text-sm">Facebook</span>
                                 </a>
 
                                 {/* Instagram */}
-                                <a href="https://www.instagram.com/tchiennn_0708/" className="p-2 md:p-3 bg-navy/50 rounded-xl text-sage/60 border border-white/10 hover:text-pink-500 hover:border-pink-500 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
+                                <a href="https://www.instagram.com/tchiennn_0708/" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-pink-500 hover:border-pink-500 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
                                     <FaInstagram size={20} />
                                     <span className="font-bold text-[12px] md:text-sm">Instagram</span>
                                 </a>
 
                                 {/* LinkedIn */}
-                                <a href="https://www.linkedin.com/in/trung-chien-huynh-73a196360/" className="p-2 md:p-3 bg-navy/50 rounded-xl text-sage/60 border border-white/10 hover:text-blue-400 hover:border-blue-400 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
+                                <a href="https://www.linkedin.com/in/trung-chien-huynh-73a196360/" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-blue-400 hover:border-blue-400 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
                                     <FaLinkedin size={20} />
                                     <span className="font-bold text-[12px] md:text-sm">LinkedIn</span>
                                 </a>
 
                                 {/* Github */}
-                                <a href="https://github.com/Trchien123" className="p-2 md:p-3 bg-navy/50 rounded-xl text-sage/60 border border-white/10 hover:text-white hover:border-white transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
+                                <a href="https://github.com/Trchien123" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-white hover:border-white transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
                                     <FaGithub size={20} />
                                     <span className="font-bold text-[12px] md:text-sm">Github</span>
                                 </a>
 
                                 {/* Kaggle */}
-                                <a href="https://www.kaggle.com/hunhtrungchin" className="p-2 md:p-3 bg-navy/50 rounded-xl text-sage/60 border border-white/10 hover:text-[#20BEFF] hover:border-[#20BEFF] transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
+                                <a href="https://www.kaggle.com/hunhtrungchin" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-[#20BEFF] hover:border-[#20BEFF] transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
                                     <FaKaggle size={20} />
                                     <span className="font-bold text-[12px] md:text-sm">Kaggle</span>
                                 </a>
 
                                 {/* Mail */}
-                                <a href="mailto:huynhtrungchienltt@gmail.com" className="p-2 md:p-3 bg-navy/50 rounded-xl text-sage/60 border border-white/10 hover:text-[#EA4335] hover:border-[#EA4335] transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
+                                <a href="mailto:huynhtrungchienltt@gmail.com" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-[#EA4335] hover:border-[#EA4335] transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
                                     <IoMdMail size={20} />
                                     <span className="font-bold text-[12px] md:text-sm">Email</span>
                                 </a>
@@ -89,7 +89,7 @@ const About = () => {
 
                 {/* Content */}
                 <div className="md:col-span-8 lg:col-span-9" data-aos="fade-up" data-aos-delay="400">
-                    <div className="min-h-112.5 md:h-150 bg-dusk/20 border border-white/10 rounded-3xl relative overflow-hidden backdrop-blur-sm">
+                    <div className="min-h-112.5 md:h-150 bg-bg-surface/50 border border-text-main/10 rounded-3xl relative overflow-hidden backdrop-blur-sm">
                         <div className="h-full overflow-y-auto p-5 md:p-8">
                             <div key={activeTab} className="animate-fade-in">
                                 {renderContent()}

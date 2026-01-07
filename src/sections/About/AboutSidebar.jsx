@@ -14,7 +14,7 @@ const AboutSidebar = ({activeTab, setActiveTab}) => {
 
     return (
         <div className="w-full">
-            <div className="hidden md:block text-xs font-bold text-sage/40 uppercase tracking-widest mb-4 px-2">
+            <div className="hidden md:block text-xs font-bold text-text-muted/40 uppercase tracking-widest mb-4 px-2">
                 Navigation
             </div>
 
@@ -31,7 +31,7 @@ const AboutSidebar = ({activeTab, setActiveTab}) => {
                             className="w-full whitespace-nowrap md:whitespace-normal"
                         >  
                             {/* Icon */}
-                            <Icon className={`w-5 h-5 ${isActive ? "text-neon" : "text-sage/50"}`} />
+                            <Icon className={`w-5 h-5 ${isActive ? "text-text-button" : "text-text-muted/50"}`} />
 
                             {/* Label */}
                             <span className="text-md md:text-base ml-3">{item.label}</span>

@@ -82,7 +82,7 @@ const Project = () => {
     return (
         <div id="projects" className="w-full min-h-fit max-w-368 mx-auto animate-fade-in pb-20 md:pb-40 px-4 md:px-6 lg:px-8 scroll-mt-20">
             <h2 className="text-4xl md:text-5xl mb-10 flex gap-3" data-aos="fade-up">
-                <Folder className='text-neon' size={40}/>
+                <Folder className='text-text-button' size={40}/>
                 Projects
             </h2>
         
@@ -92,14 +92,14 @@ const Project = () => {
                 {projects.slice(0, visibleCount).map((project, index) => (
                     <div 
                         key={project.id} 
-                        className="group flex flex-col bg-navy/30 border border-white/10 rounded-2xl overflow-hidden hover:border-neon/50 hover:-translate-y-1 transition-all duration-300 shadow-lg hover:cursor-pointer"
+                        className="group flex flex-col bg-bg-main/30 border border-text-main/10 rounded-2xl overflow-hidden hover:border-text-button/50 hover:-translate-y-1 transition-all duration-300 shadow-lg hover:cursor-pointer"
                         data-aos="fade-up"
                         data-aos-delay={(index % 3) * 100}
                     >
                         
                         {/* IMAGE SECTION */}
                         <div className="relative w-full h-48 overflow-hidden">
-                            <div className="absolute inset-0 bg-navy/20 group-hover:bg-transparent z-10 transition-colors duration-300"></div>
+                            <div className="absolute inset-0 bg-bg-main/20 group-hover:bg-transparent z-10 transition-colors duration-300"></div>
                             <img 
                                 src={project.image} 
                                 alt={project.title} 
@@ -110,13 +110,13 @@ const Project = () => {
                         {/* CONTENT SECTION */}
                         <div className="p-6 flex flex-col">
                             <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-2xl text-white group-hover:text-neon transition-colors">
+                                <h3 className="text-2xl text-text-main group-hover:text-text-button transition-colors">
                                     {project.title}
                                 </h3>
-                                <FolderGit2 className="text-sage/80 translate-y-1.25 group-hover:text-white transition-colors" size={20} />
+                                <FolderGit2 className="text-text-muted/80 translate-y-1.25 group-hover:text-text-main transition-colors" size={20} />
                             </div>
                             
-                            <p className="text-sage/80 text-base leading-relaxed mb-4 line-clamp-4">
+                            <p className="text-text-muted/80 text-base leading-relaxed mb-4 line-clamp-4">
                                 {project.description}
                             </p>
                         </div>
@@ -127,7 +127,7 @@ const Project = () => {
                             {/* Tech Stack Tags */}
                             <div className="flex flex-wrap gap-2 mb-6">
                                 {project.tech.map((tech, index) => (
-                                    <span key={index} className="text-sm font-mono text-neon bg-neon/10 px-2 py-1 rounded">
+                                    <span key={index} className="text-sm font-mono text-text-button bg-text-button/10 px-2 py-1 rounded">
                                         {tech}
                                     </span>
                                 ))}
@@ -136,7 +136,7 @@ const Project = () => {
                             {/* The Link Button */}
                             <a 
                                 href={project.link}
-                                className="flex items-center gap-2 text-sm font-bold text-white group-hover:text-neon transition-colors w-fit"
+                                className="flex items-center gap-2 text-sm font-bold text-text-main group-hover:text-text-button transition-colors w-fit"
                             >
                                 View Project 
                                 <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -161,7 +161,7 @@ const Project = () => {
                     <Button 
                         variant='outline'
                         onClick={handleSeeLess}
-                        className="border-red-500/50 text-red-400 hover:bg-red-500/10 hover:text-sage"
+                        className="border-red-500/50 text-red-400 hover:bg-red-500/50 hover:text-text-muted"
                     >
                         See Less
                         <ArrowUp size={18} className="group-hover:-translate-y-1 transition-transform" />

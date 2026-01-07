@@ -4,7 +4,7 @@ import { ArrowLeft, Calendar, Clock, ArrowRight, User } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import Giscus from '@giscus/react';
+import BlogComment from '@/components/BlogComment';
 
 // MOCK DATA
 const BLOG_POSTS = [
@@ -55,7 +55,7 @@ const BlogDetailPage = () => {
   if (!post) return <div className="text- white text-center pt-32">Post not found</div>;
 
   return (
-    <div className="min-h-screen bg-navy pt-28">
+    <div className="min-h-screen bg-bg-main pt-28">
       <div className="max-w-368 py-5 mx-auto pb-20 px-4 md:px-6 lg:px-8 scroll-mt-20">
         {/* Main Content */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative">
@@ -68,10 +68,10 @@ const BlogDetailPage = () => {
                         <span className="text-xs font-bold text-navy bg-neon px-3 py-1 rounded-full">
                             {post.category}
                         </span>
-                        <h1 className="text-3xl md:text-5xl font-bold text-white leading-tight">
+                        <h1 className="text-3xl md:text-5xl font-bold text-text-main leading-tight">
                             {post.title}
                         </h1>
-                        <div className="flex items-center gap-6 text-sm text-sage/60 border-b border-white/10 pb-8">
+                        <div className="flex items-center gap-6 text-sm text-text-muted/60 border-b border-text-main/10 pb-8">
                             <span className="flex items-center gap-2"><Calendar size={16}/> {post.date}</span>
                             <span className="flex items-center gap-2"><Clock size={16}/> {post.readTime}</span>
                             <span className="hidden md:flex items-center gap-2"><User size={16}/>Huynh Trung Chien</span>
@@ -79,24 +79,24 @@ const BlogDetailPage = () => {
                     </div>
 
                     {/* Image */}
-                    <div className="w-full h-64 md:h-100 rounded-2xl overflow-hidden mb-12 border border-white/10">
+                    <div className="w-full h-64 md:h-100 rounded-2xl overflow-hidden mb-12 border border-text-main/10">
                         <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
                     </div>
 
                     {/* Markdown Content */}
-                    <div className="markdown-content text-sage/90 text-lg leading-relaxed space-y-6">
+                    <div className="markdown-content text-text-muted/90 text-lg leading-relaxed space-y-6">
                         <ReactMarkdown
                             components={{
-                                h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-white mt-10 mb-4" {...props} />,
-                                h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-neon mt-8 mb-4 border-l-4 border-neon pl-4" {...props} />,
+                                h1: ({node, ...props}) => <h1 className="text-3xl font-bold text-text-main mt-10 mb-4" {...props} />,
+                                h2: ({node, ...props}) => <h2 className="text-2xl font-bold text-text-button mt-8 mb-4 border-l-4 border-text-button pl-4" {...props} />,
                                 p: ({node, ...props}) => <p className="mb-6 text-base" {...props} />,
-                                ul: ({node, ...props}) => <ul className="list-disc text-base list-inside mb-6 space-y-2 marker:text-neon" {...props} />,
-                                strong: ({node, ...props}) => <strong className="text-white font-bold" {...props} />,
+                                ul: ({node, ...props}) => <ul className="list-disc text-base list-inside mb-6 space-y-2 marker:text-text-button" {...props} />,
+                                strong: ({node, ...props}) => <strong className="text-text-main font-bold" {...props} />,
                                 code({node, inline, className, children, ...props}) {
                                     const match = /language-(\w+)/.exec(className || '')
                                     return !inline && match ? (
-                                    <div className="rounded-xl overflow-hidden my-8 border border-white/10 shadow-2xl">
-                                        <div className="bg-[#282a36] px-4 py-2 text-xs text-white/50 flex justify-between font-mono border-b border-white/5">
+                                    <div className="rounded-xl overflow-hidden my-8 border border-text-main/10 shadow-2xl">
+                                        <div className="bg-[#282a36] px-4 py-2 text-xs text-text-main/50 flex justify-between font-mono border-b border-text-main/5">
                                             <span>{match[1].toUpperCase()}</span>
                                         </div>
                                         <SyntaxHighlighter
@@ -110,7 +110,7 @@ const BlogDetailPage = () => {
                                         </SyntaxHighlighter>
                                     </div>
                                     ) : (
-                                    <code className="bg-white/10 text-neon px-1.5 py-0.5 rounded font-mono text-sm" {...props}>
+                                    <code className="bg-white/10 text-text-button px-1.5 py-0.5 rounded font-mono text-sm" {...props}>
                                         {children}
                                     </code>
                                     )
@@ -122,24 +122,7 @@ const BlogDetailPage = () => {
                     </div>
 
                     {/* Comments */}
-                    <div className="mt-16 pt-10 border-t border-white/10">
-                        <h3 className="text-3xl font-bold text-white mb-8">Comments</h3>
-                        <Giscus
-                            id="comments"
-                            repo="Trchien123/portfolio-website"
-                            repoId="R_kgDOQ0tcFw"
-                            category="Announcements"
-                            categoryId="DIC_kwDOQ0tcF84C0o84"
-                            mapping="pathname"
-                            term="Welcome to @giscus/react component!"
-                            reactionsEnabled="1"
-                            emitMetadata="0"
-                            inputPosition="top"
-                            theme="dark"
-                            lang="en"
-                            loading="lazy"
-                        />
-                    </div>
+                    <BlogComment />
                 </article>
             </div>
 
@@ -148,7 +131,7 @@ const BlogDetailPage = () => {
             <aside className="hidden lg:block lg:col-span-4"  data-aos="fade-up" data-aos-delay={100}>
                 <div className="sticky top-32 space-y-8">
                     
-                    <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2 border-l-4 border-neon pl-3">
+                    <h3 className="text-xl font-bold text-text-main mb-6 flex items-center gap-2 border-l-4 border-neon pl-3">
                          Recommended
                     </h3>
 
@@ -157,11 +140,11 @@ const BlogDetailPage = () => {
                             <div 
                                 key={recPost.id}
                                 onClick={() => navigate(`/blog/${recPost.id}`)}
-                                className="group cursor-pointer bg-navy/30 border border-white/5 rounded-xl overflow-hidden hover:border-neon/50 transition-all duration-300 shadow-lg"
+                                className="group cursor-pointer bg-bg-main/30 border border-text-main/5 rounded-xl overflow-hidden hover:border-text-button/50 transition-all duration-300 shadow-lg"
                             >
                                 {/* Sidebar Card Image */}
                                 <div className="h-40 overflow-hidden relative">
-                                    <div className="absolute inset-0 bg-navy/20 group-hover:bg-transparent transition-colors z-10"></div>
+                                    <div className="absolute inset-0 bg-bg-main/20 group-hover:bg-transparent transition-colors z-10"></div>
                                     <img 
                                         src={recPost.image} 
                                         alt={recPost.title} 
@@ -177,12 +160,12 @@ const BlogDetailPage = () => {
                                 
                                 {/* Sidebar Card Content */}
                                 <div className="p-5">
-                                    <h4 className="text-xl font-bold text-white mb-3 group-hover:text-neon transition-colors leading-snug">
+                                    <h4 className="text-xl font-bold text-text-main mb-3 group-hover:text-text-button transition-colors leading-snug">
                                         {recPost.title}
                                     </h4>
-                                    <div className="flex items-center justify-between text-sm text-sage/50">
+                                    <div className="flex items-center justify-between text-sm text-text-muted/50">
                                         <span>{recPost.date}</span>
-                                        <span className="flex items-center gap-1">
+                                        <span className="flex items-center gap-1 text-text-main">
                                             Read <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform"/>
                                         </span>
                                     </div>
