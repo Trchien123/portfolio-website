@@ -111,7 +111,7 @@ const BlogListPage = () => {
                 className={`shadow-none rounded-full text-sm font-medium transition-all duration-300 border ${
                   selectedCategory === cat 
                     ? "bg-neon text-navy border-text-button font-bold hover:bg-neon/90"
-                    : "bg-transparent text-text-muted/70 border-text-main/10 hover:border-text-main/30 hover:text-navy"
+                    : "bg-transparent text-text-muted/70 border-text-main/10 hover:border-text-main/30 hover:text-navy hover:bg-neon"
                 }`}
                 data-aos="fade-up"
                 data-aos-delay={200}
@@ -141,7 +141,7 @@ const BlogListPage = () => {
                     />
                     {/* Category Badge overlay on image */}
                     <div className="absolute top-4 left-4 z-20">
-                      <span className="text-xs font-bold text-text-main bg-neon px-3 py-1 rounded-full">
+                      <span className="text-xs font-bold text-navy bg-neon px-3 py-1 rounded-full">
                         {post.category}
                       </span>
                     </div>

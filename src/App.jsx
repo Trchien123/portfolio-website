@@ -1,58 +1,74 @@
-import './index.css';
-import Header from './components/Header.jsx';
-import Hero from './sections/Hero.jsx';
-import About from './sections/About/About.jsx';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import {useEffect} from 'react';
-import Skill from './sections/Skill.jsx';
-import Project from './sections/Project.jsx';
-import Blog from './sections/Blog/Blog.jsx';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import BlogDetailPage from './sections/Blog/BlogDetailPage';
-import BlogListPage from './sections/Blog/BlogListPage';
-import ScrollToTop from './components/ScrollToTop';
-import Contact from './sections/Contact';
+import "./index.css";
+import Header from "./components/Header.jsx";
+import Hero from "./sections/Hero.jsx";
+import About from "./sections/About/About.jsx";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import { useEffect, useState } from "react";
+import Skill from "./sections/Skill.jsx";
+import Project from "./sections/Project.jsx";
+import Blog from "./sections/Blog/Blog.jsx";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import BlogDetailPage from "./sections/Blog/BlogDetailPage";
+import BlogListPage from "./sections/Blog/BlogListPage";
+import ScrollToTop from "./components/ScrollToTop";
+import Contact from "./sections/Contact";
+import SignatureSplash from "./components/SignatureSplash";
 
 function App() {
+  // Loading Splash Signature
+  const [loading, setLoading] = useState(true);
+
+  // Animation
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: true,
-      anchorPlacement: 'top-bottom',
-    });
-  }, []);
+    if (!loading) {
+      AOS.init({
+        duration: 1000,
+        once: true,
+        anchorPlacement: "top-bottom",
+      });
+    }
+  }, [loading]);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen">
-        {/* Header */}
-        <Header/>
+    <>
+      {loading ? (
+        /* Singature Splash */
+        <SignatureSplash onComplete={() => setLoading(false)} />
+      ) : (
+        <Router>
+          <ScrollToTop />
 
-        <Routes>
-          {/* Main Path */}
-          <Route path="/" element={
-            <main>
-              <Hero/>
-              <About/>
-              <Skill/>
-              <Project/>
-              <Blog/>
-              <Contact/>
-            </main>
-          }/>
+          <div className="min-h-screen">
+            {/* Header */}
+            <Header />
 
-          {/* Blog List Page */}
-          <Route path="/blog" element={<BlogListPage />} />
+            <Routes>
+              {/* Main Path */}
+              <Route
+                path="/"
+                element={
+                  <main>
+                    <Hero />
+                    <About />
+                    <Skill />
+                    <Project />
+                    <Blog />
+                    <Contact />
+                  </main>
+                }
+              />
 
-          {/* Blog Detail Page*/}
-          <Route path="/blog/:id" element={<BlogDetailPage />} />
+              {/* Blog List Page */}
+              <Route path="/blog" element={<BlogListPage />} />
 
-        </Routes>
-      </div>
-    </Router>
-
-  )
-};
+              {/* Blog Detail Page*/}
+              <Route path="/blog/:id" element={<BlogDetailPage />} />
+            </Routes>
+          </div>
+        </Router>
+      )}
+    </>
+  );
+}
 export default App;

@@ -20,7 +20,7 @@ const Contact = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                 {/* Left Side: Contact Info */}
-                <div className="space-y-8" data-aos="fade-right">
+                <div className="space-y-8" data-aos="fade-up">
                     <h3 className="text-2xl font-semibold text-text-main">Contact Information</h3>
                     
                     <div className="space-y-6">

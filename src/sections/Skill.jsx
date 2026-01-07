@@ -99,7 +99,7 @@ const Skill = () => {
                             {category.learning.length > 0 && (
                                 <div>
                                     <h5 className="text-text-muted font-bold uppercase tracking-widest text-base mb-4 flex items-center gap-2">
-                                        <CircleDashed className="-translate-y-0.5"x size={14} /> 
+                                        <CircleDashed className="-translate-y-0.5" size={14} /> 
                                         Currently Learning & Exploring
                                     </h5>
                                     <div className="flex flex-wrap gap-2">
