@@ -5,14 +5,15 @@ import Education from './tabs/Education';
 import Achievement from './tabs/Achievement';
 import Hobby from './tabs/Hobby';
 import Photo from './tabs/Photo';
-import { FaFacebook, FaInstagram, FaLinkedin, FaGithub, FaKaggle } from "react-icons/fa6";
-import { IoMdMail } from "react-icons/io";
 import { ScanFace } from 'lucide-react';
 import Certificate from './tabs/Certificate';
+import { portfolioData } from '@/lib/data';
 
 const About = () => {
     // React use state to control the state of the current selected tab
     const [activeTab, setActiveTab] = useState("intro");
+
+    const { about } = portfolioData;
 
     // Render content function to render the content based on the selected tab
     const renderContent = () => {
@@ -46,42 +47,21 @@ const About = () => {
                             </h4>
                             
                             <div className="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-3 px-1">
-                                
-                                {/* Facebook */}
-                                <a href="https://www.facebook.com/huynh.trung.chien.2025" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-blue-500 hover:border-blue-500 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
-                                    <FaFacebook size={20} />
-                                    <span className="font-bold text-[12px] md:text-sm">Facebook</span>
-                                </a>
-
-                                {/* Instagram */}
-                                <a href="https://www.instagram.com/tchiennn_0708/" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-pink-500 hover:border-pink-500 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
-                                    <FaInstagram size={20} />
-                                    <span className="font-bold text-[12px] md:text-sm">Instagram</span>
-                                </a>
-
-                                {/* LinkedIn */}
-                                <a href="https://www.linkedin.com/in/trung-chien-huynh-73a196360/" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-blue-400 hover:border-blue-400 transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
-                                    <FaLinkedin size={20} />
-                                    <span className="font-bold text-[12px] md:text-sm">LinkedIn</span>
-                                </a>
-
-                                {/* Github */}
-                                <a href="https://github.com/Trchien123" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-white hover:border-white transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
-                                    <FaGithub size={20} />
-                                    <span className="font-bold text-[12px] md:text-sm">Github</span>
-                                </a>
-
-                                {/* Kaggle */}
-                                <a href="https://www.kaggle.com/hunhtrungchin" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-[#20BEFF] hover:border-[#20BEFF] transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
-                                    <FaKaggle size={20} />
-                                    <span className="font-bold text-[12px] md:text-sm">Kaggle</span>
-                                </a>
-
-                                {/* Mail */}
-                                <a href="mailto:huynhtrungchienltt@gmail.com" className="p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface hover:text-[#EA4335] hover:border-[#EA4335] transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2">
-                                    <IoMdMail size={20} />
-                                    <span className="font-bold text-[12px] md:text-sm">Email</span>
-                                </a>
+                                {about.socials.map((social, index) => {
+                                    const Icon = social.icon;
+                                    return (
+                                        <a 
+                                            key={index}
+                                            href={social.url} 
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2 ${social.color}`}
+                                        >
+                                            <Icon size={20} />
+                                            <span className="font-bold text-[12px] md:text-sm">{social.name}</span>
+                                        </a>
+                                    )
+                                })}
                             </div>
                         </div>
                     </div>

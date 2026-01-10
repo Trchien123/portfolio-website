@@ -1,76 +1,21 @@
 import React, { useState } from 'react';
 import { ExternalLink, FolderGit2, ArrowRight, Folder, ArrowUp } from 'lucide-react';
 import Button from '@/components/Button';
+import { portfolioData } from '@/lib/data';
 
 const Project = () => {
+    // Access projects from centralized data
+    const { projects } = portfolioData;
+
     // State to keep track of projects per page
     const [visibleCount, setVisibleCount] = useState(3);
-
-    // Fake data
-    const projects = [
-        {
-            id: 1,
-            title: "Accessible Living Support System",
-            description: "An intelligent assistance system designed for blind individuals. It uses computer vision to detect obstacles and recognizes faces to assist in daily navigation.",
-            image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000",
-            tech: ["Python", "OpenCV", "YOLOv8", "IoT"],
-            link: "/project-details/1"
-        },
-        {
-            id: 2,
-            title: "Face Recognition & Anti-Spoofing",
-            description: "A robust security system capable of verifying identities while detecting liveness to prevent photo/video spoofing attacks.",
-            image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=1000",
-            tech: ["TensorFlow", "Keras", "Deep Learning", "React"],
-            link: "/project-details/2"
-        },
-        {
-            id: 3,
-            title: "Personal Portfolio Website",
-            description: "A modern, responsive portfolio built to showcase AI projects and skills. Features smooth animations and a dark-mode tech aesthetic.",
-            image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=1000",
-            tech: ["React.js", "Tailwind CSS", "Vite", "Lucide Icons"],
-            link: "/project-details/3"
-        },
-        {
-            id: 4,
-            title: "Indoor Localization System",
-            description: "Research project using Whisper ASR and Clip-ViT to navigate complex indoor environments using audio-visual cues.",
-            image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000",
-            tech: ["PyTorch", "Whisper AI", "ChromaDB", "FastAPI"],
-            link: "#"
-        },
-        {
-            id: 5,
-            title: "Indoor Localization System",
-            description: "Research project using Whisper ASR and Clip-ViT to navigate complex indoor environments using audio-visual cues.",
-            image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000",
-            tech: ["PyTorch", "Whisper AI", "ChromaDB", "FastAPI"],
-            link: "#"
-        },
-        {
-            id: 6,
-            title: "Indoor Localization System",
-            description: "Research project using Whisper ASR and Clip-ViT to navigate complex indoor environments using audio-visual cues.",
-            image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000",
-            tech: ["PyTorch", "Whisper AI", "ChromaDB", "FastAPI"],
-            link: "#"
-        },
-        {
-            id: 7,
-            title: "Indoor Localization System",
-            description: "Research project using Whisper ASR and Clip-ViT to navigate complex indoor environments using audio-visual cues.",
-            image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000",
-            tech: ["PyTorch", "Whisper AI", "ChromaDB", "FastAPI"],
-            link: "#"
-        },
-    ];
 
     // Handle when users click show more, 3 more projects will be shown
     const handleLoadMore = () => {
         setVisibleCount((prevCount) => prevCount + 3);
     };
 
+    // Reset view to 3 projects and scroll back to the header of the project section
     const handleSeeLess = () => {
         setVisibleCount(3);
         const section = document.getElementById('projects');
@@ -110,7 +55,7 @@ const Project = () => {
                         {/* CONTENT SECTION */}
                         <div className="p-6 flex flex-col">
                             <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-2xl text-text-main group-hover:text-text-button transition-colors">
+                                <h3 className="text-2xl font-bold text-text-main group-hover:text-text-button transition-colors">
                                     {project.title}
                                 </h3>
                                 <FolderGit2 className="text-text-muted/80 translate-y-1.25 group-hover:text-text-main transition-colors" size={20} />
@@ -122,12 +67,11 @@ const Project = () => {
                         </div>
 
                         {/* FOOTER SECTION */}
-                        {/* Technologies + Link */}
                         <div className="p-6 pt-0 mt-auto">
                             {/* Tech Stack Tags */}
                             <div className="flex flex-wrap gap-2 mb-6">
-                                {project.tech.map((tech, index) => (
-                                    <span key={index} className="text-sm font-mono text-text-button bg-text-button/10 px-2 py-1 rounded">
+                                {project.tech.map((tech, techIdx) => (
+                                    <span key={techIdx} className="text-sm font-mono text-text-button bg-text-button/10 px-2 py-1 rounded">
                                         {tech}
                                     </span>
                                 ))}
@@ -147,7 +91,6 @@ const Project = () => {
             </div>
 
             {/* 4. LOAD MORE & SEE LESS BUTTON SECTION */}
-            {/* Only show if there are more projects hidden */}
             <div className="flex justify-center mt-12 gap-4">
                 {visibleCount < projects.length ? (
                     <Button 
@@ -155,17 +98,20 @@ const Project = () => {
                         onClick={handleLoadMore}
                     >
                         Load More
-                        <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                 ) : (
-                    <Button 
-                        variant='outline'
-                        onClick={handleSeeLess}
-                        className="border-red-500/50 text-red-400 hover:bg-red-500/50 hover:text-text-muted"
-                    >
-                        See Less
-                        <ArrowUp size={18} className="group-hover:-translate-y-1 transition-transform" />
-                    </Button>
+                    /* Show 'See Less' only if there are more than 3 projects total */
+                    projects.length > 3 && (
+                        <Button 
+                            variant='outline'
+                            onClick={handleSeeLess}
+                            className="border-red-500/50 text-red-400 hover:bg-red-500/50 hover:text-text-muted"
+                        >
+                            See Less
+                            <ArrowUp size={18} className="ml-2 group-hover:-translate-y-1 transition-transform" />
+                        </Button>
+                    )
                 )}
             </div>
         </div>
@@ -173,4 +119,3 @@ const Project = () => {
 };
 
 export default Project;
-

@@ -1,38 +1,9 @@
 import React from 'react';
 import { ExternalLink, Award } from 'lucide-react';
+import { portfolioData } from '@/lib/data';
 
 const Certificate = () => {
-    const certificates = [
-        {
-            id: 1,
-            date: "June 2025",
-            title: "Deep Learning Specialization",
-            issuer: "DeepLearning.AI - Coursera",
-            link: "https://www.coursera.org/account/accomplishments/specialization/YOUR_ID_HERE" 
-        },
-        {
-            id: 2,
-            date: "June 2025",
-            title: "Generative AI with LLMs",
-            issuer: "DeepLearning.AI - Coursera",
-            link: "https://www.coursera.org/account/accomplishments/verify/YOUR_ID_HERE"
-        },
-        {
-            id: 3,
-            date: "April 2025",
-            title: "Mathematics for Machine Learning",
-            issuer: "Imperial College London",
-            link: "#"
-        },
-        // Adding a 4th dummy item to show how the grid fills up nicely
-        {
-            id: 4,
-            date: "Jan 2025",
-            title: "TensorFlow Developer Certificate",
-            issuer: "Google",
-            link: "#"
-        }
-    ];
+    const { certificates } = portfolioData.about;
 
     return (
         <div className="animate-fade-in">

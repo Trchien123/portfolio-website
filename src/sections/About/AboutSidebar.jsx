@@ -1,15 +1,17 @@
 import React from 'react';
 import Button from '../../components/Button';
-import {User, GraduationCap, Trophy, Award, BookHeart, Camera} from "lucide-react";
+import { User, GraduationCap, Trophy, Award, BookHeart, Camera } from "lucide-react";
+import { portfolioData } from '@/lib/data';
 
-const AboutSidebar = ({activeTab, setActiveTab}) => {
+const AboutSidebar = ({ activeTab, setActiveTab }) => {
+
     const menuItems = [
-        {id: "intro", label: "Overview", icon: User},
-        {id: "education", label: "Education", icon: GraduationCap},
-        {id: "achievement", label: "Achievements", icon: Trophy},
-        {id: "certificate", label: "Certificates", icon: Award},
-        {id: "hobby", label: "Hobbies", icon: BookHeart},
-        {id: "photo", label: "Photos", icon: Camera}
+        { id: "intro", label: "Overview", icon: User },
+        { id: "education", label: "Education", icon: GraduationCap },
+        { id: "achievement", label: "Achievements", icon: Trophy },
+        { id: "certificate", label: "Certificates", icon: Award },
+        { id: "hobby", label: "Hobbies", icon: BookHeart },
+        { id: "photo", label: "Photos", icon: Camera }
     ];
 
     return (
@@ -27,9 +29,9 @@ const AboutSidebar = ({activeTab, setActiveTab}) => {
                         <Button
                             key={item.id}
                             variant={isActive ? "active" : "ghost"}
-                            onClick= {() => setActiveTab(item.id)}
+                            onClick={() => setActiveTab(item.id)}
                             className="w-full whitespace-nowrap md:whitespace-normal"
-                        >  
+                        >
                             {/* Icon */}
                             <Icon className={`w-5 h-5 ${isActive ? "text-text-button" : "text-text-muted/50"}`} />
 
@@ -45,6 +47,7 @@ const AboutSidebar = ({activeTab, setActiveTab}) => {
                     )
                 })}
             </div>
+
         </div>
     )
 };

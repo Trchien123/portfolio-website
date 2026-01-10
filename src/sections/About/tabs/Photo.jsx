@@ -1,31 +1,11 @@
 import React, { useState } from 'react';
 import PhotoPagination from '@/components/PhotoPagination';
-
-const photos = [
-    {
-        id: 1,
-        src: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1000", // Replace with your local path: /images/photo1.jpg
-        title: "Working on AI Project",
-        description: "Developing a computer vision model for face recognition using Python and TensorFlow. This project involved training on the CelebA dataset and implementing anti-spoofing measures.",
-        location: "Hanoi, Vietnam"
-    },
-    {
-        id: 2,
-        src: "https://images.unsplash.com/photo-1528127223428-ff0052ed7a85?auto=format&fit=crop&q=80&w=1000",
-        title: "Exploring Hanoi",
-        description: "A memorable trip to the Old Quarter in Hanoi. I love the vibrant street life and the historical architecture here.",
-        location: "Old Quarter, Hanoi"
-    },
-    {
-        id: 3,
-        src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1000",
-        title: "University Life",
-        description: "Collaborating with my team at Swinburne University during a hackathon. We built a solution for accessible living support systems.",
-        location: "Swinburne University"
-    },
-];
+import { portfolioData } from '@/lib/data';
 
 const Photo = () => {
+    // Access photos from centralized data
+    const { photos } = portfolioData.about;
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 1;
     const totalPages = Math.ceil(photos.length / itemsPerPage);
@@ -48,13 +28,13 @@ const Photo = () => {
         setCurrentPage(pageNumber);
     };
 
-    // Get current photo data
+    // Get current photo data from the data file
     const currentPhoto = photos[currentPage - 1];
 
     return (
         <div className="w-full max-w-4xl mx-auto animate-fade-in space-y-8">
             
-            {/* 3. MAIN CONTENT AREA (Grid Layout) */}
+            {/* MAIN CONTENT AREA (Grid Layout) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 
                 {/* LEFT: Image Section */}
@@ -92,7 +72,7 @@ const Photo = () => {
                 </div>
             </div>
 
-            {/* 4. PAGINATION CONTROLS */}
+            {/* PAGINATION CONTROLS */}
             <PhotoPagination 
                 handleNext={handleNext} 
                 handlePageChange={handlePageChange} 
