@@ -14,6 +14,7 @@ import BlogListPage from "./sections/Blog/BlogListPage";
 import ScrollToTop from "./components/ScrollToTop";
 import Contact from "./sections/Contact";
 import SignatureSplash from "./components/SignatureSplash";
+import AdminPage from "./sections/AdminPage";
 
 function App() {
   // Loading Splash Signature
@@ -64,6 +65,9 @@ function App() {
 
               {/* Blog Detail Page*/}
               <Route path="/blog/:id" element={<BlogDetailPage />} />
+              
+              {/* Admin Page*/}
+              <Route path="/chien-admin-secret" element={<AdminPage />} />
             </Routes>
           </div>
         </Router>

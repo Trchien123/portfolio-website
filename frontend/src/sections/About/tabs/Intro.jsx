@@ -7,7 +7,7 @@ const Intro = () => {
   return (
     <div className="space-y-6 animate-fade-in">
         <h3 className="text-2xl font-bold text-text-main">
-            {intro.title} <span className="text-neon/80">{intro.subtitle}</span>
+            {intro.title} {intro.subtitle}
         </h3>
 
         {intro.paragraphs.map((paragraph, index) => (

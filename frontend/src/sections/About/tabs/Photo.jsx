@@ -32,19 +32,19 @@ const Photo = () => {
     const currentPhoto = photos[currentPage - 1];
 
     return (
-        <div className="w-full max-w-4xl mx-auto animate-fade-in space-y-8">
+        <div className="w-full mx-auto animate-fade-in space-y-8">
             
             {/* MAIN CONTENT AREA (Grid Layout) */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
                 
                 {/* LEFT: Image Section */}
-                <div className="relative group w-full aspect-square md:aspect-4/3 rounded-2xl overflow-hidden border border-text-main/10 bg-bg-main">
+                <div className="relative group w-full h-auto rounded-2xl overflow-hidden border border-text-main/10 bg-bg-main">
                     {/* The 'key' ensures the image fades in again when page changes */}
                     <img 
                         key={currentPage} 
                         src={currentPhoto.src} 
                         alt={currentPhoto.title}
-                        className="w-full h-full object-cover animate-fade-in zoom-in-95 duration-500"
+                        className="w-full h-auto block animate-fade-in duration-500"
                     />
                     
                     {/* Overlay gradient */}

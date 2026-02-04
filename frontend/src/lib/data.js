@@ -1,4 +1,9 @@
-import ProfileImage from "../assets/image.jpg";
+import ProfileImage from "../assets/profile_image.jpg";
+import liverpoolImg from '../assets/liverpool.jpg';
+import bookImg from '../assets/book.jpg';
+import musicImg from '../assets/music.jpg';
+import hackathonImg from '../assets/hackathon.jpg';
+import catImg from '../assets/cat.jpg';
 
 import { 
   Cpu, 
@@ -23,9 +28,9 @@ export const portfolioData = {
     intro: "Hiiii, my name is",
     name: "Huynh Trung Chien.",
     descriptionP1:
-      "I’m an AI Student and Machine Learning enthusiast. I enjoy turning complex datasets into simple, intelligent, and impactful solutions.",
+      "I’m an AI Student and Machine Learning enthusiast. I'm interested in working with data, machine learning, and NLP as an AI Engineer.",
     descriptionP2:
-      "My job is to build models that are functional and accurate, but also ethical and transparent. I add a technical edge to your projects by bridging the gap between raw algorithms and real-world needs. My aim is to bring your data to life through the most innovative AI techniques.",
+      "My job is to build models that are accurate and functional, and follow ethical standards. I translate complex algorithms into ethical practical solutions that meet real business and seamlessly integrate them to live software systems.",
     profileImage: ProfileImage,
     cvLink: "/path-to-your-cv.pdf", // Add CV link here
   },
@@ -33,10 +38,10 @@ export const portfolioData = {
     // Intro Tab
     intro: {
       title: "Passionate AI Learner",
-      subtitle: "Bridging theory and real-world impact.",
+      subtitle: " - Turning complex theory into working software.",
       paragraphs: [
-        "I am currently a Bachelor of Computer Science student specializing in AI at Swinburne University. My journey started with a fascination for how data can predict the future.",
-        "I focus on Deep Learning and Computer Vision, always striving to build models that are not just accurate, but also ethical and transparent.",
+        "I am currently a Bachelor of Computer Science student specializing in AI at Swinburne University. While I explored majors like Data Science and Cybersecurity, I chose this path because I realized that AI has the unique potential to change how we solve the world's toughest challenges. Moreover, I love to challenge myself, and with the difficulty of studying AI, it provides the perfect playground to test my limits and sharpen my problem-solving skills.",
+        "My main focus is on Machine Learning, Computer Vision, and LLM. Besides that, currently, I am actively expanding my skills in software architecture and system desig. I believe this engineering foundation is key to transforming experimental AI models into robust, real-world solutions.",
         "Outside of coding, I am deeply involved in tech communities and hackathons to sharpen my problem-solving skills.",
       ],
     },
@@ -85,38 +90,88 @@ export const portfolioData = {
     certificates: [
       {
         id: 1,
-        date: "June 2025",
+        date: "Nov 2025",
         title: "Deep Learning Specialization",
         issuer: "DeepLearning.AI - Coursera",
-        link: "https://www.coursera.org/...",
+        link: "https://www.coursera.org/account/accomplishments/specialization/certificate/WTT0IQ5AJ5Y2",
       },
       {
         id: 2,
-        date: "June 2025",
-        title: "Generative AI with LLMs",
+        date: "May 2025",
+        title: "Advanced Learning Algorithm",
         issuer: "DeepLearning.AI - Coursera",
-        link: "https://www.coursera.org/...",
+        link: "https://www.coursera.org/account/accomplishments/records/USYFDBD4D2US.",
+      },
+      {
+        id: 3,
+        date: "August 2025",
+        title: "Play It Safe: Manage Security Risks",
+        issuer: "Google - Coursera",
+        link: "https://www.coursera.org/account/accomplishments/records/7O5UEO30IWV8",
+      },
+      {
+        id: 4,
+        date: "June 2025",
+        title: "Generative AI with Large Language Models",
+        issuer: "DeepLearning.AI, Amazon Web Services - Coursera",
+        link: "https://www.coursera.org/account/accomplishments/records/F2IYR4LMQJJC",
+      },
+      {
+        id: 5,
+        date: "July 2025",
+        title: "Foundations of Cybersecurity",
+        issuer: "Google - Coursera",
+        link: "https://www.coursera.org/account/accomplishments/records/T1GO910DL339",
+      },
+      {
+        id: 6,
+        date: "June 2025",
+        title: "Mathematics for Machine Learning Specialization",
+        issuer: "Imperial College London - Coursera",
+        link: "https://www.coursera.org/account/accomplishments/specialization/BAQ0O05GLNMY",
+      },
+      {
+        id: 7,
+        date: "April 2025",
+        title: "Supervised Machine Learning: Regression and Classification ",
+        issuer: "DeepLearning.AI - Coursera",
+        link: "https://www.coursera.org/account/accomplishments/verify/ZN8PM9RGCCIZ",
+      },
+      {
+        id: 8,
+        date: "December 2024",
+        title: "CCNA: Introduction to Networks",
+        issuer: "Cisco Networking Academy",
+        link: "https://www.linkedin.com/in/trung-chien-huynh-73a196360/details/certifications/",
       },
     ],
 
     // Hobbies Tab
     hobbies: {
       title: "Beyond Coding",
-      tags: ["Photography", "Machine Learning", "Traveling", "Chess", "Music"],
+      tags: ["Games", "Football", "Music", "Reading"],
       description:
-        "When I'm not in front of a screen, I love capturing moments through my lens or exploring new places. I believe a balanced life fuels creativity in technical work.",
-      images: [null, null], // You can replace with imported image variables
+        "When I'm not in front of a screen, I love watching Liverpool, which is my favorite club, playing in the weekend. Besides that, I am also interested in playing games with my younger brother as well as listening to music and reading books.",
+      images: [liverpoolImg, musicImg],
     },
 
     // Photos Tab
     photos: [
       {
         id: 1,
-        src: "https://images.unsplash.com/...",
-        title: "Working on AI Project",
+        src: hackathonImg,
+        title: "VNPT AI Hackathon - Hanoi",
         description:
-          "Developing a computer vision model for face recognition...",
+          "We got the third prize in the VNPT AI Hackathon held in Hanoi.",
         location: "Hanoi, Vietnam",
+      },
+      {
+        id: 2,
+        src: catImg,
+        title: "My Cutiee Cat",
+        description:
+          "",
+        location: "Ho Chi Minh, Vietnam",
       },
     ],
 
@@ -169,7 +224,7 @@ export const portfolioData = {
       image:
         "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000",
       tech: ["Python", "OpenCV", "YOLOv8", "IoT"],
-      link: "/project-details/1",
+      link: "https://github.com/mtoanchoicode/ALISS-Accessible-Living-Support-System-with-Intelligent-Assistance",
     },
     {
       id: 2,
@@ -179,7 +234,7 @@ export const portfolioData = {
       image:
         "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=1000",
       tech: ["TensorFlow", "Keras", "Deep Learning", "React"],
-      link: "/project-details/2",
+      link: "https://github.com/Trchien123/FaceRecognition",
     },
     {
       id: 3,
@@ -189,18 +244,8 @@ export const portfolioData = {
       image:
         "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=1000",
       tech: ["React.js", "Tailwind CSS", "Vite", "Lucide Icons"],
-      link: "/project-details/3",
-    },
-    {
-      id: 4,
-      title: "Indoor Localization System",
-      description:
-        "Research project using Whisper ASR and Clip-ViT to navigate complex indoor environments using audio-visual cues.",
-      image:
-        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=1000",
-      tech: ["PyTorch", "Whisper AI", "ChromaDB", "FastAPI"],
-      link: "#",
-    },
+      link: "https://github.com/Trchien123/portfolio-website",
+    }
   ],
   skills: {
     intro:
@@ -246,45 +291,6 @@ export const portfolioData = {
           "Git & GitHub",
           "Streamlit",
         ],
-      },
-    ],
-  },
-  blogs: {
-    intro:
-      "Sharing my journey in Artificial Intelligence and Software Development.",
-    posts: [
-      {
-        id: 1,
-        title: "Building an Anti-Spoofing Face ID System",
-        src: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1000",
-        excerpt:
-          "A deep dive into how I implemented liveness detection using OpenCV and PyTorch to prevent photo attacks.",
-        date: "Jan 05, 2026",
-        readTime: "8 min read",
-        tags: ["Computer Vision", "Security", "Deep Learning"],
-        slug: "anti-spoofing-face-id",
-      },
-      {
-        id: 2,
-        title: "Optimizing YOLOv8 for Edge Devices",
-        src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=1000",
-        excerpt:
-          "Techniques I learned to make object detection models run faster on Raspberry Pi without losing accuracy.",
-        date: "Dec 22, 2025",
-        readTime: "5 min read",
-        tags: ["Edge AI", "Optimization"],
-        slug: "optimizing-yolov8",
-      },
-      {
-        id: 3,
-        title: "Why I Learned React as an AI Engineer",
-        src: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&q=80&w=1000",
-        excerpt:
-          "Frontend skills are underrated for Data Scientists. Here is how building UI helps me showcase my models better.",
-        date: "Nov 15, 2025",
-        readTime: "4 min read",
-        tags: ["Career", "Web Dev"],
-        slug: "react-for-ai",
       },
     ],
   },

@@ -1,58 +1,37 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, ArrowRight, User } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { dracula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import BlogComment from '@/components/BlogComment';
-
-// MOCK DATA
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "Building an Anti-Spoofing Face ID System",
-    date: "Jan 05, 2026",
-    readTime: "8 min read",
-    category: "AI Engineering",
-    image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=1000",
-    content: `# Introduction\nFace recognition is widely used...\n\n(This is a long article placeholder to demonstrate the sticky sidebar effect...)\n\n`.repeat(20) 
-  },
-  {
-    id: 2,
-    title: "Optimizing YOLOv8 for Edge Devices",
-    date: "Dec 22, 2025",
-    readTime: "5 min read",
-    category: "Computer Vision",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000",
-    content: `# Introduction\nRunning AI on Raspberry Pi...`
-  },
-  {
-    id: 3,
-    title: "Why I Learned React as an AI Engineer",
-    date: "Nov 15, 2025",
-    readTime: "4 min read",
-    category: "Web Development",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1000",
-    content: `# The Gap\nAI models need a UI...`
-  },
-];
+import api from '@/lib/axios';
 
 const BlogDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [post, setPost] = useState(null);
   
-  const post = BLOG_POSTS.find(p => p.id === parseInt(id));
-  
-  // Get 2 recommendations
-  const recommendedPosts = BLOG_POSTS
-    .filter(p => p.id !== parseInt(id))
-    .slice(0, 2);
-
   useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        // get post by id
+        const res = await api.get(`/posts/${id}`);
+        setPost(res.data);
+      } catch (err) {
+        console.error("Post not found:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPost();
     window.scrollTo(0, 0);
   }, [id]);
 
-  if (!post) return <div className="text- white text-center pt-32">Post not found</div>;
+  if (!post) return <div className="text-white text-center pt-32">Post not found</div>;
+  
+  // Get 2 recommendations
+  const recommendedPosts = [];
 
   return (
     <div className="min-h-screen bg-bg-main pt-28">
@@ -134,6 +113,8 @@ const BlogDetailPage = () => {
                     <h3 className="text-xl font-bold text-text-main mb-6 flex items-center gap-2 border-l-4 border-neon pl-3">
                          Recommended
                     </h3>
+
+                    <p>Under Construction....</p>
 
                     <div className="flex flex-col gap-6">
                         {recommendedPosts.map((recPost) => (

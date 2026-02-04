@@ -2,72 +2,37 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Calendar, Clock, ArrowLeft, ArrowRight, Filter, BookOpen } from 'lucide-react';
 import Button from '@/components/Button';
-
-// 1. MOCK DATA
-const BLOG_POSTS = [
-  {
-    id: 1,
-    title: "Building an Anti-Spoofing Face ID System",
-    excerpt: "A deep dive into how I implemented liveness detection using OpenCV and PyTorch to prevent photo attacks.",
-    date: "Jan 05, 2026",
-    readTime: "8 min read",
-    category: "AI Engineering",
-    image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: 2,
-    title: "Optimizing YOLOv8 for Edge Devices",
-    excerpt: "Techniques I learned to make object detection models run faster on Raspberry Pi without losing accuracy.",
-    date: "Dec 22, 2025",
-    readTime: "5 min read",
-    category: "Computer Vision",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: 3,
-    title: "Why I Learned React as an AI Engineer",
-    excerpt: "Frontend skills are underrated for Data Scientists. Here is how building UI helps me showcase my models better.",
-    date: "Nov 15, 2025",
-    readTime: "4 min read",
-    category: "Web Development",
-    image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: 4,
-    title: "Understanding Transformers & Attention",
-    excerpt: "Breaking down the 'Attention is All You Need' paper into simple concepts and code snippets.",
-    date: "Oct 10, 2025",
-    readTime: "12 min read",
-    category: "Deep Learning",
-    image: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=1000"
-  },
-  {
-    id: 5,
-    title: "Setting up a Python Environment for AI",
-    excerpt: "Conda vs Venv? Docker? My guide to setting up a reproducible machine learning environment.",
-    date: "Sep 28, 2025",
-    readTime: "6 min read",
-    category: "Tutorials",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=1000"
-  },
-];
+import api from '@/lib/axios';
 
 // Defined Categories for the Filter Tabs
 const CATEGORIES = ["All", "AI Engineering", "Computer Vision", "Web Development", "Deep Learning", "Tutorials"];
 
 const BlogListPage = () => {
-
-  const navigate = useNavigate();
+  const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
+  useEffect(() => {
+    const fetchAllPosts = async () => {
+      try {
+        const res = await api.get('/posts');
+        setPosts(res.data);
+      } catch (err) {
+        console.error("Fetch error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAllPosts();
+  }, []);
+
   // FILTERING LOGIC
-  const filteredPosts = BLOG_POSTS.filter((post) => {
+  const filteredPosts = posts.filter((post) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
-
+  
   return (
     <div className="min-h-screen pt-28 pb-20">
       <div className="max-w-368 mx-auto pb-20 px-4 md:px-6 lg:px-8 scroll-mt-20">
@@ -103,7 +68,7 @@ const BlogListPage = () => {
           </div>
 
           {/* Category Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-4" data-aos-once="true" data-aos="fade-up" data-aos-delay={200}>
             {CATEGORIES.map((cat) => (
               <Button
                 key={cat}
@@ -113,8 +78,6 @@ const BlogListPage = () => {
                     ? "bg-neon text-navy border-text-button font-bold hover:bg-neon/90"
                     : "bg-transparent text-text-muted/70 border-text-main/10 hover:border-text-main/30 hover:text-navy hover:bg-neon"
                 }`}
-                data-aos="fade-up"
-                data-aos-delay={200}
               >
                 {cat}
               </Button>
@@ -126,7 +89,7 @@ const BlogListPage = () => {
         {filteredPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post, index) => (
-              <Link to={`/blog/${post.id}`} key={post.id} className="group h-full" data-aos="fade-up" data-aos-delay={(index % 3) * 100}>
+              <Link to={`/blog/${post._id}`} key={post._id} className="group h-full" data-aos="fade-up" data-aos-delay={(index % 3) * 100}>
                 <article 
                   className="bg-bg-surface/30 border border-text-main/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-text-button/50 hover:-translate-y-2 transition-all duration-300 shadow-lg relative"
                 >
