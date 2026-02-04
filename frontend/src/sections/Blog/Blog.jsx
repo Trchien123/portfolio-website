@@ -6,10 +6,12 @@ import api from '@/lib/axios';
 
 const Blog = () => {
   const navigate = useNavigate();
-  const[posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPosts = async () => {
+      console.log("Base URL:", import.meta.env.VITE_API_URL);
       try {
         const res = await api.get('/posts');
         setPosts(res.data.slice(0, 3));
