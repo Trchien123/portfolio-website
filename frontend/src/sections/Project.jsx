@@ -35,11 +35,12 @@ const Project = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 {projects.slice(0, visibleCount).map((project, index) => (
-                    <div 
+                    <a 
                         key={project.id} 
                         className="group flex flex-col bg-bg-surface/30 border border-text-main/10 rounded-2xl overflow-hidden hover:border-text-button/50 hover:-translate-y-1 transition-all duration-300 shadow-lg hover:cursor-pointer"
                         data-aos="fade-up"
                         data-aos-delay={(index % 3) * 100}
+                        href={project.link}
                     >
                         
                         {/* IMAGE SECTION */}
@@ -86,7 +87,7 @@ const Project = () => {
                                 <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
                             </a>
                         </div>
-                    </div>
+                    </a>
                 ))}
             </div>
 
