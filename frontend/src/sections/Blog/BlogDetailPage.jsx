@@ -11,9 +11,11 @@ const BlogDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
     const fetchPost = async () => {
+      setIsLoading(true);
       try {
         // get post by id
         const res = await api.get(`/posts/${id}`);
@@ -27,6 +29,14 @@ const BlogDetailPage = () => {
     fetchPost();
     window.scrollTo(0, 0);
   }, [id]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-bg-main flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-neon"></div>
+      </div>
+    );
+  }
 
   if (!post) return <div className="text-white text-center pt-32">Post not found</div>;
   
