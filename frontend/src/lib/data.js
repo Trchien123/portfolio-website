@@ -230,11 +230,11 @@ export const portfolioData = {
       id: 2,
       title: "Face Recognition & Anti-Spoofing",
       description:
-        "A robust security system capable of verifying identities while detecting liveness to prevent photo/video spoofing attacks.",
+        "This project is being uploaded soon.",
       image:
-        "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&q=80&w=1000",
+        "https://plus.unsplash.com/premium_photo-1700830452915-434970100217?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tech: ["TensorFlow", "Keras", "Deep Learning", "React"],
-      link: "https://github.com/Trchien123/FaceRecognition",
+      link: "#",
     },
     {
       id: 3,
@@ -245,7 +245,27 @@ export const portfolioData = {
         "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&q=80&w=1000",
       tech: ["React.js", "Tailwind CSS", "Vite", "Lucide Icons"],
       link: "https://github.com/Trchien123/portfolio-website",
-    }
+    },
+    {
+      id: 4,
+      title: "Maze Searching Algorithm",
+      description:
+        "A web-based visualization tool and command-line engine for solving complex mazes using classic Artificial Intelligence search algorithms like BFS, DFS, A*, and more.",
+      image:
+        "https://images.unsplash.com/photo-1752154344437-44bd7480e8ee?q=80&w=2600&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tech: ["React.js", "Vite", "Python", "FastAPI"],
+      link: "https://github.com/Trchien123/cos30019-introtoai",
+    },
+    {
+      id: 5,
+      title: "Traffic Flow Prediction System",
+      description:
+        "This project is being uploaded soon.",
+      image:
+        "hhttps://images.unsplash.com/photo-1680969295989-43b229a4fce3?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tech: ["TensorFlow", "Keras", "Deep Learning", "React"],
+      link: "#",
+    },
   ],
   skills: {
     intro:
