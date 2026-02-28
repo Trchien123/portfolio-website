@@ -62,4 +62,4 @@ Feel free to reach out if you want to collaborate or just say hi!
 
 * **GitHub:** [@Trchien123](https://github.com/Trchien123)
 * **Email:** *[huynhtrungchienltt@gmail.com]*
-* **LinkedIn:** *[Thêm link LinkedIn của bạn vào đây](https://www.linkedin.com/in/trung-chien-huynh-73a196360/)]*
+* **LinkedIn:** *[Trung Chien Huynh](https://www.linkedin.com/in/trung-chien-huynh-73a196360/)*
