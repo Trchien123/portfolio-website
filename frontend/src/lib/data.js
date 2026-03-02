@@ -220,21 +220,21 @@ export const portfolioData = {
       id: 1,
       title: "Accessible Living Support System",
       description:
-        "An intelligent assistance system designed for blind individuals. It uses computer vision to detect obstacles and recognizes faces to assist in daily navigation.",
+        "An intelligent assistance system designed for blind individuals to locate their objects and improve their life. This project is currently in Progress.",
       image:
         "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1000",
-      tech: ["Python", "OpenCV", "YOLOv8", "IoT"],
+      tech: ["Python", "ComputerVision",],
       link: "https://github.com/mtoanchoicode/ALISS-Accessible-Living-Support-System-with-Intelligent-Assistance",
     },
     {
       id: 2,
-      title: "Face Recognition & Anti-Spoofing",
+      title: "Attendance Checking System",
       description:
-        "This project is being uploaded soon.",
+        "Attendance Checking System from sratch, including Face Recognition, Emotion Detection, and Anti Spoofing. The UI of the system is currently in progress.",
       image:
         "https://plus.unsplash.com/premium_photo-1700830452915-434970100217?q=80&w=1548&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      tech: ["TensorFlow", "Keras", "Deep Learning", "React"],
-      link: "#",
+      tech: ["TensorFlow", "Keras", "ComputerVision", "React"],
+      link: "https://github.com/Trchien123/FaceRecognition",
     },
     {
       id: 3,
@@ -260,11 +260,21 @@ export const portfolioData = {
       id: 5,
       title: "Traffic Flow Prediction System",
       description:
-        "This project is being uploaded soon.",
+        "A traffic flow prediction system using traffic flow data from Australia. This project is currently refined and will be updated weekly.",
       image:
         "https://images.unsplash.com/photo-1680969295989-43b229a4fce3?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      tech: ["TensorFlow", "Keras", "Deep Learning", "React"],
-      link: "#",
+      tech: ["Machine Learning", "Tensorflow", "FastAPI"],
+      link: "https://github.com/Trchien123/TrafficFlowPrediction",
+    },
+    {
+      id: 6,
+      title: "VNPT-AI Hackathon",
+      description:
+        "This is our work for the VNPT AI Hackathon held in Hanoi.",
+      image:
+        hackathonImg,
+      tech: ["LLMs"],
+      link: "https://github.com/mtoanchoicode/VNPT_AI",
     },
   ],
   skills: {
@@ -273,10 +283,10 @@ export const portfolioData = {
     skillSets: [
       {
         id: "ai",
-        title: "Artificial Intelligence & Data",
+        title: "Artificial Intelligence",
         icon: Cpu,
         description:
-          "Focusing on Computer Vision and Deep Learning algorithms.",
+          "Focusing on Computer Vision, DL algorithms, and LLMs.",
         proficient: [
           "Python",
           "TensorFlow / Keras",
@@ -291,17 +301,16 @@ export const portfolioData = {
           "C++ (Basics)",
           "PyTorch",
           "Model Deployment",
-          "System Design",
           "Reinforcement Learning",
           "MLOps",
         ],
       },
       {
         id: "web",
-        title: "Web Development",
+        title: "Web Dev & System Architecture",
         icon: Globe,
         description:
-          "Exploring frontend & backend to build user interfaces for AI apps.",
+          "Focusing on web interfaces and efficient system architectures.",
         proficient: [],
         learning: [
           "HTML5 & CSS3",
@@ -310,6 +319,7 @@ export const portfolioData = {
           "JavaScript (ES6+)",
           "Git & GitHub",
           "Streamlit",
+          "System Architecture & Design",
         ],
       },
     ],
