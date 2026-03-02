@@ -12,11 +12,6 @@ const Hero = () => {
     }
   };
 
-  // Function to handle download cv
-  const handleDownloadCV = () => {
-    window.open(hero.cvLink, "_blank");
-  };
-
   return (
     <section className="min-h-fit max-w-368 flex justify-between items-center mx-auto py-40 pb-20 md:pb-40 px-4 md:px-6 lg:px-8">
       <div className="md:w-[70%] w-full flex flex-col" data-aos="fade-up">
@@ -35,9 +30,11 @@ const Hero = () => {
           </div>
         </div>
         <div className="flex gap-6 pt-5">
-          <Button onClick={handleDownloadCV}>
-            Download CV
-          </Button>
+          <a href={hero.cvLink} download="HuynhTrungChien_CV.pdf">
+            <Button>
+              Download CV
+            </Button>
+          </a>
 
           <Button variant="outline" onClick={handleAboutMeClick}>
             About Me

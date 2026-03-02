@@ -32,7 +32,7 @@ export const portfolioData = {
     descriptionP2:
       "My job is to build models that are accurate and functional, and follow ethical standards. I translate complex algorithms into ethical practical solutions that meet real business and seamlessly integrate them to live software systems.",
     profileImage: ProfileImage,
-    cvLink: "/path-to-your-cv.pdf", // Add CV link here
+    cvLink: "/HuynhTrungChien_CV.pdf", // Add CV link here
   },
   about: {
     // Intro Tab
