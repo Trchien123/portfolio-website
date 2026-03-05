@@ -8,6 +8,8 @@ const Blog = () => {
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -26,14 +28,10 @@ const Blog = () => {
 
   // FILTERING LOGIC
   const filteredPosts = posts.filter((post) => {
-    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
-
-    // logic to handle series of blogs
-    // only blogs not within a series or a series of blogs will appear
+    // only display a single post or a series
     const isVisibleInList = !post.seriesName || post.seriesName === "" || post.isSeries === true;
 
-    return matchesSearch && matchesCategory && isVisibleInList;
+    return isVisibleInList;
   });
 
   // Handle when the post is clicked
