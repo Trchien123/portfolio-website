@@ -87,12 +87,21 @@ const AdminPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Processing...");
+
+    // create a payload to handle data type
+    const payload = {
+      ...formData,
+      isSeries: String(formData.isSeries) === "true",
+      chapter: Number(formData.chapter) || 0, 
+      seriesName: formData.seriesName ? formData.seriesName.trim() : ""
+    };
+    
     try {
       if (editingId) {
-        await api.put(`/posts/${editingId}`, formData);
+        await api.put(`/posts/${editingId}`, payload);
         setStatus("✅ Updated");
       } else {
-        await api.post("/posts", formData);
+        await api.post("/posts", payload);
         setStatus("✅ Published");
       }
       resetForm();
@@ -228,12 +237,7 @@ const AdminPage = () => {
                 <select
                   name="isSeries"
                   value={formData.isSeries}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      isSeries: e.target.value === "true",
-                    })
-                  }
+                  onChange={handleChange}
                   className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none focus:border-text-button"
                 >
                   <option value="false" className="bg-bg-surface">
