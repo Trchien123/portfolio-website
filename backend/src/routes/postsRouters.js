@@ -14,8 +14,8 @@ router.get("/:id", getPostById);
 
 router.post('/login', login);
 
-router.put("/:id", verifyToken, updatePost);
+router.put("/:id", verifyToken,  updatePost); //verifyToken
 
-router.delete("/:id", verifyToken, deletePost);
+router.delete("/:id", verifyToken, deletePost); // verifyToken
 
 export default router;

@@ -16,7 +16,7 @@ app.use(cors({
     origin: [
         "https://huynhtrungchien.dev",
         "https://www.huynhtrungchien.dev",
-        "https://huynhtrungchien.vercel.app"
+        "https://huynhtrungchien.vercel.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]

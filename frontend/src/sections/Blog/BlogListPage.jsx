@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Calendar, Clock, ArrowLeft, ArrowRight, Filter, BookOpen } from 'lucide-react';
+import { Search, Calendar, Clock, ArrowRight, Filter, BookOpen } from 'lucide-react';
 import Button from '@/components/Button';
 import api from '@/lib/axios';
 
 // Defined Categories for the Filter Tabs
-const CATEGORIES = ["All", "AI Engineering", "Computer Vision", "Web Development", "Deep Learning", "Tutorials"];
+const CATEGORIES = ["All", "Others", "Computer Vision", "Web Development", "ML/DL", "Maths", "Software Architecture"];
 
 const BlogListPage = () => {
   const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchAllPosts = async () => {
@@ -30,7 +31,12 @@ const BlogListPage = () => {
   const filteredPosts = posts.filter((post) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+
+    // logic to handle series of blogs
+    // only blogs not within a series or a series of blogs will appear
+    const isVisibleInList = !post.seriesName || post.seriesName === "" || post.isSeries === true;
+
+    return matchesSearch && matchesCategory && isVisibleInList;
   });
   
   return (
@@ -89,9 +95,15 @@ const BlogListPage = () => {
         {filteredPosts.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredPosts.map((post, index) => (
-              <Link to={`/blog/${post._id}`} key={post._id} className="group h-full" data-aos="fade-up" data-aos-delay={(index % 3) * 100}>
+              <Link 
+                to={post.isSeries ? `/blog/series/${post.seriesName}` : `/blog/${post._id}`}
+                key={post._id} 
+                className="group h-full" 
+                data-aos="fade-up" 
+                data-aos-delay={(index % 3) * 100}
+              >
                 <article 
-                  className="bg-bg-surface/30 border border-text-main/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-text-button/50 hover:-translate-y-2 transition-all duration-300 shadow-lg relative"
+                  className={`bg-bg-surface/30 border border-text-main/5 rounded-2xl overflow-hidden h-full flex flex-col hover:border-text-button/50 hover:-translate-y-2 transition-all duration-300 shadow-lg relative ${post.isSeries ? "border-text-button/40" : ""}`}
                 >
                   
                   {/* Image */}
@@ -102,6 +114,7 @@ const BlogListPage = () => {
                       alt={post.title} 
                       className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                     />
+
                     {/* Category Badge overlay on image */}
                     <div className="absolute top-4 left-4 z-20">
                       <span className="text-xs font-bold text-navy bg-neon px-3 py-1 rounded-full">
@@ -110,14 +123,24 @@ const BlogListPage = () => {
                     </div>
                   </div>
 
-                  {/* Content */}
+                  {/* Content Section */}
                   <div className="p-6 flex flex-col flex-1">
+                    {/* Info Meta */}
                     <div className="flex items-center gap-3 text-sm text-text-muted/50 mb-3">
-                      <span className="flex items-center gap-1"><Calendar size={12}/> {post.date}</span>
-                      <span className="flex items-center gap-1"><Clock size={12}/> {post.readTime}</span>
+                      {post.isSeries ? (
+                        <span className="flex items-center gap-1 text-text-button font-bold uppercase tracking-tighter text-[11px]">
+                          <BookOpen size={14}/> {post.readTime || "Series"}
+                        </span>
+                      ) : (
+                        <>
+                          <span className="flex items-center gap-1"><Calendar size={12}/> {post.date}</span>
+                          <span className="flex items-center gap-1"><Clock size={12}/> {post.readTime}</span>
+                        </>
+                      )}
                     </div>
 
                     <h3 className="text-2xl font-bold text-text-main mb-3 group-hover:text-text-button transition-colors line-clamp-2">
+                      {post.isSeries && <Filter size={18} className="inline mr-2 text-text-button" />}
                       {post.title}
                     </h3>
 
@@ -126,7 +149,8 @@ const BlogListPage = () => {
                     </p>
 
                     <div className="pt-4 border-t border-text-main/5 flex items-center text-text-button text-base font-bold gap-2">
-                      Read Article <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform"/>
+                      {post.isSeries ? "View Collection" : "Read Article"}
+                      <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform"/>
                     </div>
                   </div>
 

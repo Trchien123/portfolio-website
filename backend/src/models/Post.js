@@ -8,7 +8,10 @@ const postSchema = new mongoose.Schema({
   readTime: { type: String },
   category: { type: String },
   image: { type: String },
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  isSeries: { type: Boolean, default: false},
+  seriesName: { type: String, default: ""},
+  chapter: { type: Number, default: 0}
 });
 
 const Post = mongoose.model('Post', postSchema);
