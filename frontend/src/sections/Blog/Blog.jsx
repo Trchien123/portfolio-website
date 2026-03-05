@@ -24,9 +24,25 @@ const Blog = () => {
     fetchPosts();
   }, []);
 
+  // FILTERING LOGIC
+  const filteredPosts = posts.filter((post) => {
+    const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
+
+    // logic to handle series of blogs
+    // only blogs not within a series or a series of blogs will appear
+    const isVisibleInList = !post.seriesName || post.seriesName === "" || post.isSeries === true;
+
+    return matchesSearch && matchesCategory && isVisibleInList;
+  });
+
   // Handle when the post is clicked
-  const handlePostClick = (id) => {
-    navigate(`/blog/${id}`);
+  const handlePostClick = (post) => {
+    if (post.isSeries) {
+    navigate(`/blog/series/${encodeURIComponent(post.seriesName)}`);
+  } else {
+    navigate(`/blog/${post._id}`);
+  }
   };
 
   // Handle when view all is clicked
@@ -66,11 +82,11 @@ const Blog = () => {
 
       {/* Blog List */}
       <div className="grid grid-cols-1 gap-8">
-        {posts.map((post, index) => (
+        {filteredPosts.map((post, index) => (
           <article 
             key={post._id}
             className="group cursor-pointer bg-bg-surface/30 border border-text-main/10 rounded-2xl flex flex-col md:flex-row hover:border-text-button/50 hover:-translate-y-1 transition-all duration-300 shadow-lg relative overflow-hidden h-auto md:min-h-52"
-            onClick={() => handlePostClick(post._id)}
+            onClick={() => handlePostClick(post)}
             data-aos="fade-up"
             data-aos-delay={index * 100}
           >
@@ -116,7 +132,7 @@ const Blog = () => {
                   {post.readTime}
                 </span>
                 <span className="flex items-center gap-2 text-sm font-bold text-text-main group-hover:text-text-button transition-colors w-fit group/link">
-                  View Blog
+                  {post.isSeries ? "View Series" : "View Blog"}
                   <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>

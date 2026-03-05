@@ -149,7 +149,7 @@ const BlogListPage = () => {
                     </p>
 
                     <div className="pt-4 border-t border-text-main/5 flex items-center text-text-button text-base font-bold gap-2">
-                      {post.isSeries ? "View Collection" : "Read Article"}
+                      {post.isSeries ? "View Series" : "View Blog"}
                       <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform"/>
                     </div>
                   </div>
