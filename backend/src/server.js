@@ -11,17 +11,16 @@ const PORT = process.env.PORT || 5001;
 const app = express();
 
 // middlwares
-app.use(express.json());
 app.use(cors({
     origin: [
         "https://huynhtrungchien.dev",
-        "https://www.huynhtrungchien.dev",
-        "https://huynhtrungchien.vercel.app",
+        "https://www.huynhtrungchien.dev"
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"]
 }));
 
+app.use(express.json());
 connectDB();
 
 app.use("/api/posts", router);
