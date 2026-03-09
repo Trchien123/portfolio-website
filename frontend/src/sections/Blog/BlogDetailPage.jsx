@@ -9,6 +9,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
 import BlogComment from "@/components/BlogComment";
 import api from "@/lib/axios";
+import rehypeRaw from "rehype-raw";
 
 const BlogDetailPage = () => {
   const { id } = useParams();
@@ -90,7 +91,7 @@ const BlogDetailPage = () => {
               <div className="markdown-content text-text-muted/90 text-lg leading-relaxed space-y-6">
                 <ReactMarkdown
                   remarkPlugins={[remarkMath]}
-                  rehypePlugins={[rehypeKatex]}
+                  rehypePlugins={[[rehypeRaw, rehypeKatex]}
                   components={{
                     h1: ({ node, ...props }) => (
                       <h1
@@ -112,6 +113,12 @@ const BlogDetailPage = () => {
                         className="list-disc text-base list-inside mb-6 space-y-2 marker:text-text-button"
                         {...props}
                       />
+                    ),
+                    table: ({ node, ...props }) => (
+                      <table className="w-full border-collapse border-none my-8" {...props} />
+                    ),
+                    td: ({ node, ...props }) => (
+                      <td className="border-none p-4" {...props} />
                     ),
                     strong: ({ node, ...props }) => (
                       <strong className="text-text-main font-bold" {...props} />
