@@ -52,11 +52,26 @@
   text-align: center;
 }
 
-.vector-item img {
+/* Center labels inside the gallery items */
+.label-center {
+  text-align: center !important;
   width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin-bottom: 0.5rem;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* Specific styling for the Figure Title */
+.text-center-util {
+  text-align: center !important;
+  width: 100%;
+  margin: 2rem 0;
+  color: var(--color-text-main);
+}
+
+/* Ensure images within the gallery are centered */
+.vector-item img {
+  display: block;
+  margin: 0 auto;
 }
 
 :root{
