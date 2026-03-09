@@ -105,6 +105,21 @@ const BlogDetailPage = () => {
                         {...props}
                       />
                     ),
+                    h3: ({ node, ...props }) => (
+                      <h3
+                        className="text-xl font-bold text-text-main mt-8 mb-3 flex items-center gap-2"
+                        {...props}
+                      >
+                        <span className="text-text-button">▹</span>
+                        {props.children}
+                      </h3>
+                    ),
+                    h4: ({ node, ...props }) => (
+                      <h4
+                        className="text-lg font-semibold text-text-muted/80 mt-6 mb-2 italic"
+                        {...props}
+                      />
+                    ),
                     p: ({ node, children, ...props }) => {
                       return <p className="mb-6 text-base text-left" {...props}>{children}</p>;
                     },
