@@ -35,6 +35,30 @@
   --color-text-button: var(--button-text);
 } 
 
+/* Style for the container of the two images */
+.vector-gallery {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+}
+
+/* Style for each individual image + label block */
+.vector-item {
+  flex: 1;
+  min-width: 280px;
+  max-width: 400px;
+  text-align: center;
+}
+
+.vector-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
 :root{
     /* Dark theme */
     --main-bg: var(--color-navy);

@@ -105,9 +105,9 @@ const BlogDetailPage = () => {
                         {...props}
                       />
                     ),
-                    p: ({ node, ...props }) => (
-                      <p className="mb-6 text-base" {...props} />
-                    ),
+                    p: ({ node, children, ...props }) => {
+                      return <p className="mb-6 text-base text-center" {...props}>{children}</p>;
+                    },
                     ul: ({ node, ...props }) => (
                       <ul
                         className="list-disc text-base list-inside mb-6 space-y-2 marker:text-text-button"
