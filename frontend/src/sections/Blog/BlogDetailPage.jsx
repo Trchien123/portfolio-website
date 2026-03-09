@@ -106,7 +106,7 @@ const BlogDetailPage = () => {
                       />
                     ),
                     p: ({ node, children, ...props }) => {
-                      return <p className="mb-6 text-base text-center" {...props}>{children}</p>;
+                      return <p className="mb-6 text-base text-left" {...props}>{children}</p>;
                     },
                     ul: ({ node, ...props }) => (
                       <ul
