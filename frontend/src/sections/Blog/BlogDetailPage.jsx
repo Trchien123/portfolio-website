@@ -91,7 +91,7 @@ const BlogDetailPage = () => {
               <div className="markdown-content text-text-muted/90 text-lg leading-relaxed space-y-6">
                 <ReactMarkdown
                   remarkPlugins={[remarkMath]}
-                  rehypePlugins={[[rehypeRaw, rehypeKatex]}
+                  rehypePlugins={[rehypeRaw, rehypeKatex]}
                   components={{
                     h1: ({ node, ...props }) => (
                       <h1
