@@ -3,6 +3,7 @@ import router from './routes/postsRouters.js';
 import { connectDB } from './config/db.js';
 import dotenv from "dotenv";
 import cors from 'cors';
+import aiRouters from './routes/aiRouters.js';
 
 dotenv.config();
 
@@ -14,16 +15,19 @@ const app = express();
 app.use(cors({
     origin: [
         "https://huynhtrungchien.dev",
-        "https://www.huynhtrungchien.dev"
+        "https://www.huynhtrungchien.dev",
+        "http://localhost:5173"
     ],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(express.json());
 connectDB();
 
 app.use("/api/posts", router);
+app.use("/api/career-agent", aiRouters);
 
 app.get('/', (req, res) => {
   res.send("API is running...");

@@ -16,6 +16,7 @@ import Contact from "./sections/Contact";
 import SignatureSplash from "./components/SignatureSplash";
 import AdminPage from "./sections/AdminPage";
 import BlogSeriesPage from './sections/Blog/BlogSeriesPage.jsx';
+import Chatbot from "./sections/Chatbot";
 
 function App() {
   // Loading Splash Signature
@@ -73,6 +74,9 @@ function App() {
               {/* Admin Page*/}
               <Route path="/chien-admin-secret" element={<AdminPage />} />
             </Routes>
+            
+            <Chatbot />
+            
           </div>
         </Router>
       )}
