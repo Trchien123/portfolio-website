@@ -52,7 +52,6 @@ const Chatbot = () => {
         <button
           onClick={() => setIsOpen(true)}
           className="bg-neon text-navy p-4 rounded-full shadow-2xl hover:scale-110 transition-all duration-300 border-2 border-text-button group"
-          data-aos="zoom-in"
         >
           <MessageCircle size={28} className="group-hover:rotate-12 transition-transform" />
           <span className="absolute -top-12 right-0 bg-bg-surface text-text-main text-xs py-1 px-3 rounded-lg border border-text-button/30 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
