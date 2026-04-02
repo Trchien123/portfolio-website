@@ -1,4 +1,4 @@
-import ProfileImage from "../assets/profile_image.jpg";
+import ProfileImage from "../assets/profile_image.PNG";
 import liverpoolImg from '../assets/liverpool.jpg';
 import bookImg from '../assets/book.jpg';
 import musicImg from '../assets/music.jpg';
@@ -45,6 +45,19 @@ export const portfolioData = {
         "Outside of coding, I am deeply involved in tech communities and hackathons to sharpen my problem-solving skills.",
       ],
     },
+
+    // Experience Tab
+    experience: [
+      {
+        period: "Starting April 16, 2026", 
+        role: "Incoming AI Engineer Intern",
+        company: "Bosch Global Software Technologies Vietnam",
+        location: "Ho Chi Minh City, Vietnam",
+        tasks: [
+        ],
+        technologies: []
+      }
+    ],
 
     // Education Tab
     education: [
@@ -258,16 +271,16 @@ export const portfolioData = {
     },
     {
       id: 5,
-      title: "Traffic Flow Prediction System",
+      title: "AI Ecosystem",
       description:
-        "A traffic flow prediction system using traffic flow data from Australia. This project is currently refined and will be updated weekly.",
+        "High-performance AI hub featuring Agentic RAG and automated LLM workflows. Built with FastAPI, uv, and Pinecone for production-ready scalability",
       image:
-        "https://images.unsplash.com/photo-1680969295989-43b229a4fce3?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-      tech: ["Machine Learning", "Tensorflow", "FastAPI"],
-      link: "https://github.com/Trchien123/TrafficFlowPrediction",
+        "https://images.unsplash.com/photo-1727434032792-c7ef921ae086?q=80&w=2064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tech: ["OpenAI", "FastAPI", "uv", "Pinecone"],
+      link: "https://github.com/Trchien123/ai-ecosystem",
     },
     {
-      id: 6,
+      id: 5,
       title: "VNPT-AI Hackathon",
       description:
         "This is our work for the VNPT AI Hackathon held in Hanoi.",

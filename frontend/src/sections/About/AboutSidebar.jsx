@@ -1,12 +1,13 @@
 import React from 'react';
 import Button from '../../components/Button';
-import { User, GraduationCap, Trophy, Award, BookHeart, Camera } from "lucide-react";
+import { User, GraduationCap, Trophy, Award, BookHeart, Camera, Briefcase } from "lucide-react";
 import { portfolioData } from '@/lib/data';
 
 const AboutSidebar = ({ activeTab, setActiveTab }) => {
 
     const menuItems = [
         { id: "intro", label: "Overview", icon: User },
+        { id: "experience", label: "Experience", icon: Briefcase },
         { id: "education", label: "Education", icon: GraduationCap },
         { id: "achievement", label: "Achievements", icon: Trophy },
         { id: "certificate", label: "Certificates", icon: Award },

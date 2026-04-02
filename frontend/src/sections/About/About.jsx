@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AboutSidebar from './AboutSidebar';
 import Intro from './tabs/Intro';
+import Experience from './tabs/Experience';
 import Education from './tabs/Education';
 import Achievement from './tabs/Achievement';
 import Hobby from './tabs/Hobby';
@@ -19,6 +20,7 @@ const About = () => {
     const renderContent = () => {
         switch (activeTab) {
             case "intro": return <Intro/>;
+            case "experience": return <Experience/>
             case "education": return <Education/>;
             case "achievement": return <Achievement/>;
             case "certificate": return <Certificate/>;
@@ -69,7 +71,7 @@ const About = () => {
 
                 {/* Content */}
                 <div className="md:col-span-8 lg:col-span-9" data-aos="fade-up" data-aos-delay="400">
-                    <div className="min-h-112.5 md:h-150 bg-bg-surface/50 border border-text-main/10 rounded-3xl relative overflow-hidden backdrop-blur-sm">
+                    <div className="min-h-112.5 md:h-170 bg-bg-surface/50 border border-text-main/10 rounded-3xl relative overflow-hidden backdrop-blur-sm">
                         <div className="h-full overflow-y-auto p-5 md:p-8">
                             <div key={activeTab} className="animate-fade-in">
                                 {renderContent()}
