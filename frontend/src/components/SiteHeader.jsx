@@ -8,9 +8,9 @@ import { scrollToSection } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
+  { label: "Projects", id: "projects" },
   { label: "About", id: "about" },
   { label: "Skills", id: "skills" },
-  { label: "Projects", id: "projects" },
   { label: "Blogs", id: "blogs" },
   { label: "Contact", id: "contact" },
 ];
@@ -71,13 +71,12 @@ const SiteHeader = () => {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
         <Wordmark />
 
-        <nav aria-label="Main" className="hidden md:block">
-          <ul className="flex items-center gap-8">
-            {renderLinks("text-sm transition-colors duration-150 ease-out-soft")}
-          </ul>
-        </nav>
-
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 md:gap-6">
+          <nav aria-label="Main" className="hidden md:block">
+            <ul className="flex items-center gap-7">
+              {renderLinks("text-sm transition-colors duration-150 ease-out-soft")}
+            </ul>
+          </nav>
           <ThemeToggle />
           <Button
             ref={menuButtonRef}

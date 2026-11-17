@@ -1,104 +1,88 @@
-import "./index.css";
-import Header from "./components/Header.jsx";
-import Hero from "./sections/Hero.jsx";
-import About from "./sections/About/About.jsx";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { lazy, Suspense, useEffect, useState } from "react";
-import Skill from "./sections/Skill.jsx";
-import Project from "./sections/Project.jsx";
-import Blog from "./sections/Blog/Blog.jsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import BlogDetailPage from "./sections/Blog/BlogDetailPage";
-import BlogListPage from "./sections/Blog/BlogListPage";
+import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
 import ScrollToTop from "./components/ScrollToTop";
+import Hero from "./sections/Hero";
+import About from "./sections/About/About";
+import Skill from "./sections/Skill";
+import Project from "./sections/Project";
+import Blog from "./sections/Blog/Blog";
 import Contact from "./sections/Contact";
-import SignatureSplash from "./components/SignatureSplash";
-import AdminPage from "./sections/AdminPage";
-import BlogSeriesPage from './sections/Blog/BlogSeriesPage.jsx';
 import Chatbot from "./sections/Chatbot";
+import BlogListPage from "./sections/Blog/BlogListPage";
+import BlogDetailPage from "./sections/Blog/BlogDetailPage";
+import BlogSeriesPage from "./sections/Blog/BlogSeriesPage";
+import AdminPage from "./sections/AdminPage";
 
 // DEV ONLY: design-system preview, not included in production builds.
 const DesignPreview = import.meta.env.DEV ? lazy(() => import("./dev/DesignPreview.jsx")) : null;
-const isPreviewRoute = () => DesignPreview !== null && window.location.pathname === "/__design";
 
-function App() {
-  // Loading Splash Signature
-  const [loading, setLoading] = useState(() => !isPreviewRoute());
-
-  // Animation
-  useEffect(() => {
-    if (!loading) {
-      AOS.init({
-        duration: 1000,
-        once: true,
-        anchorPlacement: "top-bottom",
-      });
-    }
-  }, [loading]);
-
+function SiteLayout({ footer = true }) {
   return (
     <>
-      {loading ? (
-        /* Singature Splash */
-        <SignatureSplash onComplete={() => setLoading(false)} />
-      ) : (
-        <Router>
-          <ScrollToTop />
-
-          <Routes>
-            {DesignPreview ? (
-              <Route
-                path="/__design"
-                element={
-                  <Suspense fallback={null}>
-                    <DesignPreview />
-                  </Suspense>
-                }
-              />
-            ) : null}
-            <Route path="*" element={
-          <div className="min-h-screen">
-            {/* Header */}
-            <Header />
-
-            <Routes>
-              {/* Main Path */}
-              <Route
-                path="/"
-                element={
-                  <main>
-                    <Hero />
-                    <About />
-                    <Skill />
-                    <Project />
-                    <Blog />
-                    <Contact />
-                  </main>
-                }
-              />
-
-              {/* Blog List Page */}
-              <Route path="/blog" element={<BlogListPage />} />
-
-              {/* Blog Detail Page*/}
-              <Route path="/blog/:id" element={<BlogDetailPage />} />
-              
-              {/* Blog Series Page */}
-              <Route path="/blog/series/:seriesName" element={<BlogSeriesPage />} />
-              
-              {/* Admin Page*/}
-              <Route path="/chien-admin-secret" element={<AdminPage />} />
-            </Routes>
-            
-            <Chatbot />
-            
-          </div>
-            } />
-          </Routes>
-        </Router>
-      )}
+      <SiteHeader />
+      <main id="main">
+        <Outlet />
+      </main>
+      {footer ? <SiteFooter /> : null}
+      <Chatbot />
     </>
   );
 }
+
+function Home() {
+  return (
+    <>
+      <Hero />
+      <Project />
+      <About />
+      <Skill />
+      <Blog />
+      <Contact />
+    </>
+  );
+}
+
+function App() {
+  useEffect(() => {
+    AOS.init({
+      duration: 200,
+      easing: "ease-out",
+      offset: 40,
+      once: true,
+      disable: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    });
+  }, []);
+
+  return (
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        {DesignPreview ? (
+          <Route
+            path="/__design"
+            element={
+              <Suspense fallback={null}>
+                <DesignPreview />
+              </Suspense>
+            }
+          />
+        ) : null}
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<BlogListPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
+          <Route path="/blog/series/:seriesName" element={<BlogSeriesPage />} />
+        </Route>
+        <Route element={<SiteLayout footer={false} />}>
+          <Route path="/chien-admin-secret" element={<AdminPage />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+}
+
 export default App;

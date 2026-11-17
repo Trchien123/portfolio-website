@@ -17,7 +17,7 @@ const SiteFooter = () => (
             {email.value}
           </TextLink>
         </div>
-        <SocialLinks />
+        <SocialLinks className="-ml-2.5 md:-mr-2.5 md:ml-0" />
       </div>
       <div className="flex flex-col gap-2 text-sm text-fg-subtle sm:flex-row sm:items-center sm:justify-between">
         <p>© {YEAR} Huynh Trung Chien</p>
