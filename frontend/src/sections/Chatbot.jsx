@@ -10,6 +10,16 @@ function Chatbot() {
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef(null);
+  const inputRef = useRef(null);
+  const launcherRef = useRef(null);
+  const wasOpen = useRef(false);
+
+  // Focus moves into the panel when it opens and back to the launcher when it closes.
+  useEffect(() => {
+    if (isOpen) inputRef.current?.focus();
+    else if (wasOpen.current) launcherRef.current?.focus();
+    wasOpen.current = isOpen;
+  }, [isOpen]);
 
   const cannotSend = !message.trim() || isLoading;
 
@@ -46,6 +56,7 @@ function Chatbot() {
       <div className="fixed right-4 bottom-4 z-50 md:right-6 md:bottom-6">
         <button
           type="button"
+          ref={launcherRef}
           onClick={() => setIsOpen(true)}
           aria-label="Open chat"
           title="Chat with my AI Agent!"
@@ -120,6 +131,7 @@ function Chatbot() {
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Ask something..."
+              ref={inputRef}
               aria-label="Message"
               className="h-11 w-full border border-line bg-sheet pr-12 pl-3 text-base text-ink placeholder:text-muted"
             />

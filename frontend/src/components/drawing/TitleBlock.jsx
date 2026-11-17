@@ -23,8 +23,10 @@ function TitleBlock({ cells, action, className }) {
               download={action.download}
               className="flex h-full flex-col justify-center bg-fill px-4 py-3 text-on-fill transition-colors duration-200 hover:bg-ink hover:text-sheet"
             >
-              <span className="font-mono text-label tracking-wider uppercase">{action.label}</span>
-              <span className="mt-0.5 text-lg font-black">{action.text} →</span>
+              <span className="font-mono text-label tracking-wider uppercase" aria-hidden="true">{action.label}</span>
+              <span className="mt-0.5 text-lg font-black">
+              {action.text} <span aria-hidden="true">→</span>
+            </span>
             </a>
           </dd>
         </div>

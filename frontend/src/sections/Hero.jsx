@@ -22,24 +22,31 @@ function useCallouts(viewRef, slabRefs, ready) {
     const view = viewRef.current;
     if (!view || window.innerWidth < 768) return setPoints([]);
     const box = view.getBoundingClientRect();
-    const end = box.width - LABEL_WIDTH - 8;
-    setPoints(
-      LAYERS.map((layer) => {
-        const r = slabRefs.current[layer].querySelector(".face").getBoundingClientRect();
-        return { layer, x: r.right - box.left - 6, y: r.top - box.top + r.height * 0.62, end };
-      })
-    );
+    const anchors = LAYERS.map((layer) => {
+      const r = slabRefs.current[layer].querySelector(".face").getBoundingClientRect();
+      return { layer, x: r.right - box.left - 6, y: r.top - box.top + r.height * 0.62 };
+    });
+    // Labels sit in one column right of the widest slab, never on top of it.
+    const end = Math.max(box.width - LABEL_WIDTH - 8, ...anchors.map((a) => a.x + 24));
+    setPoints(anchors.map((a) => ({ ...a, end })));
   }, [viewRef, slabRefs]);
 
   useEffect(() => {
-    if (!ready) return;
-    const timer = setTimeout(measure, prefersReducedMotion() ? 0 : EXPLODE_MS);
-    window.addEventListener("resize", measure);
+    if (!ready || !viewRef.current) return;
+    let timer = setTimeout(measure, prefersReducedMotion() ? 0 : EXPLODE_MS);
+    // A resize can change the slab size and gap (CSS breakpoints), which
+    // re-runs the spring: measure now, and again once it has settled.
+    const observer = new ResizeObserver(() => {
+      measure();
+      clearTimeout(timer);
+      timer = setTimeout(measure, prefersReducedMotion() ? 0 : EXPLODE_MS);
+    });
+    observer.observe(viewRef.current);
     return () => {
       clearTimeout(timer);
-      window.removeEventListener("resize", measure);
+      observer.disconnect();
     };
-  }, [ready, measure]);
+  }, [ready, measure, viewRef]);
 
   return points;
 }
@@ -63,7 +70,7 @@ function Hero() {
   const [first, second] = hero.name.replace(/\.$/, "").split(/ (?=\S+$)/);
 
   return (
-    <section ref={revealRef} aria-labelledby="hero-title" className="hero-min-h grid items-center gap-12 px-4 pt-10 pb-16 md:px-10 lg:grid-cols-2 lg:py-10">
+    <section ref={revealRef} aria-labelledby="hero-title" className="hero-min-h grid items-center gap-12 px-4 pt-10 pb-16 md:px-10 xl:grid-cols-2 xl:py-10">
       <div>
         <DimensionLine label="Full stack" className="mb-6 max-w-lg" />
         <h1 id="hero-title" className="text-display tracking-tightest">
@@ -112,8 +119,8 @@ function Hero() {
             return (
               <li
                 key={layer}
-                className="flex items-center gap-3 transition-opacity duration-500 md:absolute md:right-0 md:w-36"
-                style={point ? { top: point.y - 16 } : undefined}
+                className="flex items-center gap-3 transition-opacity duration-500 md:absolute md:w-36"
+                style={point ? { top: point.y - 16, left: point.end + 8 } : undefined}
               >
                 <span className="grid size-8 shrink-0 place-items-center rounded-full border-2 border-line font-mono text-sm text-ink">{i + 1}</span>
                 <span className="text-lg font-black text-ink">{layer}</span>

@@ -249,12 +249,6 @@
   top: 62%;
 }
 
-@media (min-width: 768px) {
-  .iso-stack.is-hero .iso-plane {
-    left: 38%;
-  }
-}
-
 .iso-stack.is-hero {
   --size: 200px;
   --edge: 16px;
@@ -263,7 +257,38 @@
   max-width: 560px;
 }
 
+/* Tablet and small laptop: hero is one column, stack sits left of its labels */
 @media (min-width: 768px) {
+  .iso-stack.is-hero {
+    --size: 300px;
+    --edge: 24px;
+    --gap-open: 100px;
+    height: 600px;
+    max-width: none;
+  }
+
+  .iso-stack.is-hero .iso-plane {
+    left: 38%;
+    top: 50%;
+  }
+}
+
+/* Two-column hero: the stack column is narrower, so the stack shrinks and
+   moves left to keep a clear lane for the callout labels */
+@media (min-width: 1280px) {
+  .iso-stack.is-hero {
+    --size: 250px;
+    --edge: 20px;
+    --gap-open: 90px;
+    height: 560px;
+  }
+
+  .iso-stack.is-hero .iso-plane {
+    left: 34%;
+  }
+}
+
+@media (min-width: 1536px) {
   .iso-stack.is-hero {
     --size: 300px;
     --edge: 24px;
@@ -272,12 +297,12 @@
   }
 
   .iso-stack.is-hero .iso-plane {
-    top: 50%;
+    left: 36%;
   }
 }
 
 /* Hero fills the first viewport under the zone row and header */
-@media (min-width: 1024px) {
+@media (min-width: 1280px) {
   .hero-min-h {
     min-height: calc(100svh - 7rem);
   }

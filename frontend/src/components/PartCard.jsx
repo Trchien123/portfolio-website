@@ -8,7 +8,7 @@ function PartCard({ project, index }) {
   const id = `P-${String(index + 1).padStart(2, "0")}`;
 
   return (
-    <article className="part group relative flex w-full flex-col gap-4 border-r border-b border-line p-6 transition-colors duration-300 ease-out-soft hover:bg-faint">
+    <article className="part group relative flex w-full flex-col gap-4 border-r border-b border-line p-6 transition-colors duration-300 ease-out-soft focus-within:bg-faint hover:bg-faint">
       <div className="flex justify-between font-mono text-xs tracking-wider uppercase">
         <span className="text-dim">{id}</span>
         <span className="text-muted">{statusFor(project.description)}</span>
@@ -39,7 +39,7 @@ function PartCard({ project, index }) {
 
       <p className="flex items-center justify-between font-bold text-ink" aria-hidden="true">
         View on GitHub
-        <span className="transition-transform duration-300 ease-out-soft group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-dim">↗</span>
+        <span className="transition-transform duration-300 ease-out-soft group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-dim group-focus-within:translate-x-1 group-focus-within:-translate-y-1 group-focus-within:text-dim">↗</span>
       </p>
     </article>
   );

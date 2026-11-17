@@ -66,7 +66,7 @@ function About() {
                 type="button"
                 role="tab"
                 aria-selected={selected}
-                aria-controls={`panel-${tab.id}`}
+                aria-controls="about-panel"
                 tabIndex={selected ? 0 : -1}
                 onClick={() => setActive(tab.id)}
                 className={cn(
@@ -80,7 +80,7 @@ function About() {
             );
           })}
         </div>
-        <div id={`panel-${active}`} role="tabpanel" aria-labelledby={`tab-${active}`} tabIndex={0} className="border-2 border-t-0 border-line p-5 md:p-8">
+        <div id="about-panel" role="tabpanel" aria-labelledby={`tab-${active}`} tabIndex={0} className="border-2 border-t-0 border-line p-5 md:p-8">
           <div key={active} className="animate-fade-in">
             <ActivePanel />
           </div>
