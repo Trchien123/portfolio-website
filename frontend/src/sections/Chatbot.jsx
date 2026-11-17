@@ -106,7 +106,7 @@ function Chatbot() {
 
           {isLoading ? (
             <div className="flex justify-start">
-              <div className=" border border-line bg-sheet px-3 py-2">
+              <div className="border border-line bg-sheet px-3 py-2">
                 <Loader2 size={16} className="animate-spin text-muted" aria-label="Loading" />
               </div>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Send,
   Edit3,
@@ -58,7 +58,7 @@ const AdminPage = () => {
       localStorage.setItem("admin_token", res.data.token);
       setIsAuthenticated(true);
       fetchPosts();
-    } catch (err) {
+    } catch {
       alert("Invalid Password");
     }
   };
@@ -92,10 +92,10 @@ const AdminPage = () => {
     const payload = {
       ...formData,
       isSeries: String(formData.isSeries) === "true",
-      chapter: Number(formData.chapter) || 0, 
+      chapter: Number(formData.chapter) || 0,
       seriesName: formData.seriesName ? formData.seriesName.trim() : ""
     };
-    
+
     try {
       if (editingId) {
         await api.put(`/posts/${editingId}`, payload);

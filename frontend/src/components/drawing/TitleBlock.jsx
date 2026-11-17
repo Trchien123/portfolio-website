@@ -17,15 +17,15 @@ function TitleBlock({ cells, action, className }) {
         <div className="border-t border-line sm:border-t-0">
           <dt className="sr-only">{action.label}</dt>
           <dd className="h-full">
-          <a
-            href={action.href}
-            onClick={action.onClick}
-            download={action.download}
-            className="flex h-full flex-col justify-center bg-fill px-4 py-3 text-on-fill transition-colors duration-200 hover:bg-ink hover:text-sheet"
-          >
-            <span className="font-mono text-label tracking-wider uppercase">{action.label}</span>
-            <span className="mt-0.5 text-lg font-black">{action.text} →</span>
-          </a>
+            <a
+              href={action.href}
+              onClick={action.onClick}
+              download={action.download}
+              className="flex h-full flex-col justify-center bg-fill px-4 py-3 text-on-fill transition-colors duration-200 hover:bg-ink hover:text-sheet"
+            >
+              <span className="font-mono text-label tracking-wider uppercase">{action.label}</span>
+              <span className="mt-0.5 text-lg font-black">{action.text} →</span>
+            </a>
           </dd>
         </div>
       ) : null}

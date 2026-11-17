@@ -9,7 +9,7 @@ import { scrollToSection } from "@/lib/scroll";
 const { projects } = portfolioData;
 const PAGE = 3;
 
-const Project = () => {
+function Project() {
   const [visibleCount, setVisibleCount] = useState(PAGE);
   const gridRef = useReveal({ threshold: 0.1 });
 
@@ -51,6 +51,6 @@ const Project = () => {
       ) : null}
     </section>
   );
-};
+}
 
 export default Project;

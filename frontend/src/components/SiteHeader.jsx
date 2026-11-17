@@ -16,7 +16,7 @@ const NAV_ITEMS = [
   { label: "Contact", id: "contact" },
 ];
 
-const SiteHeader = () => {
+function SiteHeader() {
   const [isOpen, setIsOpen] = useState(false);
   const menuButtonRef = useRef(null);
   const { pathname, hash } = useLocation();
@@ -103,6 +103,6 @@ const SiteHeader = () => {
       ) : null}
     </header>
   );
-};
+}
 
 export default SiteHeader;

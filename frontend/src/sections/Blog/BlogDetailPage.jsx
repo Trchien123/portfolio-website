@@ -62,7 +62,7 @@ const MARKDOWN = {
   code: CodeBlock,
 };
 
-const BlogDetailPage = () => {
+function BlogDetailPage() {
   const { id } = useParams();
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -142,6 +142,6 @@ const BlogDetailPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default BlogDetailPage;

@@ -1,4 +1,4 @@
-const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+import { prefersReducedMotion } from "./motion";
 
 // Scrolls to an in-page section by id. Returns false if it isn't on this page.
 export function scrollToSection(id) {

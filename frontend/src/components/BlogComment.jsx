@@ -1,7 +1,7 @@
 import Giscus from "@giscus/react";
 import { useTheme } from "@/lib/theme";
 
-const BlogComment = () => {
+function BlogComment() {
   const { theme } = useTheme();
 
   return (
@@ -24,6 +24,6 @@ const BlogComment = () => {
       />
     </div>
   );
-};
+}
 
 export default BlogComment;

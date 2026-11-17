@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigationType } from "react-router-dom";
 
 // New routes start at the top; back/forward keeps the browser's position.
-const ScrollToTop = () => {
+function ScrollToTop() {
   const { pathname } = useLocation();
   const navType = useNavigationType();
 
@@ -11,6 +11,6 @@ const ScrollToTop = () => {
   }, [pathname, navType]);
 
   return null;
-};
+}
 
 export default ScrollToTop;

@@ -4,7 +4,7 @@ import { portfolioData } from "@/lib/data";
 
 const { photos } = portfolioData.about;
 
-const Photo = () => {
+function Photo() {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = photos.length;
   const currentPhoto = photos[currentPage - 1];
@@ -37,6 +37,6 @@ const Photo = () => {
       <PhotoPagination handleNext={handleNext} handlePrev={handlePrev} handlePageChange={setCurrentPage} page={currentPage} totalPages={totalPages} />
     </div>
   );
-};
+}
 
 export default Photo;

@@ -12,13 +12,13 @@ import Experience from "./sections/Experience";
 import Blog from "./sections/Blog/Blog";
 import Contact from "./sections/Contact";
 import Chatbot from "./sections/Chatbot";
+import AdminPage from "./sections/AdminPage";
+
 // Blog pages load on demand: Markdown, KaTeX and the code highlighter stay
 // out of the home page bundle.
 const BlogListPage = lazy(() => import("./sections/Blog/BlogListPage"));
 const BlogDetailPage = lazy(() => import("./sections/Blog/BlogDetailPage"));
 const BlogSeriesPage = lazy(() => import("./sections/Blog/BlogSeriesPage"));
-import AdminPage from "./sections/AdminPage";
-
 
 function SiteLayout({ footer = true }) {
   return (

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
-
-const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+import { prefersReducedMotion } from "./motion";
 
 /**
  * Marks an element with data-reveal="out" and flips it to "in" the first time
@@ -13,7 +12,7 @@ export function useReveal({ immediate = false, threshold = 0.2 } = {}) {
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
-    if (immediate || reducedMotion() || !("IntersectionObserver" in window)) {
+    if (immediate || prefersReducedMotion() || !("IntersectionObserver" in window)) {
       element.dataset.reveal = "in";
       return;
     }

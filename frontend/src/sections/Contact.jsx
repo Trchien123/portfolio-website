@@ -30,21 +30,24 @@ function Contact() {
           </span>
         </a>
         <dl className="grid border-t-2 border-line lg:border-t-0 lg:border-l-2">
-          {others.map((detail) => (
-            <div key={detail.label} className="border-b border-line px-6 py-5">
-              <dt className={`${LABEL} text-muted`}>{detail.label}</dt>
-              <dd className="mt-1">
-                <a
-                  href={detail.href}
-                  target={detail.href.startsWith("http") ? "_blank" : undefined}
-                  rel={detail.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="text-xl font-bold text-ink underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-dim hover:decoration-dim"
-                >
-                  {detail.value}
-                </a>
-              </dd>
-            </div>
-          ))}
+          {others.map((detail) => {
+            const external = detail.href.startsWith("http");
+            return (
+              <div key={detail.label} className="border-b border-line px-6 py-5">
+                <dt className={`${LABEL} text-muted`}>{detail.label}</dt>
+                <dd className="mt-1">
+                  <a
+                    href={detail.href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="text-xl font-bold text-ink underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:text-dim hover:decoration-dim"
+                  >
+                    {detail.value}
+                  </a>
+                </dd>
+              </div>
+            );
+          })}
           <div className="px-6 py-5">
             <dt className={`${LABEL} text-muted`}>Elsewhere</dt>
             <dd className="mt-2">

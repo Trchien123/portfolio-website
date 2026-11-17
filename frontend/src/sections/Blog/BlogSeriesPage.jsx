@@ -4,7 +4,7 @@ import DimensionLine from "@/components/drawing/DimensionLine";
 import api from "@/lib/axios";
 import { useReveal } from "@/lib/useReveal";
 
-const BlogSeriesPage = () => {
+function BlogSeriesPage() {
   const { seriesName } = useParams();
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -85,6 +85,6 @@ const BlogSeriesPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default BlogSeriesPage;

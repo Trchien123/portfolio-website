@@ -5,14 +5,13 @@ import TitleBlock from "@/components/drawing/TitleBlock";
 import { TextLink } from "@/components/ui/text-link";
 import { portfolioData } from "@/lib/data";
 import { LAYERS } from "@/lib/layers";
+import { prefersReducedMotion } from "@/lib/motion";
 import { useReveal } from "@/lib/useReveal";
 import { scrollToSection } from "@/lib/scroll";
 
 const { hero } = portfolioData;
 const EXPLODE_MS = 1900; // slab spring (1.4s) + top slab delay (0.3s) + margin
 const LABEL_WIDTH = 144; // matches md:w-36 on the callout labels
-
-const reducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // Measures the right edge of each slab's top face so the callouts point at
 // the real slab, whatever the viewport.
@@ -34,7 +33,7 @@ function useCallouts(viewRef, slabRefs, ready) {
 
   useEffect(() => {
     if (!ready) return;
-    const timer = setTimeout(measure, reducedMotion() ? 0 : EXPLODE_MS);
+    const timer = setTimeout(measure, prefersReducedMotion() ? 0 : EXPLODE_MS);
     window.addEventListener("resize", measure);
     return () => {
       clearTimeout(timer);
@@ -45,7 +44,7 @@ function useCallouts(viewRef, slabRefs, ready) {
   return points;
 }
 
-const Hero = () => {
+function Hero() {
   const revealRef = useReveal({ immediate: true });
   const viewRef = useRef(null);
   const slabRefs = useRef({});
@@ -53,7 +52,7 @@ const Hero = () => {
   const points = useCallouts(viewRef, slabRefs, open);
 
   useEffect(() => {
-    const timer = setTimeout(() => setOpen(true), reducedMotion() ? 0 : 450);
+    const timer = setTimeout(() => setOpen(true), prefersReducedMotion() ? 0 : 450);
     return () => clearTimeout(timer);
   }, []);
 
@@ -125,6 +124,6 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+}
 
 export default Hero;

@@ -1,5 +1,5 @@
 import IsoStack from "@/components/drawing/IsoStack";
-import { LAYERS, layersFor, statusFor } from "@/lib/layers";
+import { layersFor, statusFor } from "@/lib/layers";
 
 // One project as a part on the parts list: id, mini stack with the layers it
 // uses lit, spec rows, and a single link covering the card.
@@ -29,7 +29,7 @@ function PartCard({ project, index }) {
       <dl className="mt-auto border-t border-line text-sm">
         <div className="grid grid-cols-[5rem_1fr] gap-3 border-b border-faint py-2">
           <dt className="pt-0.5 font-mono text-label tracking-wider text-muted uppercase">Layers</dt>
-          <dd className="text-ink">{LAYERS.filter((l) => used.includes(l)).join(" · ") || "—"}</dd>
+          <dd className="text-ink">{used.join(" · ") || "—"}</dd>
         </div>
         <div className="grid grid-cols-[5rem_1fr] gap-3 py-2">
           <dt className="pt-0.5 font-mono text-label tracking-wider text-muted uppercase">Stack</dt>

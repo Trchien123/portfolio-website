@@ -5,14 +5,12 @@ import DimensionLine from "@/components/drawing/DimensionLine";
 import { Button } from "@/components/ui/button";
 import api from "@/lib/axios";
 import { useReveal } from "@/lib/useReveal";
-import { cn } from "@/lib/utils";
 
-// Defined Categories for the Filter Tabs
 const CATEGORIES = ["All", "Others", "Computer Vision", "Web Development", "ML/DL", "Maths", "Software Architecture"];
 
 const postHref = (post) => (post.isSeries ? `/blog/series/${post.seriesName}` : `/blog/${post._id}`);
 
-const BlogListPage = () => {
+function BlogListPage() {
   const [posts, setPosts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -31,7 +29,7 @@ const BlogListPage = () => {
   const filteredPosts = posts.filter((post) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === "All" || post.category === selectedCategory;
-    const isVisibleInList = !post.seriesName || post.seriesName === "" || post.isSeries === true;
+    const isVisibleInList = !post.seriesName || post.isSeries === true;
     return matchesSearch && matchesCategory && isVisibleInList;
   });
 
@@ -98,7 +96,7 @@ const BlogListPage = () => {
               <span className="font-mono text-sm text-muted">{post.isSeries ? "Series" : post.date}</span>
               <div>
                 <h2 className="text-2xl leading-tight tracking-tight">
-                  <Link to={postHref(post)} className={cn("card-link group-hover:text-dim")}>
+                  <Link to={postHref(post)} className="card-link group-hover:text-dim">
                     {post.title}
                   </Link>
                 </h2>
@@ -114,6 +112,6 @@ const BlogListPage = () => {
       ) : null}
     </div>
   );
-};
+}
 
 export default BlogListPage;
