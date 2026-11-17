@@ -328,6 +328,13 @@
 .iso-stack.is-small {
   --size: 120px;
   --edge: 10px;
+  --gap: 20px;
+}
+
+/* Part cards: the mini stack opens on hover / keyboard focus */
+.part:hover .iso-stack.is-small,
+.part:focus-within .iso-stack.is-small {
+  --gap: 36px;
 }
 
 .iso-stack.is-small .slab > * {

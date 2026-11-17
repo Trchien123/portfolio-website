@@ -11,7 +11,7 @@ function IsoStack({ open = false, gap = 100, small = false, used, className, sla
   return (
     <div
       className={cn("iso-stack", small && "is-small", className)}
-      style={{ "--gap": open ? `var(--gap-open, ${gap}px)` : "0px" }}
+      style={small ? undefined : { "--gap": open ? `var(--gap-open, ${gap}px)` : "0px" }}
       aria-hidden="true"
     >
       <div className="iso-plane">
