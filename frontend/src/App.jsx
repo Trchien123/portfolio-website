@@ -4,7 +4,7 @@ import Hero from "./sections/Hero.jsx";
 import About from "./sections/About/About.jsx";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Skill from "./sections/Skill.jsx";
 import Project from "./sections/Project.jsx";
 import Blog from "./sections/Blog/Blog.jsx";
@@ -18,9 +18,13 @@ import AdminPage from "./sections/AdminPage";
 import BlogSeriesPage from './sections/Blog/BlogSeriesPage.jsx';
 import Chatbot from "./sections/Chatbot";
 
+// DEV ONLY: design-system preview, not included in production builds.
+const DesignPreview = import.meta.env.DEV ? lazy(() => import("./dev/DesignPreview.jsx")) : null;
+const isPreviewRoute = () => DesignPreview !== null && window.location.pathname === "/__design";
+
 function App() {
   // Loading Splash Signature
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !isPreviewRoute());
 
   // Animation
   useEffect(() => {
@@ -42,6 +46,18 @@ function App() {
         <Router>
           <ScrollToTop />
 
+          <Routes>
+            {DesignPreview ? (
+              <Route
+                path="/__design"
+                element={
+                  <Suspense fallback={null}>
+                    <DesignPreview />
+                  </Suspense>
+                }
+              />
+            ) : null}
+            <Route path="*" element={
           <div className="min-h-screen">
             {/* Header */}
             <Header />
@@ -78,6 +94,8 @@ function App() {
             <Chatbot />
             
           </div>
+            } />
+          </Routes>
         </Router>
       )}
     </>
