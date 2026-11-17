@@ -10,13 +10,8 @@ const ThemeToggle = () => {
     // control the storage of the theme of the website
     useEffect(() => {
         const root = window.document.documentElement;
-        if (isLight) {
-            root.classList.add("light");
-            localStorage.setItem("theme", "light");
-        } else {
-            root.classList.remove("light");
-            localStorage.setItem("theme", "dark");
-        }
+        root.classList.toggle("dark", !isLight);
+        localStorage.setItem("theme", isLight ? "light" : "dark");
     }, [isLight]);
 
 

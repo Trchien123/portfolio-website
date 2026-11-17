@@ -1,41 +1,133 @@
 @import "tailwindcss";
 
+/* Theme is class-based: <html class="dark"> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------
+   Semantic design tokens (light is the default, .dark overrides)
+   --------------------------------------------------------------- */
+:root {
+  --bg: #fbfcfd;
+  --surface: #f2f5f8;
+  --surface-hover: #eaeff4;
+  --border: #dce3ea;
+  --border-strong: #c3cdd8;
+  --fg: #0b1524;
+  --fg-muted: #4a5b6e;
+  --fg-subtle: #64748b;
+  --accent: #047857;
+  --accent-hover: #065f46;
+  --accent-fg: #ffffff;
+  --accent-soft: color-mix(in oklab, var(--accent) 10%, transparent);
+  --danger: #b91c1c;
+}
+
+.dark {
+  --bg: #070d17;
+  --surface: #0e1826;
+  --surface-hover: #132033;
+  --border: #1e2b3c;
+  --border-strong: #2c3d52;
+  --fg: #e6edf3;
+  --fg-muted: #93a4b5;
+  --fg-subtle: #6b7d90;
+  --accent: #3ddc97;
+  --accent-hover: #5fe6ab;
+  --accent-fg: #04130c;
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --danger: #f87171;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-fg: var(--accent-fg);
+  --color-accent-soft: var(--accent-soft);
+  --color-danger: var(--danger);
+}
+
 @theme {
-  /* The bright green (#00ff82) */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Type scale: Tailwind defaults except 4xl (38px) */
+  --text-4xl: 2.375rem;
+  --text-4xl--line-height: 1.15;
+
+  --radius-sm: 6px;
+  --radius-md: 12px;
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --shadow-float: 0 8px 24px -8px rgb(0 0 0 / 0.25);
+
+  /* ---- Legacy tokens: removed once every section is migrated ---- */
   --color-neon: #00ff82;
-
-  /* The soft grey-green (#bfcecc) */
   --color-sage: #bfcecc;
-
-  /* The deepest background (#000b18) */
   --color-navy: #000b18;
-
-  /* The lighter surface (#001a2e) */
   --color-dusk: #001a2e;
-
-  /* Monsterrat font */
-  --font-spartan: "League Spartan", sans-serif;
-
-  /* Monsterrat font */
-  --font-montserrat: "Montserrat", sans-serif;
-
-  /* Color background main */
+  --font-spartan: var(--font-sans);
+  --font-montserrat: var(--font-sans);
   --color-bg-main: var(--main-bg);
-
-  /* Color background surface */
   --color-bg-surface: var(--surface-bg);
-
-  /* Color text main*/
   --color-text-main: var(--main-text);
-
-  /* Color text muted */
   --color-text-muted: var(--muted-text);
-
-  /* Button color */
   --color-text-button: var(--button-text);
-} 
+}
 
-/* Style for the container of the two images */
+/* Legacy variables, keyed to the same .dark switch as the new tokens */
+.dark {
+  --main-bg: var(--color-navy);
+  --surface-bg: var(--color-dusk);
+  --main-text: #ffffff;
+  --muted-text: var(--color-sage);
+  --button-text: var(--color-neon);
+}
+
+:root:not(.dark) {
+  --main-bg: var(--color-sage);
+  --surface-bg: #ffffff;
+  --main-text: var(--color-navy);
+  --muted-text: var(--color-dusk);
+  --button-text: var(--color-navy);
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply bg-bg font-sans text-fg-muted antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight text-fg;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--fg);
+  }
+}
+
+/* Blog figure helpers used inside Markdown posts */
 .vector-gallery {
   display: flex;
   justify-content: center;
@@ -44,7 +136,6 @@
   margin: 2rem 0;
 }
 
-/* Style for each individual image + label block */
 .vector-item {
   flex: 1;
   min-width: 280px;
@@ -52,7 +143,11 @@
   text-align: center;
 }
 
-/* Center labels inside the gallery items */
+.vector-item img {
+  display: block;
+  margin: 0 auto;
+}
+
 .label-center {
   text-align: center !important;
   width: 100%;
@@ -60,107 +155,62 @@
   margin-top: 0.5rem;
 }
 
-/* Specific styling for the Figure Title */
 .text-center-util {
   text-align: center !important;
   width: 100%;
   margin: 2rem 0;
-  color: var(--color-text-main);
+  color: var(--fg);
 }
 
-/* Ensure images within the gallery are centered */
-.vector-item img {
-  display: block;
-  margin: 0 auto;
-}
-
-:root{
-    /* Dark theme */
-    --main-bg: var(--color-navy);
-    --surface-bg: var(--color-dusk);
-    --main-text: #ffffff;
-    --muted-text: var(--color-sage);
-    --button-text: var(--color-neon);
-}
-
-html.light {
-    /* Light theme */
-    --main-bg: var(--color-sage);
-    --surface-bg: #ffffff;
-    --main-text: var(--color-navy);
-    --muted-text: var(--color-dusk);
-    --button-text: var(--color-navy);
-}
-
-@layer base {
-
-  html {
-    background-color: var(--main-bg);
-    transition: background-color 0.3s ease;
-  }
-
-  body {
-    /* Main background color */
-    background-color: var(--main-bg);
-    
-    /* Gradient from left to right or vice versa */
-    background-image: linear-gradient(to right, var(--main-bg), var(--surface-bg));
-    
-    /* choose the default color to be sage */
-    color: var(--muted-text); 
-
-    font-family: var(--font-montserrat);
-
-    /* Smooth transition */
-    transition: background-color 0.5s ease-in-out, 
-                color 0.5s ease-in-out, 
-                border-color 0.5s ease-in-out,
-                background-image 0.5s ease-in-out;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-spartan);
-    font-weight: 700;
-  }
-}
-
-
-/* Fade in animation for about page */
+/* Fade-in used by the About tabs (legacy, removed with the About unit) */
 @layer utilities {
-    .animate-fade-in {
-        animation: fadeIn 0.5s ease-out forwards;
-    }
+  .animate-fade-in {
+    animation: fadeIn 0.2s var(--ease-out-soft) forwards;
+  }
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0 ;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
-/* Scroll bar */
-@layer utilities {
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
+::-webkit-scrollbar-track {
+  background: transparent;
+}
 
-    ::-webkit-scrollbar-track {
-        background: var(--color-text-surface); /* Navy with opacity */
-        border-radius: 10px;
-    }
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 9999px;
+}
 
-    ::-webkit-scrollbar-thumb {
-        background: var(--color-text-muted); /* Sage with opacity */
-        border-radius: 10px;
-    }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-subtle);
+}
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--button-text); /* Neon hover */
-    }
+/* Reduced motion: no non-essential animation anywhere */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

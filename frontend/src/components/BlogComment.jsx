@@ -7,7 +7,7 @@ const BlogComment = () => {
   useEffect(() => {
     // Check theme
     const checkTheme = () => {
-      const isLight = document.documentElement.classList.contains('light');
+      const isLight = !document.documentElement.classList.contains('dark');
       // 'light' or 'dark_dimmed'
       setGiscusTheme(isLight ? 'light' : 'dark_dimmed'); 
     };
