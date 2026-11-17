@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
@@ -11,9 +12,11 @@ import Experience from "./sections/Experience";
 import Blog from "./sections/Blog/Blog";
 import Contact from "./sections/Contact";
 import Chatbot from "./sections/Chatbot";
-import BlogListPage from "./sections/Blog/BlogListPage";
-import BlogDetailPage from "./sections/Blog/BlogDetailPage";
-import BlogSeriesPage from "./sections/Blog/BlogSeriesPage";
+// Blog pages load on demand: Markdown, KaTeX and the code highlighter stay
+// out of the home page bundle.
+const BlogListPage = lazy(() => import("./sections/Blog/BlogListPage"));
+const BlogDetailPage = lazy(() => import("./sections/Blog/BlogDetailPage"));
+const BlogSeriesPage = lazy(() => import("./sections/Blog/BlogSeriesPage"));
 import AdminPage from "./sections/AdminPage";
 
 
@@ -23,7 +26,9 @@ function SiteLayout({ footer = true }) {
       <SheetFrame>
         <SiteHeader />
         <main id="main">
-          <Outlet />
+          <Suspense fallback={<p className="min-h-96 px-4 py-20 font-mono text-sm text-muted md:px-10">Loading…</p>}>
+            <Outlet />
+          </Suspense>
         </main>
         {footer ? <SiteFooter /> : null}
       </SheetFrame>
