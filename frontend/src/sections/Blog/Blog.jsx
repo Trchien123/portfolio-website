@@ -1,157 +1,66 @@
-import React, {useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom'; 
-import { ExternalLink, Calendar, Clock, ArrowRight, BookOpen } from 'lucide-react';
-import Button from '@/components/Button';
-import api from '@/lib/axios';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import SectionHeading from "@/components/drawing/SectionHeading";
+import { Button } from "@/components/ui/button";
+import api from "@/lib/axios";
+import { useReveal } from "@/lib/useReveal";
 
-const Blog = () => {
-  const navigate = useNavigate();
+const postHref = (post) => (post.isSeries ? `/blog/series/${encodeURIComponent(post.seriesName)}` : `/blog/${post._id}`);
+
+// Only single posts and series folders appear in lists, never series chapters.
+const isListed = (post) => !post.seriesName || post.isSeries === true;
+
+function Blog() {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const ref = useReveal({ threshold: 0.1 });
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      console.log("Base URL:", import.meta.env.VITE_API_URL);
-      try {
-        const res = await api.get('/posts');
-        setPosts(res.data.slice(0, 3));
-      } catch (err) {
-        console.error("Error when getting post:", err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchPosts();
+    api
+      .get("/posts")
+      .then((res) => setPosts(res.data.slice(0, 3)))
+      .catch((err) => console.error("Error when getting post:", err))
+      .finally(() => setIsLoading(false));
   }, []);
 
-  // FILTERING LOGIC
-  const filteredPosts = posts.filter((post) => {
-    // only display a single post or a series
-    const isVisibleInList = !post.seriesName || post.seriesName === "" || post.isSeries === true;
-
-    return isVisibleInList;
-  });
-
-  // Handle when the post is clicked
-  const handlePostClick = (post) => {
-    if (post.isSeries) {
-    navigate(`/blog/series/${encodeURIComponent(post.seriesName)}`);
-  } else {
-    navigate(`/blog/${post._id}`);
-  }
-  };
-
-  // Handle when view all is clicked
-  const handleViewAll = () => {
-    navigate('/blog');
-  };
+  const listed = posts.filter(isListed);
 
   return (
-    <section  
-      id="blogs"
-      className="w-full max-w-368 mx-auto pb-20 md:pb-40 px-4 md:px-6 lg:px-8 scroll-mt-20"
-    >
-      
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-4" data-aos="fade-up">
-        <div>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-muted mb-4 flex items-center gap-3">
-            <BookOpen className="text-text-button" size={40} />
-            Blogs
-          </h2>
-          <p className="text-text-muted/70 text-md max-w-2xl">
-            My latest thoughts on AI Engineering, Computer Vision, and Web Development.
-          </p>
-        </div>
+    <section id="blogs" aria-labelledby="blogs-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
+      <SectionHeading id="blogs-title" title="Technical notes" note={"Writing\nAI · web · maths"} />
 
-        {/* Desktop View All Button */}
-        <div className="hidden md:block">
-          <Button
-            onClick={handleViewAll}
-            variant='outline'
-          >
-            View All Posts 
-            <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
+      <div ref={ref}>
+        {isLoading ? <p className="font-mono text-sm text-muted">Loading notes…</p> : null}
+        {!isLoading && listed.length === 0 ? <p className="font-mono text-sm text-muted">No notes published yet.</p> : null}
+
+        <ol className="border-t-2 border-line">
+          {listed.map((post, i) => (
+            <li key={post._id} className="rv-up group relative grid gap-2 border-b border-line py-6 transition-colors duration-200 hover:bg-faint md:grid-cols-[4rem_9rem_1fr_12rem] md:items-baseline md:gap-6 md:px-2" style={{ "--d": `${i * 0.1}s` }}>
+              <span className="font-mono text-sm text-dim">N-{String(i + 1).padStart(2, "0")}</span>
+              <span className="font-mono text-sm text-muted">{post.isSeries ? "Series" : post.date}</span>
+              <div>
+                <h3 className="text-2xl leading-tight tracking-tight">
+                  <Link to={postHref(post)} className="card-link group-hover:text-dim">
+                    {post.title}
+                  </Link>
+                </h3>
+                <p className="mt-2 line-clamp-2 max-w-prose leading-relaxed">{post.excerpt}</p>
+              </div>
+              <span className="font-mono text-sm tracking-wider text-muted uppercase md:text-right">
+                {post.category} <span aria-hidden="true">↗</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-10">
+          <Button asChild variant="secondary">
+            <Link to="/blog">View all notes →</Link>
           </Button>
         </div>
       </div>
-
-      {/* Blog List */}
-      <div className="grid grid-cols-1 gap-8">
-        {filteredPosts.map((post, index) => (
-          <article 
-            key={post._id}
-            className="group cursor-pointer bg-bg-surface/30 border border-text-main/10 rounded-2xl flex flex-col md:flex-row hover:border-text-button/50 hover:-translate-y-1 transition-all duration-300 shadow-lg relative overflow-hidden h-auto md:min-h-52"
-            onClick={() => handlePostClick(post)}
-            data-aos="fade-up"
-            data-aos-delay={index * 100}
-          >
-            {/* Left Image */}
-            <div className="w-full h-48 md:w-[35%] md:h-full relative overflow-hidden">
-              <img 
-                src={post.image}
-                alt={post.title} 
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-bg-main/20 group-hover:bg-transparent transition-colors"></div>
-            </div>
-
-            {/* Main content */}
-            <div className="group w-full flex flex-col p-5">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-text-button/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-              <div>
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex flex-wrap gap-2 relative z-10">
-                    <span className="text-sm font-mono font-bold text-text-button bg-text-button/10 px-2 py-0.5 rounded border border-text-button/20">
-                      {post.category}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-text-muted/50 relative z-10">
-                    <span className="flex items-center gap-1"><Calendar size={12}/> {post.date}</span>
-                  </div>
-                </div>
-
-                <h3 className="text-2xl md:text-xl font-bold text-text-main mb-2 group-hover:text-text-button transition-colors line-clamp-2 relative z-10">
-                  {post.title}
-                </h3>
-
-                <p className="text-text-muted/70 text-base line-clamp-3 leading-relaxed relative z-10">
-                  {post.excerpt}
-                </p>
-              </div>
-
-              {/* Footer */}
-              <div className="flex items-center justify-between gap-4 text-sm text-text-muted/50 mt-auto border-t border-text-main/10 pt-4 relative z-10">
-                <span className="flex items-center gap-1.5">
-                  <Clock size={14} className="text-text-button/70"/> 
-                  {post.readTime}
-                </span>
-                <span className="flex items-center gap-2 text-sm font-bold text-text-main group-hover:text-text-button transition-colors w-fit group/link">
-                  {post.isSeries ? "View Series" : "View Blog"}
-                  <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
-                </span>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {/* MOBILE VIEW ALL BUTTON */}
-      <div className="mt-10 flex justify-center md:hidden">
-        <Button
-          onClick={handleViewAll}
-          variant="outline"
-        >
-          View All Posts 
-          <ArrowRight size={18} className="ml-2" />
-        </Button>
-      </div>
-
     </section>
   );
-};
+}
 
 export default Blog;
