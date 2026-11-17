@@ -4,69 +4,73 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ---------------------------------------------------------------
-   Semantic design tokens (light is the default, .dark overrides)
+   "Drawing of the Stack" tokens. Light = sage paper, dark = dusk sheet.
    --------------------------------------------------------------- */
 :root {
-  --bg: #fbfcfd;
-  --surface: #f2f5f8;
-  --surface-hover: #eaeff4;
-  --border: #dce3ea;
-  --border-strong: #c3cdd8;
-  --fg: #0b1524;
-  --fg-muted: #4a5b6e;
-  --fg-subtle: #64748b;
-  --accent: #047857;
-  --accent-hover: #065f46;
-  --accent-fg: #ffffff;
-  --accent-soft: color-mix(in oklab, var(--accent) 10%, transparent);
+  --sheet: #dfe7e5;
+  --sheet-raised: #e9efed;
+  --line: #001a2e;
+  --ink: #000b18;
+  --muted: #2d4253;
+  --faint: rgb(0 26 46 / 0.13);
+  --dim: #006b3d;
+  --fill: #00ff82;
+  --on-fill: #001a2e;
   --danger: #b91c1c;
+  --slab-1: #ffffff;
+  --slab-2: #bfcecc;
+  --slab-3: #001a2e;
+  --slab-4: #000b18;
 }
 
 .dark {
-  --bg: #070d17;
-  --surface: #0e1826;
-  --surface-hover: #132033;
-  --border: #1e2b3c;
-  --border-strong: #2c3d52;
-  --fg: #e6edf3;
-  --fg-muted: #93a4b5;
-  --fg-subtle: #6b7d90;
-  --accent: #3ddc97;
-  --accent-hover: #5fe6ab;
-  --accent-fg: #04130c;
-  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --sheet: #001a2e;
+  --sheet-raised: #072338;
+  --line: #bfcecc;
+  --ink: #ffffff;
+  --muted: #9fb3b1;
+  --faint: rgb(191 206 204 / 0.11);
+  --dim: #00ff82;
   --danger: #f87171;
+  --slab-1: #0b2234;
+  --slab-2: #14344a;
+  --slab-3: #bfcecc;
+  --slab-4: #e9efed;
 }
 
 @theme inline {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-hover: var(--surface-hover);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
-  --color-fg: var(--fg);
-  --color-fg-muted: var(--fg-muted);
-  --color-fg-subtle: var(--fg-subtle);
-  --color-accent: var(--accent);
-  --color-accent-hover: var(--accent-hover);
-  --color-accent-fg: var(--accent-fg);
-  --color-accent-soft: var(--accent-soft);
+  --color-sheet: var(--sheet);
+  --color-sheet-raised: var(--sheet-raised);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-dim: var(--dim);
+  --color-fill: var(--fill);
+  --color-on-fill: var(--on-fill);
   --color-danger: var(--danger);
+
+  /* Transitional aliases for v1 class names (removed in cleanup) */
+  --color-bg: var(--sheet);
+  --color-surface: var(--sheet-raised);
+  --color-surface-hover: var(--sheet-raised);
+  --color-border: var(--faint);
+  --color-border-strong: var(--line);
+  --color-fg: var(--ink);
+  --color-fg-muted: var(--muted);
+  --color-fg-subtle: var(--muted);
+  --color-accent: var(--dim);
+  --color-accent-hover: var(--dim);
+  --color-accent-fg: var(--on-fill);
+  --color-accent-soft: var(--faint);
 }
 
 @theme {
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
-
-  /* Type scale: Tailwind defaults except 4xl (38px) */
-  --text-4xl: 2.375rem;
-  --text-4xl--line-height: 1.15;
-
-  --radius-sm: 6px;
-  --radius-md: 12px;
+  --font-sans: "Chivo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Chivo Mono", ui-monospace, SFMono-Regular, monospace;
 
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
-  --shadow-float: 0 8px 24px -8px rgb(0 0 0 / 0.25);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 
   /* ---- Legacy tokens: removed once every section is migrated ---- */
   --color-neon: #00ff82;
@@ -82,26 +86,27 @@
   --color-text-button: var(--button-text);
 }
 
-/* Legacy variables, keyed to the same .dark switch as the new tokens */
+/* Legacy variables, keyed to the same .dark switch */
 .dark {
-  --main-bg: var(--color-navy);
-  --surface-bg: var(--color-dusk);
-  --main-text: #ffffff;
-  --muted-text: var(--color-sage);
-  --button-text: var(--color-neon);
+  --main-bg: var(--sheet);
+  --surface-bg: var(--sheet-raised);
+  --main-text: var(--ink);
+  --muted-text: var(--muted);
+  --button-text: var(--dim);
 }
 
 :root:not(.dark) {
-  --main-bg: var(--color-sage);
-  --surface-bg: #ffffff;
-  --main-text: var(--color-navy);
-  --muted-text: var(--color-dusk);
-  --button-text: var(--color-navy);
+  --main-bg: var(--sheet);
+  --surface-bg: var(--sheet-raised);
+  --main-text: var(--ink);
+  --muted-text: var(--muted);
+  --button-text: var(--dim);
 }
 
 @layer base {
   html {
     color-scheme: light;
+    background: var(--sheet);
   }
 
   html.dark {
@@ -109,37 +114,45 @@
   }
 
   body {
-    @apply bg-bg font-sans text-fg-muted antialiased;
-    caret-color: var(--accent);
+    @apply bg-sheet font-sans text-muted antialiased;
+    caret-color: var(--dim);
+    transition: background-color 0.6s var(--ease-out-soft), color 0.6s var(--ease-out-soft);
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold tracking-tight text-fg;
+    @apply font-black tracking-tight text-ink;
   }
 
   /* Anchor targets clear the sticky header */
   [id] {
-    scroll-margin-top: 5rem;
+    scroll-margin-top: 6rem;
   }
 
   :focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
+    outline: 2px solid var(--dim);
+    outline-offset: 3px;
   }
 
   ::selection {
-    background-color: var(--accent-soft);
-    color: var(--fg);
+    background-color: var(--fill);
+    color: var(--on-fill);
   }
 }
 
-/* Whole-card link: the single link inside an interactive Card covers the card */
 @layer components {
+  /* The drafting grid: 48px squares */
+  .drafting-grid {
+    background-image:
+      linear-gradient(var(--faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--faint) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Whole-card link: the single link inside a card covers the card */
   .card-link::after {
     content: "";
     position: absolute;
     inset: 0;
-    border-radius: var(--radius-md);
   }
 
   .card-link:focus-visible {
@@ -147,8 +160,41 @@
   }
 
   .card-link:focus-visible::after {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
+    outline: 2px solid var(--dim);
+    outline-offset: -2px;
+  }
+
+  /* Reveal choreography (driven by useReveal: data-reveal="in") */
+  [data-reveal] .rv-draw {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  [data-reveal] .rv-wipe {
+    clip-path: inset(0 100% 0 0);
+  }
+  [data-reveal] .rv-up {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  [data-reveal] .rv-fade {
+    opacity: 0;
+  }
+  [data-reveal="in"] .rv-draw {
+    transform: scaleX(1);
+    transition: transform 1s var(--ease-out-soft) var(--d, 0s);
+  }
+  [data-reveal="in"] .rv-wipe {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1s var(--ease-out-soft) var(--d, 0s);
+  }
+  [data-reveal="in"] .rv-up {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s var(--ease-out-soft) var(--d, 0s), transform 0.6s var(--ease-out-soft) var(--d, 0s);
+  }
+  [data-reveal="in"] .rv-fade {
+    opacity: 1;
+    transition: opacity 0.6s var(--ease-out-soft) var(--d, 0s);
   }
 }
 
@@ -184,13 +230,13 @@
   text-align: center !important;
   width: 100%;
   margin: 2rem 0;
-  color: var(--fg);
+  color: var(--ink);
 }
 
-/* Fade-in used by the About tabs (legacy, removed with the About unit) */
+/* Fade-in used by legacy About tabs (removed with the About unit) */
 @layer utilities {
   .animate-fade-in {
-    animation: fadeIn 0.2s var(--ease-out-soft) forwards;
+    animation: fadeIn 0.3s var(--ease-out-soft) forwards;
   }
 }
 
@@ -207,44 +253,41 @@
 
 /* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--sheet);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 9999px;
+  background: var(--faint);
+  border: 2px solid var(--sheet);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--fg-subtle);
+  background: var(--dim);
 }
 
-/* AOS: a short 8px rise instead of the library's 100px default */
-html [data-aos="fade-up"] {
-  transform: translate3d(0, 8px, 0);
-}
-
-html [data-aos="fade-up"].aos-animate {
-  transform: translate3d(0, 0, 0);
-}
-
-/* Reduced motion: no non-essential animation anywhere */
+/* Reduced motion: final states, no animation */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0s !important;
+    animation-delay: 0s !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0s !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 
-  [data-aos] {
+  [data-reveal] .rv-draw,
+  [data-reveal] .rv-wipe,
+  [data-reveal] .rv-up,
+  [data-reveal] .rv-fade {
     opacity: 1 !important;
     transform: none !important;
+    clip-path: none !important;
   }
 }

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -17,8 +17,6 @@ import BlogDetailPage from "./sections/Blog/BlogDetailPage";
 import BlogSeriesPage from "./sections/Blog/BlogSeriesPage";
 import AdminPage from "./sections/AdminPage";
 
-// DEV ONLY: design-system preview, not included in production builds.
-const DesignPreview = import.meta.env.DEV ? lazy(() => import("./dev/DesignPreview.jsx")) : null;
 
 function SiteLayout({ footer = true }) {
   return (
@@ -61,16 +59,6 @@ function App() {
     <Router>
       <ScrollToTop />
       <Routes>
-        {DesignPreview ? (
-          <Route
-            path="/__design"
-            element={
-              <Suspense fallback={null}>
-                <DesignPreview />
-              </Suspense>
-            }
-          />
-        ) : null}
         <Route element={<SiteLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<BlogListPage />} />
