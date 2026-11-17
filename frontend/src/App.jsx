@@ -7,6 +7,7 @@ import Hero from "./sections/Hero";
 import About from "./sections/About/About";
 import Skill from "./sections/Skill";
 import Project from "./sections/Project";
+import Experience from "./sections/Experience";
 import Blog from "./sections/Blog/Blog";
 import Contact from "./sections/Contact";
 import Chatbot from "./sections/Chatbot";
@@ -36,6 +37,7 @@ function Home() {
     <>
       <Hero />
       <Project />
+      <Experience />
       <About />
       <Skill />
       <Blog />
