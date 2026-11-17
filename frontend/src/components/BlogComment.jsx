@@ -1,5 +1,5 @@
-import Giscus from '@giscus/react';
-import { useTheme } from '@/lib/theme';
+import Giscus from "@giscus/react";
+import { useTheme } from "@/lib/theme";
 
 const BlogComment = () => {
   const { theme } = useTheme();
@@ -18,7 +18,7 @@ const BlogComment = () => {
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme={theme === 'dark' ? 'dark_dimmed' : 'light'}
+        theme={theme === "dark" ? "dark_dimmed" : "light"}
         lang="en"
         loading="lazy"
       />

@@ -37,7 +37,7 @@ const TYPE_SCALE = [
   ["text-lg", "18 / lead"],
   ["text-base", "16 / body"],
   ["text-sm", "14 / meta, UI"],
-  ["text-xs", "12 / mono labels only"],
+  ["text-xs", "12 / mono data: dates, tags"],
 ];
 
 const SPACING = [1, 2, 3, 4, 6, 8, 12, 16, 24, 32];
@@ -45,7 +45,7 @@ const RADII = [["rounded-sm", "6px: buttons, inputs"], ["rounded-md", "12px: car
 
 const Block = ({ id, title, children }) => (
   <section data-testid={id} aria-labelledby={`${id}-title`} className="space-y-6 border-t border-border py-12">
-    <h2 id={`${id}-title`} className="font-mono text-xs uppercase tracking-wider text-fg-subtle">
+    <h2 id={`${id}-title`} className="text-sm font-medium text-fg-subtle">
       {title}
     </h2>
     {children}
@@ -88,7 +88,7 @@ const DesignPreview = () => {
                 <span className="w-56 shrink-0 font-mono text-xs text-fg-subtle">
                   {cls} · {note}
                 </span>
-                <span className={`${cls} text-fg`}>{cls === "text-xs" ? "MONO LABEL 2026" : "Huynh Trung Chien"}</span>
+                <span className={`${cls} text-fg`}>{cls === "text-xs" ? "2026-11-18" : "Huynh Trung Chien"}</span>
               </li>
             ))}
           </ul>
@@ -160,9 +160,8 @@ const DesignPreview = () => {
 
         <Block id="section-heading" title="Section heading">
           <SectionHeading
-            eyebrow="Projects"
             title="Projects"
-            lead="Section titles pair a mono eyebrow with a plain heading and an optional lead."
+            lead="A plain heading carries the section; an optional lead and one action sit beside it."
             action={<Button variant="secondary">View all</Button>}
           />
         </Block>

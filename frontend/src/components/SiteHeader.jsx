@@ -41,12 +41,9 @@ const SiteHeader = () => {
   }, [isOpen]);
 
   const handleNavClick = (event, id) => {
-    setIsOpen(false);
-    if (pathname === "/" && scrollToSection(id)) {
-      event.preventDefault();
-      return;
-    }
     event.preventDefault();
+    setIsOpen(false);
+    if (pathname === "/" && scrollToSection(id)) return;
     navigate(`/#${id}`);
   };
 
