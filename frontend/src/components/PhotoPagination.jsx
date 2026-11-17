@@ -40,7 +40,7 @@ const PhotoPagination = ({
   const pagesToShow = generatePages();
 
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-start">
       <Pagination>
         <PaginationContent>
           {/* Prvious */}
@@ -49,7 +49,7 @@ const PhotoPagination = ({
               onClick={page === 1 ? undefined : handlePrev}
               className={cn(
                 "cursor-pointer",
-                "hover:bg-bg-main/10 hover:text-text-button hover:border-text-button/50",
+                "text-ink",
                 page === 1 && "pointer-events-none opacity-50"
               )}
             />
@@ -66,12 +66,8 @@ const PhotoPagination = ({
                     if (p !== page) handlePageChange(p);
                   }}
                   className={cn(
-                    "cursor-pointer transition-all duration-300 border-transparent",
-                    // 1. ACTIVE STATE (Current Page)
-                    p === page
-                      ? "bg-text-button text-bg-main font-bold hover:bg-text-button/80 hover:text-bg-main"
-                      : // 2. INACTIVE STATE (Other Pages)
-                        "text-text-main/70 hover:bg-text-main/10 hover:text-text-button hover:border-text-main/10"
+                    "cursor-pointer font-mono",
+                    p === page ? "bg-fill text-on-fill hover:bg-fill" : "text-muted hover:text-ink"
                   )}
                 >
                   {p}
@@ -86,7 +82,7 @@ const PhotoPagination = ({
               onClick={page === totalPages ? undefined : handleNext}
               className={cn(
                 "cursor-pointer",
-                "hover:bg-text-main/10 hover:text-text-button hover:border-text-button/50",
+                "text-ink",
                 page === totalPages && "pointer-events-none opacity-50"
               )}
             />

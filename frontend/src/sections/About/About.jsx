@@ -1,87 +1,93 @@
-import React, { useState } from 'react';
-import AboutSidebar from './AboutSidebar';
-import Intro from './tabs/Intro';
-import Experience from './tabs/Experience';
-import Education from './tabs/Education';
-import Achievement from './tabs/Achievement';
-import Hobby from './tabs/Hobby';
-import Photo from './tabs/Photo';
-import { ScanFace } from 'lucide-react';
-import Certificate from './tabs/Certificate';
-import { portfolioData } from '@/lib/data';
+import { useRef, useState } from "react";
+import SectionHeading from "@/components/drawing/SectionHeading";
+import Achievement from "./tabs/Achievement";
+import Certificate from "./tabs/Certificate";
+import Hobby from "./tabs/Hobby";
+import Photo from "./tabs/Photo";
+import { portfolioData } from "@/lib/data";
+import { useReveal } from "@/lib/useReveal";
+import { cn } from "@/lib/utils";
 
-const About = () => {
-    // React use state to control the state of the current selected tab
-    const [activeTab, setActiveTab] = useState("intro");
+const { intro } = portfolioData.about;
 
-    const { about } = portfolioData;
+const TABS = [
+  { id: "achievements", label: "Achievements", Panel: Achievement },
+  { id: "certificates", label: "Certificates", Panel: Certificate },
+  { id: "hobbies", label: "Hobbies", Panel: Hobby },
+  { id: "photos", label: "Photos", Panel: Photo },
+];
 
-    // Render content function to render the content based on the selected tab
-    const renderContent = () => {
-        switch (activeTab) {
-            case "intro": return <Intro/>;
-            case "experience": return <Experience/>
-            case "education": return <Education/>;
-            case "achievement": return <Achievement/>;
-            case "certificate": return <Certificate/>;
-            case "hobby": return <Hobby/>;
-            case "photo": return <Photo/>;
-            default: return <Intro/>;
-        }
-    }
-    return (
-        <section id="about" className="min-h-fit max-w-368 w-full flex flex-col mx-auto pb-20 md:pb-40 px-4 md:px-6 lg:px-8 scroll-mt-20">
-            {/* Title */}
-            <div className="mb-10 flex gap-3" data-aos="fade-up">
-                <ScanFace className="text-text-button" size={40} />
-                <h2 className="text-4xl md:text-5xl font-bold text-text-muted">About Me</h2>
-            </div>
+function About() {
+  const [active, setActive] = useState(TABS[0].id);
+  const tabRefs = useRef({});
+  const notesRef = useReveal({ threshold: 0.15 });
+  const ActivePanel = TABS.find((tab) => tab.id === active).Panel;
 
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-12">
-                {/* Side Bar */}
-                <div className="md:col-span-4 lg:col-span-3" data-aos="fade-up" data-aos-delay="100">
-                    <div className="md:sticky md:top-32">
-                        <AboutSidebar activeTab={activeTab} setActiveTab={setActiveTab}/>
-                        
-                        <div className="mt-6 pt-6 border-t border-text-muted/10">
-                            <h4 className="text-xs font-bold text-text-muted/40 uppercase tracking-widest mb-4 px-2">
-                                Connect
-                            </h4>
-                            
-                            <div className="grid grid-cols-3 md:grid-cols-2 gap-2 md:gap-3 px-1">
-                                {about.socials.map((social, index) => {
-                                    const Icon = social.icon;
-                                    return (
-                                        <a 
-                                            key={index}
-                                            href={social.url} 
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`p-2 md:p-3 bg-bg-surface/50 rounded-xl text-text-muted/60 border border-bg-surface transition-all hover:-translate-y-1 flex flex-col md:flex-row items-center justify-center gap-2 ${social.color}`}
-                                        >
-                                            <Icon size={20} />
-                                            <span className="font-bold text-[12px] md:text-sm">{social.name}</span>
-                                        </a>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  // Arrow keys / Home / End move between tabs (WAI-ARIA tabs pattern).
+  const onKeyDown = (event) => {
+    const index = TABS.findIndex((tab) => tab.id === active);
+    const next = { ArrowRight: index + 1, ArrowLeft: index - 1, Home: 0, End: TABS.length - 1 }[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    const tab = TABS[(next + TABS.length) % TABS.length];
+    setActive(tab.id);
+    tabRefs.current[tab.id]?.focus();
+  };
 
-                {/* Content */}
-                <div className="md:col-span-8 lg:col-span-9" data-aos="fade-up" data-aos-delay="400">
-                    <div className="min-h-112.5 md:h-170 bg-bg-surface/50 border border-text-main/10 rounded-3xl relative overflow-hidden backdrop-blur-sm">
-                        <div className="h-full overflow-y-auto p-5 md:p-8">
-                            <div key={activeTab} className="animate-fade-in">
-                                {renderContent()}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    )
-};
+  return (
+    <section id="about" aria-labelledby="about-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
+      <SectionHeading id="about-title" title="General notes" note={"About me\nRead before reviewing"} />
+
+      <div ref={notesRef} className="grid gap-10 lg:grid-cols-[1fr_2fr]">
+        {/* reason (grid-cols): note heading column + reading column */}
+        <p className="rv-up text-2xl leading-snug font-black text-ink md:text-3xl">
+          {intro.title}
+          <span className="block font-normal text-muted">{intro.subtitle.replace(/^\s*-\s*/, "")}</span>
+        </p>
+        <ol className="space-y-6">
+          {intro.paragraphs.map((paragraph, i) => (
+            <li key={paragraph.slice(0, 24)} className="rv-up grid grid-cols-[2.5rem_1fr] gap-2 text-lg leading-relaxed" style={{ "--d": `${0.1 + i * 0.1}s` }}>
+              <span className="font-mono text-dim">{i + 1}.</span>
+              <p className="max-w-prose">{paragraph}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div className="mt-16">
+        <div role="tablist" aria-label="More about me" className="flex overflow-x-auto border-b-2 border-line" onKeyDown={onKeyDown}>
+          {TABS.map((tab, i) => {
+            const selected = tab.id === active;
+            return (
+              <button
+                key={tab.id}
+                ref={(node) => (tabRefs.current[tab.id] = node)}
+                id={`tab-${tab.id}`}
+                type="button"
+                role="tab"
+                aria-selected={selected}
+                aria-controls={`panel-${tab.id}`}
+                tabIndex={selected ? 0 : -1}
+                onClick={() => setActive(tab.id)}
+                className={cn(
+                  "-mb-0.5 flex shrink-0 cursor-pointer items-baseline gap-2 border-2 border-b-0 px-5 py-3 text-lg font-bold transition-colors duration-200",
+                  selected ? "border-line bg-sheet text-ink" : "border-transparent text-muted hover:text-ink"
+                )}
+              >
+                <span className={cn("font-mono text-xs", selected ? "text-dim" : "text-muted")}>{String(i + 1).padStart(2, "0")}</span>
+                {tab.label}
+              </button>
+            );
+          })}
+        </div>
+        <div id={`panel-${active}`} role="tabpanel" aria-labelledby={`tab-${active}`} tabIndex={0} className="border-2 border-t-0 border-line p-5 md:p-8">
+          <div key={active} className="animate-fade-in">
+            <ActivePanel />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default About;

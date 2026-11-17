@@ -1,87 +1,42 @@
-import React, { useState } from 'react';
-import PhotoPagination from '@/components/PhotoPagination';
-import { portfolioData } from '@/lib/data';
+import { useState } from "react";
+import PhotoPagination from "@/components/PhotoPagination";
+import { portfolioData } from "@/lib/data";
+
+const { photos } = portfolioData.about;
 
 const Photo = () => {
-    // Access photos from centralized data
-    const { photos } = portfolioData.about;
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = photos.length;
+  const currentPhoto = photos[currentPage - 1];
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 1;
-    const totalPages = Math.ceil(photos.length / itemsPerPage);
-    
-    const handlePrev = (e) => {
-        if (e) e.preventDefault();
-        if (currentPage > 1) {
-            setCurrentPage((prev) => prev - 1);
-        }
-    };
+  const handlePrev = (e) => {
+    e?.preventDefault();
+    setCurrentPage((prev) => Math.max(1, prev - 1));
+  };
 
-    const handleNext = (e) => {
-        if (e) e.preventDefault();
-        if (currentPage < totalPages) {
-            setCurrentPage((prev) => prev + 1);
-        }
-    };
+  const handleNext = (e) => {
+    e?.preventDefault();
+    setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+  };
 
-    const handlePageChange = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
-
-    // Get current photo data from the data file
-    const currentPhoto = photos[currentPage - 1];
-
-    return (
-        <div className="w-full mx-auto animate-fade-in space-y-8">
-            
-            {/* MAIN CONTENT AREA (Grid Layout) */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                
-                {/* LEFT: Image Section */}
-                <div className="relative group w-full h-auto rounded-2xl overflow-hidden border border-text-main/10 bg-bg-main">
-                    {/* The 'key' ensures the image fades in again when page changes */}
-                    <img 
-                        key={currentPage} 
-                        src={currentPhoto.src} 
-                        alt={currentPhoto.title}
-                        className="w-full h-auto block animate-fade-in duration-500"
-                    />
-                    
-                    {/* Overlay gradient */}
-                    <div className="absolute inset-0 bg-linear-to-t from-bg-main/60 to-transparent opacity-50"></div>
-                </div>
-
-                {/* Description Section */}
-                <div key={`${currentPage}-text`} className="space-y-4 animate-fade-in duration-500">
-                    <div className="inline-block px-3 py-1 rounded-full bg-text-button/10 border border-text-button/20 text-text-button text-xs font-bold uppercase tracking-wider">
-                        {currentPhoto.location}
-                    </div>
-                    
-                    <h3 className="md:text-3xl text-2xl font-bold text-text-main font-spartan">
-                        {currentPhoto.title}
-                    </h3>
-                    
-                    <p className="text-text-muted/80 leading-relaxed text-base">
-                        {currentPhoto.description}
-                    </p>
-
-                    <div className="pt-4 flex items-center gap-2 text-sm text-text-muted/50">
-                        <span>Photo {currentPage} of {totalPages}</span>
-                        <div className="h-px bg-bg-main/20 flex-1"></div>
-                    </div>
-                </div>
-            </div>
-
-            {/* PAGINATION CONTROLS */}
-            <PhotoPagination 
-                handleNext={handleNext} 
-                handlePageChange={handlePageChange} 
-                handlePrev={handlePrev} 
-                page={currentPage} 
-                totalPages={totalPages}
-            />
+  return (
+    <div className="space-y-6">
+      <div className="grid items-center gap-8 md:grid-cols-2">
+        <figure className="border-2 border-line">
+          <img key={currentPage} src={currentPhoto.src} alt={currentPhoto.title} loading="lazy" decoding="async" width={900} height={675} className="block aspect-4/3 w-full animate-fade-in object-cover" />
+        </figure>
+        <div key={`${currentPage}-text`} className="animate-fade-in space-y-3">
+          <p className="font-mono text-sm tracking-wider text-dim uppercase">{currentPhoto.location}</p>
+          <h3 className="text-3xl">{currentPhoto.title}</h3>
+          {currentPhoto.description ? <p className="text-lg leading-relaxed">{currentPhoto.description}</p> : null}
+          <p className="font-mono text-sm text-muted">
+            Photo {currentPage} of {totalPages}
+          </p>
         </div>
-    );
+      </div>
+      <PhotoPagination handleNext={handleNext} handlePrev={handlePrev} handlePageChange={setCurrentPage} page={currentPage} totalPages={totalPages} />
+    </div>
+  );
 };
 
 export default Photo;
