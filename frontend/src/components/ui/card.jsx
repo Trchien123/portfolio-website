@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
  * `card-link` class: its ::after stretches over the whole card, so the card is
  * clickable without nesting anchors.
  */
-function Card({ as: Comp = "div", interactive = false, className, ...props }) {
+function Card({ as = "div", interactive = false, className, ...props }) {
+  const Comp = as;
   return (
     <Comp
       className={cn(

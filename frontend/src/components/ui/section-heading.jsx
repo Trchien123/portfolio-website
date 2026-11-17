@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 
-function SectionHeading({ id, eyebrow, title, lead, action, as: Heading = "h2", className }) {
+function SectionHeading({ id, eyebrow, title, lead, action, as = "h2", className }) {
+  const Heading = as;
   return (
     <div className={cn("mb-10 flex flex-col gap-6 md:mb-12 md:flex-row md:items-end md:justify-between", className)}>
       <div className="space-y-3">
