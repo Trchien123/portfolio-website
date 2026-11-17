@@ -138,14 +138,14 @@ const AdminPage = () => {
       <div className="h-screen flex items-center justify-center px-4">
         <form
           onSubmit={handleLogin}
-          className="max-w-md w-full bg-bg-surface/50 border border-text-main/10 p-8 rounded-3xl backdrop-blur-sm"
+          className="max-w-md w-full bg-sheet border-2 border-line p-8"
         >
           <div className="flex justify-center mb-6">
-            <div className="p-4 bg-bg-main rounded-full text-text-button">
+            <div className="p-4 bg-sheet text-dim">
               <Lock size={32} />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-center text-text-main mb-6">
+          <h2 className="text-2xl font-bold text-center text-ink mb-6">
             Admin Access
           </h2>
           <input
@@ -153,11 +153,11 @@ const AdminPage = () => {
             placeholder="Enter Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main focus:border-text-button outline-none transition-all mb-6"
+            className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink focus:border-dim transition-all mb-6"
           />
           <button
             type="submit"
-            className="w-full bg-text-button text-bg-main py-3 rounded-xl font-bold hover:opacity-80 transition-all"
+            className="w-full bg-fill text-on-fill py-3 font-bold hover:bg-ink hover:text-sheet transition-colors"
           >
             Unlock Panel
           </button>
@@ -171,14 +171,14 @@ const AdminPage = () => {
     <section className="min-h-fit max-w-368 w-full flex flex-col mx-auto py-20 md:py-40 px-4 md:px-6 lg:px-8">
       <div className="mb-10 flex justify-between items-center">
         <div className="flex gap-3 items-center">
-          <LayoutGrid className="text-text-button" size={40} />
-          <h2 className="text-4xl md:text-5xl font-bold text-text-muted">
+          <LayoutGrid className="text-dim" size={40} />
+          <h2 className="text-4xl md:text-5xl font-bold text-muted">
             Admin Panel
           </h2>
         </div>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 text-red-400 hover:text-red-300 font-bold"
+          className="flex items-center gap-2 text-danger hover:opacity-80 font-bold"
         >
           <LogOut size={20} /> Logout
         </button>
@@ -186,12 +186,12 @@ const AdminPage = () => {
 
       <div className="space-y-12">
         {/* Form container for context */}
-        <div className="bg-bg-surface/50 border border-text-main/10 rounded-3xl relative overflow-hidden backdrop-blur-sm p-5 md:p-8">
-          <h3 className="text-2xl font-bold text-text-main mb-6 flex items-center gap-2">
+        <div className="bg-sheet border-2 border-line relative overflow-hidden p-5 md:p-8">
+          <h3 className="text-2xl font-bold text-ink mb-6 flex items-center gap-2">
             {editingId ? (
-              <Edit3 size={24} className="text-blue-400" />
+              <Edit3 size={24} className="text-dim" />
             ) : (
-              <PlusCircle size={24} className="text-text-button" />
+              <PlusCircle size={24} className="text-dim" />
             )}
             {editingId ? "Edit Post" : "New Post"}
           </h3>
@@ -204,17 +204,17 @@ const AdminPage = () => {
                 value={formData.title}
                 onChange={handleChange}
                 required
-                className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main focus:border-text-button outline-none transition-all"
+                className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink focus:border-dim transition-all"
               />
               <div className="flex gap-4">
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleChange}
-                  className="flex-1 bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none"
+                  className="flex-1 bg-sheet border-2 border-line py-3 px-4 text-ink"
                 >
                   {CATEGORIES.map((cat) => (
-                    <option key={cat} value={cat} className="bg-bg-surface">
+                    <option key={cat} value={cat} className="bg-sheet">
                       {cat}
                     </option>
                   ))}
@@ -224,26 +224,26 @@ const AdminPage = () => {
                   placeholder="Read Time"
                   value={formData.readTime}
                   onChange={handleChange}
-                  className="flex-1 bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none"
+                  className="flex-1 bg-sheet border-2 border-line py-3 px-4 text-ink"
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end">
               {/* Choose type of post */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-text-button uppercase ml-2">
+                <label className="text-xs font-bold text-dim uppercase ml-2">
                   Post Type
                 </label>
                 <select
                   name="isSeries"
                   value={formData.isSeries}
                   onChange={handleChange}
-                  className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none focus:border-text-button"
+                  className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink focus:border-dim"
                 >
-                  <option value="false" className="bg-bg-surface">
+                  <option value="false" className="bg-sheet">
                     Single Article
                   </option>
-                  <option value="true" className="bg-bg-surface">
+                  <option value="true" className="bg-sheet">
                     Series Folder (Mastery)
                   </option>
                 </select>
@@ -251,7 +251,7 @@ const AdminPage = () => {
 
               {/* Input for series name */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-text-muted/50 uppercase ml-2">
+                <label className="text-xs font-bold text-muted uppercase ml-2">
                   Series Name (Optional)
                 </label>
                 <input
@@ -259,14 +259,14 @@ const AdminPage = () => {
                   placeholder="e.g. Linear Algebra"
                   value={formData.seriesName}
                   onChange={handleChange}
-                  className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none focus:border-text-button"
+                  className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink focus:border-dim"
                 />
               </div>
 
               {/* Input for chapter */}
               {!formData.isSeries && formData.seriesName && (
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-bold text-text-muted/50 uppercase ml-2">
+                  <label className="text-xs font-bold text-muted uppercase ml-2">
                     Order / Part #
                   </label>
                   <input
@@ -275,7 +275,7 @@ const AdminPage = () => {
                     placeholder="e.g. 1"
                     value={formData.chapter}
                     onChange={handleChange}
-                    className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none focus:border-text-button"
+                    className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink focus:border-dim"
                   />
                 </div>
               )}
@@ -285,7 +285,7 @@ const AdminPage = () => {
               placeholder="Image URL"
               value={formData.image}
               onChange={handleChange}
-              className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none"
+              className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink"
             />
             <textarea
               name="excerpt"
@@ -293,7 +293,7 @@ const AdminPage = () => {
               value={formData.excerpt}
               onChange={handleChange}
               rows="2"
-              className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main outline-none"
+              className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink"
             />
             <textarea
               name="content"
@@ -302,11 +302,11 @@ const AdminPage = () => {
               onChange={handleChange}
               rows="10"
               required
-              className="w-full bg-bg-main/50 border border-text-main/10 rounded-xl py-3 px-4 text-text-main font-mono outline-none"
+              className="w-full bg-sheet border-2 border-line py-3 px-4 text-ink font-mono"
             />
 
             <div className="flex justify-between items-center">
-              <span className="text-sm font-bold text-text-button uppercase tracking-widest">
+              <span className="text-sm font-bold text-dim uppercase tracking-widest">
                 {status}
               </span>
               <div className="flex gap-3">
@@ -314,14 +314,14 @@ const AdminPage = () => {
                   <button
                     type="button"
                     onClick={resetForm}
-                    className="text-red-400 font-bold px-4"
+                    className="text-danger font-bold px-4"
                   >
                     Cancel
                   </button>
                 )}
                 <button
                   type="submit"
-                  className="bg-text-button text-bg-main px-8 py-3 rounded-xl font-bold flex items-center gap-2 hover:opacity-80 transition-all"
+                  className="bg-fill text-on-fill px-8 py-3 font-bold flex items-center gap-2 hover:bg-ink hover:text-sheet transition-colors"
                 >
                   {editingId ? "Update" : "Publish"} <Send size={18} />
                 </button>
@@ -331,17 +331,17 @@ const AdminPage = () => {
         </div>
 
         {/* Post Management List */}
-        <div className="bg-bg-surface/50 border border-text-main/10 rounded-3xl p-5 md:p-8 backdrop-blur-sm">
-          <h3 className="text-xl font-bold text-text-muted mb-6 uppercase tracking-widest px-2">
+        <div className="bg-sheet border-2 border-line p-5 md:p-8">
+          <h3 className="text-xl font-bold text-muted mb-6 uppercase tracking-widest px-2">
             Manage Database
           </h3>
           <div className="space-y-3">
             {posts.map((post) => (
               <div
                 key={post._id}
-                className="p-4 bg-bg-surface/30 rounded-2xl border border-text-main/5 flex justify-between items-center group hover:border-text-button/30 transition-all"
+                className="p-4 bg-sheet border-2 border-line flex justify-between items-center group hover:border-dim transition-all"
               >
-                <span className="font-medium text-text-main truncate pr-4">
+                <span className="font-medium text-ink truncate pr-4">
                   {post.title}
                 </span>
                 <div className="flex gap-4">
@@ -351,7 +351,7 @@ const AdminPage = () => {
                       setFormData(post);
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="text-text-muted/60 hover:text-blue-400 transition-colors"
+                    className="text-muted hover:text-dim transition-colors"
                   >
                     <Edit3 size={18} />
                   </button>
@@ -360,7 +360,7 @@ const AdminPage = () => {
                       if (window.confirm("Delete?"))
                         api.delete(`/posts/${post._id}`).then(fetchPosts);
                     }}
-                    className="text-text-muted/60 hover:text-red-400 transition-colors"
+                    className="text-muted hover:text-danger transition-colors"
                   >
                     <Trash2 size={18} />
                   </button>

@@ -50,19 +50,6 @@
   --color-on-fill: var(--on-fill);
   --color-danger: var(--danger);
 
-  /* Transitional aliases for v1 class names (removed in cleanup) */
-  --color-bg: var(--sheet);
-  --color-surface: var(--sheet-raised);
-  --color-surface-hover: var(--sheet-raised);
-  --color-border: var(--faint);
-  --color-border-strong: var(--line);
-  --color-fg: var(--ink);
-  --color-fg-muted: var(--muted);
-  --color-fg-subtle: var(--muted);
-  --color-accent: var(--dim);
-  --color-accent-hover: var(--dim);
-  --color-accent-fg: var(--on-fill);
-  --color-accent-soft: var(--faint);
 }
 
 @theme {
@@ -83,35 +70,6 @@
   --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 
-  /* ---- Legacy tokens: removed once every section is migrated ---- */
-  --color-neon: #00ff82;
-  --color-sage: #bfcecc;
-  --color-navy: #000b18;
-  --color-dusk: #001a2e;
-  --font-spartan: var(--font-sans);
-  --font-montserrat: var(--font-sans);
-  --color-bg-main: var(--main-bg);
-  --color-bg-surface: var(--surface-bg);
-  --color-text-main: var(--main-text);
-  --color-text-muted: var(--muted-text);
-  --color-text-button: var(--button-text);
-}
-
-/* Legacy variables, keyed to the same .dark switch */
-.dark {
-  --main-bg: var(--sheet);
-  --surface-bg: var(--sheet-raised);
-  --main-text: var(--ink);
-  --muted-text: var(--muted);
-  --button-text: var(--dim);
-}
-
-:root:not(.dark) {
-  --main-bg: var(--sheet);
-  --surface-bg: var(--sheet-raised);
-  --main-text: var(--ink);
-  --muted-text: var(--muted);
-  --button-text: var(--dim);
 }
 
 @layer base {
@@ -399,7 +357,7 @@
   color: var(--ink);
 }
 
-/* Fade-in used by legacy About tabs (removed with the About unit) */
+/* Tab panel / photo swap fade */
 @layer utilities {
   .animate-fade-in {
     animation: fadeIn 0.3s var(--ease-out-soft) forwards;
