@@ -6,7 +6,7 @@ function TextLink({ asChild = false, className, ...props }) {
   return (
     <Comp
       className={cn(
-        "text-fg underline decoration-border-strong underline-offset-4 transition-colors duration-150 ease-out-soft hover:text-accent hover:decoration-accent",
+        "text-ink underline decoration-line underline-offset-4 transition-colors duration-200 ease-out-soft hover:text-dim hover:decoration-dim",
         className
       )}
       {...props}

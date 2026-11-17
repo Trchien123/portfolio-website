@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import SiteHeader from "./components/SiteHeader";
 import SiteFooter from "./components/SiteFooter";
+import SheetFrame from "./components/drawing/SheetFrame";
 import ScrollToTop from "./components/ScrollToTop";
 import Hero from "./sections/Hero";
 import About from "./sections/About/About";
@@ -20,14 +18,16 @@ import AdminPage from "./sections/AdminPage";
 
 function SiteLayout({ footer = true }) {
   return (
-    <>
-      <SiteHeader />
-      <main id="main">
-        <Outlet />
-      </main>
-      {footer ? <SiteFooter /> : null}
+    <div className="p-2 md:p-5">
+      <SheetFrame>
+        <SiteHeader />
+        <main id="main">
+          <Outlet />
+        </main>
+        {footer ? <SiteFooter /> : null}
+      </SheetFrame>
       <Chatbot />
-    </>
+    </div>
   );
 }
 
@@ -45,16 +45,6 @@ function Home() {
 }
 
 function App() {
-  useEffect(() => {
-    AOS.init({
-      duration: 200,
-      easing: "ease-out",
-      offset: 40,
-      once: true,
-      disable: () => window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-    });
-  }, []);
-
   return (
     <Router>
       <ScrollToTop />

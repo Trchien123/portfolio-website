@@ -7,24 +7,37 @@ const { hero, contact } = portfolioData;
 const email = contact.details.find((detail) => detail.label === "Email");
 const YEAR = new Date().getFullYear();
 
+const Cell = ({ label, children, className = "" }) => (
+  <div className={`border-b border-line px-4 py-4 md:border-r md:border-b-0 md:px-6 ${className}`}>
+    <p className="font-mono text-label tracking-wider text-muted uppercase">{label}</p>
+    <div className="mt-2">{children}</div>
+  </div>
+);
+
+// The page ends like a drawing: a title block, signed.
+// reason (grid-cols): title-block cells sized to their content, like a real drawing.
 const SiteFooter = () => (
-  <footer className="border-t border-border">
-    <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 md:px-6">
-      <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-        <div className="flex items-center gap-5">
-          <Signature className="h-9 w-auto text-fg-subtle" />
-          <TextLink href={email.href} className="text-sm">
-            {email.value}
-          </TextLink>
-        </div>
-        <SocialLinks className="-ml-2.5 md:-mr-2.5 md:ml-0" />
-      </div>
-      <div className="flex flex-col gap-2 text-sm text-fg-subtle sm:flex-row sm:items-center sm:justify-between">
-        <p>© {YEAR} Huynh Trung Chien</p>
-        <TextLink href={hero.cvLink} download="HuynhTrungChien_CV.pdf" className="w-fit text-fg-muted">
+  <footer className="border-t-2 border-line bg-sheet">
+    <div className="grid md:grid-cols-[1.1fr_1.4fr_1.2fr_auto]">
+      <Cell label="Drawn by">
+        <Signature className="h-12 w-auto text-ink" />
+      </Cell>
+      <Cell label="Title">
+        <p className="text-xl font-black text-ink">Huynh Trung Chien</p>
+        <p className="text-muted">Full Stack Developer · Portfolio</p>
+      </Cell>
+      <Cell label="Contact">
+        <TextLink href={email.href} className="text-lg">
+          {email.value}
+        </TextLink>
+        <SocialLinks className="mt-2 -ml-2.5" />
+      </Cell>
+      <Cell label="Sheet" className="md:border-r-0">
+        <p className="text-ink">© {YEAR}</p>
+        <TextLink href={hero.cvLink} download="HuynhTrungChien_CV.pdf" className="mt-1 inline-block">
           Download CV
         </TextLink>
-      </div>
+      </Cell>
     </div>
   </footer>
 );

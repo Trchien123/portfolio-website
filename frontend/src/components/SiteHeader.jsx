@@ -9,9 +9,10 @@ import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { label: "Projects", id: "projects" },
+  { label: "Experience", id: "experience" },
   { label: "About", id: "about" },
   { label: "Skills", id: "skills" },
-  { label: "Blogs", id: "blogs" },
+  { label: "Writing", id: "blogs" },
   { label: "Contact", id: "contact" },
 ];
 
@@ -53,7 +54,7 @@ const SiteHeader = () => {
         <Link
           to={`/#${id}`}
           onClick={(event) => handleNavClick(event, id)}
-          className={cn(linkClassName, id === "contact" ? "text-accent hover:text-accent-hover" : "text-fg-muted hover:text-fg")}
+          className={cn(linkClassName, id === "contact" ? "text-dim" : "text-ink hover:text-dim")}
         >
           {label}
         </Link>
@@ -61,28 +62,28 @@ const SiteHeader = () => {
     ));
 
   return (
-    <header className="sticky top-0 z-40 border-b border-border bg-bg/80 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-line bg-sheet">
       <a
         href="#main"
-        className="sr-only rounded-sm bg-accent px-3 py-2 text-sm font-medium text-accent-fg focus:not-sr-only focus:absolute focus:left-4 focus:top-3"
+        className="sr-only bg-fill px-3 py-2 text-sm font-bold text-on-fill focus:not-sr-only focus:absolute focus:top-3 focus:left-4"
       >
         Skip to content
       </a>
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 md:px-6">
+      <div className="flex h-16 items-center justify-between px-4 md:h-20 md:px-10">
         <Wordmark />
 
-        <div className="flex items-center gap-1 md:gap-6">
-          <nav aria-label="Main" className="hidden md:block">
+        <div className="flex items-center gap-2 md:gap-7">
+          <nav aria-label="Main" className="hidden lg:block">
             <ul className="flex items-center gap-7">
-              {renderLinks("text-sm transition-colors duration-150 ease-out-soft")}
+              {renderLinks("text-base transition-colors duration-200 ease-out-soft")}
             </ul>
           </nav>
           <ThemeToggle />
           <Button
             ref={menuButtonRef}
-            variant="ghost"
+            variant="secondary"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden"
             aria-expanded={isOpen}
             aria-controls="mobile-nav"
             aria-label={isOpen ? "Close menu" : "Open menu"}
@@ -94,9 +95,9 @@ const SiteHeader = () => {
       </div>
 
       {isOpen ? (
-        <nav id="mobile-nav" aria-label="Main" className="border-t border-border bg-bg md:hidden">
-          <ul className="mx-auto flex max-w-6xl flex-col px-4 py-2">
-            {renderLinks("block py-3 text-base")}
+        <nav id="mobile-nav" aria-label="Main" className="border-t border-line bg-sheet lg:hidden">
+          <ul className="flex flex-col px-4 py-2 md:px-10">
+            {renderLinks("block border-b border-faint py-3 text-lg")}
           </ul>
         </nav>
       ) : null}
