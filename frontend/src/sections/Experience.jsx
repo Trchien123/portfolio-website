@@ -16,7 +16,7 @@ function Experience() {
 
   return (
     <section id="experience" aria-labelledby="experience-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
-      <SectionHeading id="experience-title" title="Revision table" note={"Experience & education\nNewest revision on top"} />
+      <SectionHeading id="experience-title" title="Experience" note={"Revision table · work & education\nNewest revision on top"} />
 
       <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
         {/* reason (grid-cols): work history is the wider column */}

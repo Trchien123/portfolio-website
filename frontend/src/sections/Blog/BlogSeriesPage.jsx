@@ -38,7 +38,7 @@ function BlogSeriesPage() {
         <div>
           <header ref={headRef} className="mb-10">
             <Link to="/blog" className="font-mono text-sm text-muted hover:text-dim">
-              ← Technical notes
+              ← Writing
             </Link>
             <DimensionLine label="Series" className="mt-6 mb-6 max-w-lg" />
             <h1 className="rv-wipe pb-descender text-5xl leading-display tracking-tightest md:text-7xl">{seriesName}</h1>

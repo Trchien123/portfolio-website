@@ -5,13 +5,13 @@ import Reveal from "@/components/drawing/Reveal";
 const { skills } = portfolioData;
 const HEAD = "font-mono text-label tracking-wider text-muted uppercase";
 
-// Each skill set becomes a group in a bill of materials:
-// proficient = "In stock", learning = "On order".
+// Each skill set becomes a group in a bill of materials,
+// with every component marked Proficient or Learning.
 function Skill() {
 
   return (
     <section id="skills" aria-labelledby="skills-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
-      <SectionHeading id="skills-title" title="Bill of materials" note={"Skills\nIn stock · on order"} />
+      <SectionHeading id="skills-title" title="Skills" note={"Bill of materials\nProficient · learning"} />
       <p className="mb-10 max-w-prose text-lg leading-relaxed">{skills.intro}</p>
 
       <div className="grid gap-10 lg:grid-cols-2">
@@ -45,7 +45,7 @@ function Skill() {
                       <td className="border-l border-line px-4 py-2.5">
                         <span className={`inline-flex items-center gap-2 font-mono text-sm ${row.stock ? "text-dim" : "text-muted"}`}>
                           <span className={`size-2.5 ${row.stock ? "bg-fill" : "border-2 border-line"}`} aria-hidden="true" />
-                          {row.stock ? "In stock" : "On order"}
+                          {row.stock ? "Proficient" : "Learning"}
                         </span>
                       </td>
                     </Reveal>

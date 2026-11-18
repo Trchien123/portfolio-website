@@ -100,7 +100,7 @@ function BlogDetailPage() {
         <article>
           <header ref={headRef} className="mb-10">
             <Link to="/blog" className="font-mono text-sm text-muted hover:text-dim">
-              ← Technical notes
+              ← Writing
             </Link>
             <DimensionLine label={post.category} className="mt-6 mb-6 max-w-lg" />
             <h1 className="rv-wipe pb-descender text-4xl leading-tight tracking-tight md:text-6xl">{post.title}</h1>

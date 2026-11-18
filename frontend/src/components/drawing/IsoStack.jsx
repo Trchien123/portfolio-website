@@ -1,11 +1,11 @@
 import { LAYERS } from "@/lib/layers";
 import { cn } from "@/lib/utils";
 
-const SLAB_COLORS = { Interface: "var(--slab-1)", APIs: "var(--slab-2)", Data: "var(--slab-3)", Models: "var(--slab-4)" };
-
 /**
- * Isometric 4-slab stack. `open` raises the gap between slabs (CSS spring
- * transition). In the small variant, `used` layers are filled green. An
+ * Isometric 4-plate stack drawn like a technical drawing: sheet-coloured
+ * plates with a drafting hatch per layer and the layer name printed on the
+ * plate. `open` raises the gap between plates (CSS spring transition). In the
+ * small variant, `used` layers are filled green. An
  * `active` layer lifts and turns green while the others step back; clicking a
  * slab calls `onSelect` (mouse shortcut; the labelled buttons are the
  * accessible control).
@@ -28,9 +28,16 @@ function IsoStack({ open = false, gap = 100, small = false, used, active, onSele
             data-used={used?.includes(layer) ? "" : undefined}
             data-active={active === layer ? "" : undefined}
             onClick={onSelect ? () => onSelect(layer) : undefined}
-            style={{ "--i": i, "--c": SLAB_COLORS[layer] }}
+            style={{ "--i": i }}
           >
-            <div className="face" />
+            <div className="face">
+              {small ? null : (
+                <span className="slab-tag">
+                  <span className="slab-tag-id">L{i + 1}</span>
+                  {layer}
+                </span>
+              )}
+            </div>
             <div className="side-a" />
             <div className="side-b" />
           </div>

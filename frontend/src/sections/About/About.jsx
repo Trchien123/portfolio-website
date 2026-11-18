@@ -35,7 +35,7 @@ function About() {
 
   return (
     <section id="about" aria-labelledby="about-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
-      <SectionHeading id="about-title" title="General notes" note={"About me\nRead before reviewing"} />
+      <SectionHeading id="about-title" title="About" note={"General notes\nRead before reviewing"} />
 
       <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
         {/* reason (grid-cols): note heading column + reading column */}

@@ -14,7 +14,7 @@ function Contact() {
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
-      <SectionHeading id="contact-title" title={contact.title} note={"Contact\nRecruiters & clients welcome"} />
+      <SectionHeading id="contact-title" title="Contact" note={"Get in touch\nRecruiters & clients welcome"} />
       <p className="mb-10 max-w-prose text-xl leading-relaxed">{contact.subtitle}</p>
 
       <Reveal className="grid border-2 border-line lg:grid-cols-[1.6fr_1fr]">

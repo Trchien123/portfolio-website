@@ -231,7 +231,7 @@ export const portfolioData = {
       },
       {
         name: "Email",
-        url: "mailto:chien@huynhtrungchien.dev",
+        url: "mailto:huynhtrungchienltt@gmail.com",
         icon: IoMdMail,
         color: "hover:text-[#EA4335] hover:border-[#EA4335]",
       },
@@ -353,8 +353,8 @@ export const portfolioData = {
     details: [
       {
         label: "Email",
-        value: "chien@huynhtrungchien.dev",
-        href: "mailto:chien@huynhtrungchien.dev",
+        value: "huynhtrungchienltt@gmail.com",
+        href: "mailto:huynhtrungchienltt@gmail.com",
         icon: Mail,
       },
       {

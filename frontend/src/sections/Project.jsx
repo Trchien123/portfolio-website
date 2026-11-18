@@ -19,7 +19,7 @@ function Project() {
 
   return (
     <section id="projects" aria-labelledby="projects-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
-      <SectionHeading id="projects-title" title="Parts list" note={`Selected projects · ${String(projects.length).padStart(2, "0")} parts\nHover a part to explode it`}>
+      <SectionHeading id="projects-title" title="Projects" note={`Parts list · ${String(projects.length).padStart(2, "0")} parts\nHover a project to explode it`}>
         <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-4 font-mono text-xs tracking-wider text-muted uppercase" aria-label="Legend">
           <li className="flex items-center gap-2"><span className="size-3 bg-fill" aria-hidden="true" />Layer used</li>
           <li className="flex items-center gap-2"><span className="size-3 border-2 border-line" aria-hidden="true" />Not used</li>

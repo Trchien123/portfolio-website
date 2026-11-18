@@ -42,7 +42,7 @@ function BlogListPage() {
     <div className="px-4 py-14 md:px-10 md:py-20">
       <header ref={headRef} className="mb-10">
         <DimensionLine label="Sheet 2 · writing" className="mb-6 max-w-lg" />
-        <h1 className="rv-wipe pb-descender text-6xl leading-display tracking-tightest md:text-8xl">Technical notes</h1>
+        <h1 className="rv-wipe pb-descender text-6xl leading-display tracking-tightest md:text-8xl">Writing</h1>
         <p className="rv-up mt-5 max-w-prose text-lg leading-relaxed" style={{ "--d": "0.3s" }}>
           Insights on Artificial Intelligence, Software Engineering, and my learning journey.
         </p>

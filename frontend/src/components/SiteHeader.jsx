@@ -25,7 +25,11 @@ function SiteHeader() {
   // Arriving on "/#id" from another route: scroll once the section exists.
   useEffect(() => {
     if (pathname !== "/" || !hash) return;
-    const frame = requestAnimationFrame(() => scrollToSection(hash.slice(1)));
+    const frame = requestAnimationFrame(() => {
+      scrollToSection(hash.slice(1));
+      // Drop "#section" from the address bar so a refresh doesn't jump back here.
+      window.history.replaceState(window.history.state, "", pathname + window.location.search);
+    });
     return () => cancelAnimationFrame(frame);
   }, [pathname, hash]);
 

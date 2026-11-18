@@ -26,7 +26,7 @@ function Blog() {
 
   return (
     <section id="blogs" aria-labelledby="blogs-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
-      <SectionHeading id="blogs-title" title="Technical notes" note={"Writing\nAI · web · maths"} />
+      <SectionHeading id="blogs-title" title="Writing" note={"Technical notes\nAI · web · maths"} />
 
       <div>
         {isLoading ? <p className="font-mono text-sm text-muted">Loading notes…</p> : null}
@@ -54,7 +54,7 @@ function Blog() {
 
         <div className="mt-10">
           <Button asChild variant="secondary">
-            <Link to="/blog">View all notes →</Link>
+            <Link to="/blog">View all writing →</Link>
           </Button>
         </div>
       </div>

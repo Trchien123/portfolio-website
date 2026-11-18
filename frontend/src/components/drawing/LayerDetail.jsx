@@ -16,7 +16,7 @@ function LayerDetail({ layer, index, onClose }) {
       aria-label={layer ? `${layer} layer details` : "Layer details"}
       aria-live="polite"
       hidden={!layer}
-      className={cn("layer-detail mt-6 border-2 border-line bg-sheet md:absolute md:right-0 md:bottom-0 md:mt-0 md:w-80")}
+      className={cn("layer-detail mt-4 border-2 border-line bg-sheet")}
     >
       {layer ? (
         <div key={layer} className="animate-fade-in">

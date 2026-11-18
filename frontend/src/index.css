@@ -17,10 +17,6 @@
   --fill: #00ff82;
   --on-fill: #001a2e;
   --danger: #b91c1c;
-  --slab-1: #ffffff;
-  --slab-2: #bfcecc;
-  --slab-3: #001a2e;
-  --slab-4: #000b18;
 }
 
 .dark {
@@ -32,10 +28,6 @@
   --faint: rgb(191 206 204 / 0.11);
   --dim: #00ff82;
   --danger: #f87171;
-  --slab-1: #0b2234;
-  --slab-2: #14344a;
-  --slab-3: #bfcecc;
-  --slab-4: #e9efed;
 }
 
 @theme inline {
@@ -219,31 +211,14 @@
 
 .iso-stack .slab > * {
   position: absolute;
-  background: var(--c);
+  background: var(--sheet);
   border: 2px solid var(--line);
+  transition: background-color 0.25s, border-color 0.25s;
 }
 
 .iso-stack .slab .face {
   inset: 0;
-}
-
-/* Selected layer: lifts and turns green; the rest step back */
-.iso-stack .slab[data-active] {
-  transform: translateZ(calc(var(--i) * var(--gap) + 36px));
-  transition-delay: 0s;
-}
-
-.iso-stack .slab[data-active] > * {
-  background: var(--fill);
-  border-color: var(--on-fill);
-}
-
-.iso-stack .slab[data-active] .face {
-  background-image: none;
-}
-
-.iso-stack[data-has-active] .slab:not([data-active]) {
-  opacity: 0.35;
+  --hatch: color-mix(in oklab, var(--line) 32%, transparent);
 }
 
 .iso-stack .slab {
@@ -257,7 +232,7 @@
   height: var(--edge);
   transform-origin: top;
   transform: rotateX(-90deg);
-  filter: brightness(0.82);
+  background: color-mix(in oklab, var(--line) 18%, var(--sheet));
 }
 
 .iso-stack .slab .side-b {
@@ -267,15 +242,85 @@
   height: 100%;
   transform-origin: left;
   transform: rotateY(90deg);
-  filter: brightness(0.82);
+  background: color-mix(in oklab, var(--line) 18%, var(--sheet));
 }
 
+/* One drafting hatch per layer */
 .iso-stack .slab[data-layer="Interface"] .face {
   background-image:
-    linear-gradient(var(--line) 1.5px, transparent 1.5px),
-    linear-gradient(90deg, var(--line) 1.5px, transparent 1.5px);
-  background-size: calc(var(--size) / 6) calc(var(--size) / 6);
-  background-position: calc(var(--size) / 12) calc(var(--size) / 12);
+    linear-gradient(var(--hatch) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--hatch) 1.5px, transparent 1.5px);
+  background-size: calc(var(--size) / 12) calc(var(--size) / 12);
+}
+
+.iso-stack .slab[data-layer="APIs"] .face {
+  background-image: repeating-linear-gradient(45deg, var(--hatch) 0 1.5px, transparent 1.5px 12px);
+}
+
+.iso-stack .slab[data-layer="Data"] .face {
+  background-image:
+    repeating-linear-gradient(45deg, var(--hatch) 0 1.2px, transparent 1.2px 13px),
+    repeating-linear-gradient(-45deg, var(--hatch) 0 1.2px, transparent 1.2px 13px);
+}
+
+.iso-stack .slab[data-layer="Models"] .face {
+  background-image: radial-gradient(var(--hatch) 1.8px, transparent 2.2px);
+  background-size: 13px 13px;
+}
+
+/* Layer name printed on the plate, like text on an isometric drawing */
+.iso-stack .slab-tag {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  padding: 0.05em 0.3em 0.12em;
+  border: 2px solid var(--line);
+  background: var(--sheet);
+  color: var(--ink);
+  font-weight: 900;
+  font-size: calc(var(--size) * 0.113);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.iso-stack .slab-tag-id {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.5em;
+  color: var(--muted);
+}
+
+.iso-stack .slab:hover .face {
+  border-color: var(--dim);
+}
+
+/* Selected layer: lifts and turns green; the rest step back */
+.iso-stack .slab[data-active] {
+  transform: translateZ(calc(var(--i) * var(--gap) + var(--gap) * 0.35));
+  transition-delay: 0s;
+}
+
+.iso-stack .slab[data-active] > *,
+.iso-stack .slab[data-active] .slab-tag {
+  background: var(--fill);
+  border-color: var(--on-fill);
+  color: var(--on-fill);
+}
+
+.iso-stack .slab[data-active] .face {
+  background-image: none;
+}
+
+.iso-stack .slab[data-active] .slab-tag-id {
+  color: var(--on-fill);
+}
+
+.iso-stack[data-has-active] .slab:not([data-active]) {
+  opacity: 0.6;
 }
 
 .iso-stack.is-hero .iso-plane {
@@ -291,7 +336,7 @@
   max-width: 560px;
 }
 
-/* Tablet and small laptop: hero is one column, stack sits left of its labels */
+/* Tablet and up: larger plates and wider gaps */
 @media (min-width: 768px) {
   .iso-stack.is-hero {
     --size: 300px;
@@ -302,23 +347,17 @@
   }
 
   .iso-stack.is-hero .iso-plane {
-    left: 38%;
     top: 56%;
   }
 }
 
-/* Two-column hero: the stack column is narrower, so the stack shrinks and
-   moves left to keep a clear lane for the callout labels */
+/* Two-column hero: the stack column is narrower, so the stack shrinks */
 @media (min-width: 1280px) {
   .iso-stack.is-hero {
     --size: 250px;
     --edge: 20px;
     --gap-open: 90px;
     height: 560px;
-  }
-
-  .iso-stack.is-hero .iso-plane {
-    left: 34%;
   }
 }
 
@@ -328,10 +367,6 @@
     --edge: 24px;
     --gap-open: 100px;
     height: 600px;
-  }
-
-  .iso-stack.is-hero .iso-plane {
-    left: 36%;
   }
 }
 
@@ -368,7 +403,7 @@
   display: none;
 }
 
-.iso-stack.is-small .slab[data-layer="Interface"] .face {
+.iso-stack.is-small .slab .face {
   background-image: none;
 }
 
@@ -379,58 +414,6 @@
 .iso-stack.is-small .slab[data-used] > * {
   background: var(--fill);
   border-color: var(--on-fill);
-}
-
-/* Hero callouts: once the stack has opened, leader lines draw out from each
-   slab, the anchor dot pops, and the label slides in (staggered by --d). */
-.callout-in {
-  animation: callout-in 0.5s var(--ease-out-soft) var(--d, 0s) both;
-}
-
-.callout-ink line {
-  stroke: var(--line);
-  stroke-dasharray: var(--len);
-  stroke-dashoffset: var(--len);
-  animation: ink 0.5s var(--ease-out-soft) var(--d, 0s) forwards;
-  transition: stroke 0.2s;
-}
-
-.callout-ink circle {
-  fill: var(--dim);
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: pop 0.3s var(--ease-out-soft) var(--d, 0s) both;
-}
-
-.callout-ink.is-active line {
-  stroke: var(--dim);
-  stroke-width: 2;
-}
-
-@keyframes callout-in {
-  from {
-    opacity: 0;
-    transform: translateX(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes ink {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes pop {
-  from {
-    transform: scale(0);
-  }
-  to {
-    transform: scale(1);
-  }
 }
 
 /* Blog figure helpers used inside Markdown posts */
