@@ -1,6 +1,6 @@
 import SectionHeading from "@/components/drawing/SectionHeading";
 import { portfolioData } from "@/lib/data";
-import { useReveal } from "@/lib/useReveal";
+import Reveal from "@/components/drawing/Reveal";
 
 const { experience, education } = portfolioData.about;
 
@@ -13,15 +13,14 @@ const cleanTitle = (title = "") => title.replace(/^[^\p{L}]+/u, "").replace(/:\s
 const HEAD = "font-mono text-label tracking-wider text-muted uppercase";
 
 function Experience() {
-  const ref = useReveal({ threshold: 0.1 });
 
   return (
     <section id="experience" aria-labelledby="experience-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
       <SectionHeading id="experience-title" title="Revision table" note={"Experience & education\nNewest revision on top"} />
 
-      <div ref={ref} className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr]">
         {/* reason (grid-cols): work history is the wider column */}
-        <div className="rv-up">
+        <Reveal>
           <h3 className="mb-4 text-xl">Work</h3>
           <ol className="border-2 border-line">
             <li className={`hidden grid-cols-[4rem_14rem_1fr] border-b-2 border-line bg-faint md:grid ${HEAD}`} aria-hidden="true">
@@ -51,9 +50,9 @@ function Experience() {
               </li>
             ))}
           </ol>
-        </div>
+        </Reveal>
 
-        <div className="rv-up" style={{ "--d": "0.15s" }}>
+        <Reveal delay={0.15}>
           <h3 className="mb-4 text-xl">Education</h3>
           <ol className="border-2 border-line">
             {education.map((item) => (
@@ -78,7 +77,7 @@ function Experience() {
               </li>
             ))}
           </ol>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

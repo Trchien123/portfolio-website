@@ -5,7 +5,7 @@ import Certificate from "./tabs/Certificate";
 import Hobby from "./tabs/Hobby";
 import Photo from "./tabs/Photo";
 import { portfolioData } from "@/lib/data";
-import { useReveal } from "@/lib/useReveal";
+import Reveal from "@/components/drawing/Reveal";
 import { cn } from "@/lib/utils";
 
 const { intro } = portfolioData.about;
@@ -20,7 +20,6 @@ const TABS = [
 function About() {
   const [active, setActive] = useState(TABS[0].id);
   const tabRefs = useRef({});
-  const notesRef = useReveal({ threshold: 0.15 });
   const ActivePanel = TABS.find((tab) => tab.id === active).Panel;
 
   // Arrow keys / Home / End move between tabs (WAI-ARIA tabs pattern).
@@ -38,18 +37,18 @@ function About() {
     <section id="about" aria-labelledby="about-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
       <SectionHeading id="about-title" title="General notes" note={"About me\nRead before reviewing"} />
 
-      <div ref={notesRef} className="grid gap-10 lg:grid-cols-[1fr_2fr]">
+      <div className="grid gap-10 lg:grid-cols-[1fr_2fr]">
         {/* reason (grid-cols): note heading column + reading column */}
-        <p className="rv-up text-2xl leading-snug font-black text-ink md:text-3xl">
+        <Reveal as="p" className="text-2xl leading-snug font-black text-ink md:text-3xl">
           {intro.title}
           <span className="block font-normal text-muted">{intro.subtitle.replace(/^\s*-\s*/, "")}</span>
-        </p>
+        </Reveal>
         <ol className="space-y-6">
           {intro.paragraphs.map((paragraph, i) => (
-            <li key={paragraph.slice(0, 24)} className="rv-up grid grid-cols-[2.5rem_1fr] gap-2 text-lg leading-relaxed" style={{ "--d": `${0.1 + i * 0.1}s` }}>
+            <Reveal as="li" key={paragraph.slice(0, 24)} className="grid grid-cols-[2.5rem_1fr] gap-2 text-lg leading-relaxed" delay={0.1 + i * 0.1}>
               <span className="font-mono text-dim">{i + 1}.</span>
               <p className="max-w-prose">{paragraph}</p>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </div>

@@ -3,7 +3,7 @@ import PartCard from "@/components/PartCard";
 import SectionHeading from "@/components/drawing/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { portfolioData } from "@/lib/data";
-import { useReveal } from "@/lib/useReveal";
+import Reveal from "@/components/drawing/Reveal";
 import { scrollToSection } from "@/lib/scroll";
 
 const { projects } = portfolioData;
@@ -11,7 +11,6 @@ const PAGE = 3;
 
 function Project() {
   const [visibleCount, setVisibleCount] = useState(PAGE);
-  const gridRef = useReveal({ threshold: 0.1 });
 
   const handleSeeLess = () => {
     setVisibleCount(PAGE);
@@ -28,11 +27,11 @@ function Project() {
         </ul>
       </SectionHeading>
 
-      <div ref={gridRef} className="grid border-t border-l border-line md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid border-t border-l border-line md:grid-cols-2 xl:grid-cols-3">
         {projects.slice(0, visibleCount).map((project, index) => (
-          <div key={project.id} className="rv-up flex" style={{ "--d": `${(index % PAGE) * 0.1}s` }}>
+          <Reveal key={project.id} className="flex" delay={(index % PAGE) * 0.1}>
             <PartCard project={project} index={index} />
-          </div>
+          </Reveal>
         ))}
       </div>
 

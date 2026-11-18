@@ -156,6 +156,17 @@
   [data-reveal] .rv-fade {
     opacity: 0;
   }
+  /* Self-revealing item (Reveal component) */
+  .rv-self[data-reveal="out"] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .rv-self[data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s var(--ease-out-soft) var(--d, 0s), transform 0.6s var(--ease-out-soft) var(--d, 0s);
+  }
+
   [data-reveal="in"] .rv-draw {
     transform: scaleX(1);
     transition: transform 1s var(--ease-out-soft) var(--d, 0s);
@@ -216,6 +227,29 @@
   inset: 0;
 }
 
+/* Selected layer: lifts and turns green; the rest step back */
+.iso-stack .slab[data-active] {
+  transform: translateZ(calc(var(--i) * var(--gap) + 36px));
+  transition-delay: 0s;
+}
+
+.iso-stack .slab[data-active] > * {
+  background: var(--fill);
+  border-color: var(--on-fill);
+}
+
+.iso-stack .slab[data-active] .face {
+  background-image: none;
+}
+
+.iso-stack[data-has-active] .slab:not([data-active]) {
+  opacity: 0.35;
+}
+
+.iso-stack .slab {
+  transition-property: transform, opacity;
+}
+
 .iso-stack .slab .side-a {
   left: 0;
   bottom: calc(var(--edge) * -1);
@@ -269,7 +303,7 @@
 
   .iso-stack.is-hero .iso-plane {
     left: 38%;
-    top: 50%;
+    top: 56%;
   }
 }
 
@@ -314,9 +348,9 @@
   --gap: 20px;
 }
 
-/* Part cards: the mini stack opens on hover / keyboard focus */
+/* Part cards: the mini stack opens on hover / keyboard focus (not after a mouse click) */
 .part:hover .iso-stack.is-small,
-.part:focus-within .iso-stack.is-small {
+.part:has(:focus-visible) .iso-stack.is-small {
   --gap: 36px;
 }
 
@@ -345,6 +379,58 @@
 .iso-stack.is-small .slab[data-used] > * {
   background: var(--fill);
   border-color: var(--on-fill);
+}
+
+/* Hero callouts: once the stack has opened, leader lines draw out from each
+   slab, the anchor dot pops, and the label slides in (staggered by --d). */
+.callout-in {
+  animation: callout-in 0.5s var(--ease-out-soft) var(--d, 0s) both;
+}
+
+.callout-ink line {
+  stroke: var(--line);
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: ink 0.5s var(--ease-out-soft) var(--d, 0s) forwards;
+  transition: stroke 0.2s;
+}
+
+.callout-ink circle {
+  fill: var(--dim);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pop 0.3s var(--ease-out-soft) var(--d, 0s) both;
+}
+
+.callout-ink.is-active line {
+  stroke: var(--dim);
+  stroke-width: 2;
+}
+
+@keyframes callout-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ink {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* Blog figure helpers used inside Markdown posts */
@@ -434,7 +520,8 @@
   [data-reveal] .rv-draw,
   [data-reveal] .rv-wipe,
   [data-reveal] .rv-up,
-  [data-reveal] .rv-fade {
+  [data-reveal] .rv-fade,
+  .rv-self[data-reveal] {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;

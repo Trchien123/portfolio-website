@@ -1,7 +1,7 @@
 import SectionHeading from "@/components/drawing/SectionHeading";
 import SocialLinks from "@/components/SocialLinks";
 import { portfolioData } from "@/lib/data";
-import { useReveal } from "@/lib/useReveal";
+import Reveal from "@/components/drawing/Reveal";
 
 const { contact } = portfolioData;
 const email = contact.details.find((d) => d.label === "Email");
@@ -11,14 +11,13 @@ const LABEL = "font-mono text-label tracking-wider uppercase";
 // Contact as the drawing's main title block; the email cell is the one
 // filled (primary) action.
 function Contact() {
-  const ref = useReveal({ threshold: 0.15 });
 
   return (
     <section id="contact" aria-labelledby="contact-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
       <SectionHeading id="contact-title" title={contact.title} note={"Contact\nRecruiters & clients welcome"} />
       <p className="mb-10 max-w-prose text-xl leading-relaxed">{contact.subtitle}</p>
 
-      <div ref={ref} className="rv-up grid border-2 border-line lg:grid-cols-[1.6fr_1fr]">
+      <Reveal className="grid border-2 border-line lg:grid-cols-[1.6fr_1fr]">
         {/* reason (grid-cols): the email cell dominates the block */}
         <a href={email.href} className="group flex flex-col justify-between gap-10 bg-fill p-6 text-on-fill transition-colors duration-200 hover:bg-ink hover:text-sheet md:p-10">
           <span className={LABEL}>Email · primary action</span>
@@ -55,7 +54,7 @@ function Contact() {
             </dd>
           </div>
         </dl>
-      </div>
+      </Reveal>
     </section>
   );
 }
