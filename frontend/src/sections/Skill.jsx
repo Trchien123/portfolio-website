@@ -1,86 +1,63 @@
-import React from 'react';
-import { CheckCircle2, CircleDashed, Cpu } from 'lucide-react';
-import { portfolioData } from '@/lib/data';
+import SectionHeading from "@/components/drawing/SectionHeading";
+import { portfolioData } from "@/lib/data";
+import Reveal from "@/components/drawing/Reveal";
 
-const Skill = () => {
-    const { skills } = portfolioData;
+const { skills } = portfolioData;
+const HEAD = "font-mono text-label tracking-wider text-muted uppercase";
 
-    return (
-        <div id="skills" className="w-full min-h-fit pb-20 md:pb-40 max-w-368 mx-auto space-y-12 px-4 md:px-6 lg:px-8 scroll-mt-20">
-            
-            {/* SECTION HEADER */}
-            <div className="text-left mx-auto mb-12" data-aos="fade-up">
-                <div className="flex gap-3">
-                    <Cpu className='text-text-button' size={40}/>
-                    <h2 className="text-4xl md:text-5xl text-text-muted mb-4">Skills</h2>
-                </div>
-                <p className="text-text-muted/80 text-base">
-                    {skills.intro}
-                </p>
+// Each skill set becomes a group in a bill of materials,
+// with every component marked Proficient or Learning.
+function Skill() {
+
+  return (
+    <section id="skills" aria-labelledby="skills-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
+      <SectionHeading id="skills-title" title="Skills" note={"Bill of materials\nProficient · learning"} />
+      <p className="mb-10 max-w-prose text-lg leading-relaxed">{skills.intro}</p>
+
+      <div className="grid gap-10 lg:grid-cols-2">
+        {skills.skillSets.map((set, g) => {
+          const rows = [
+            ...set.proficient.map((name) => ({ name, stock: true })),
+            ...set.learning.map((name) => ({ name, stock: false })),
+          ];
+          return (
+            <div key={set.id}>
+              <Reveal delay={g * 0.15}>
+              <div className="flex items-baseline justify-between gap-4 border-2 border-b-0 border-line bg-faint px-4 py-3">
+                <h3 className="text-xl">{set.title}</h3>
+                <span className="font-mono text-sm text-dim">G-{String(g + 1).padStart(2, "0")}</span>
+              </div>
+              <p className="border-x-2 border-line px-4 py-3 text-sm">{set.description}</p>
+              </Reveal>
+              <table className="w-full border-2 border-line text-left">
+                <thead>
+                  <tr className="border-b-2 border-line">
+                    <th scope="col" className={`w-14 px-4 py-2 ${HEAD}`}>No.</th>
+                    <th scope="col" className={`border-l border-line px-4 py-2 ${HEAD}`}>Component</th>
+                    <th scope="col" className={`w-32 border-l border-line px-4 py-2 ${HEAD}`}>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rows.map((row, i) => (
+                    <Reveal as="tr" key={row.name} delay={g * 0.15} className="border-b border-faint last:border-b-0">
+                      <td className="px-4 py-2.5 font-mono text-sm text-muted">{String(i + 1).padStart(2, "0")}</td>
+                      <td className="border-l border-line px-4 py-2.5 text-ink">{row.name}</td>
+                      <td className="border-l border-line px-4 py-2.5">
+                        <span className={`inline-flex items-center gap-2 font-mono text-sm ${row.stock ? "text-dim" : "text-muted"}`}>
+                          <span className={`size-2.5 ${row.stock ? "bg-fill" : "border-2 border-line"}`} aria-hidden="true" />
+                          {row.stock ? "Proficient" : "Learning"}
+                        </span>
+                      </td>
+                    </Reveal>
+                  ))}
+                </tbody>
+              </table>
             </div>
-
-            {/* SKILLS GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                {skills.skillSets.map((category, index) => {
-                    const Icon = category.icon; // Capitalize to render as component
-                    return (
-                        <div 
-                            key={category.id} 
-                            className="bg-bg-surface/30 border border-text-main/10 rounded-3xl p-8 flex flex-col hover:border-text-button/80 transition-colors duration-300"
-                            data-aos="fade-up"  
-                            data-aos-delay={index * 100}
-                        >
-                            {/* Header */}
-                            <div className="flex items-center gap-4 mb-6 border-b border-text-main/10 pb-4">
-                                <div className="p-3 bg-text-button/10 rounded-xl text-text-button">
-                                    <Icon size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="text-2xl font-bold text-text-main">{category.title}</h4>
-                                    <p className="text-base text-text-muted/60">{category.description}</p>
-                                </div>
-                            </div>
-
-                            <div className="flex-1 space-y-8">
-                                {/* SECTION 1: PROFICIENT */}
-                                {category.proficient.length > 0 && (
-                                    <div>
-                                        <h5 className="text-text-button font-bold uppercase tracking-widest text-base mb-4 flex items-center gap-2">
-                                            <CheckCircle2 className="-translate-y-0.5" size={14} /> Proficient
-                                        </h5>
-                                        <div className="flex flex-wrap gap-2">
-                                            {category.proficient.map((skill, idx) => (
-                                                <span key={idx} className="px-3 py-1.5 bg-text-main/5 border border-text-main/10 rounded-lg text-text-muted text-base hover:bg-text-button/10 hover:text-text-button transition-colors cursor-default">
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* SECTION 2: LEARNING */}
-                                {category.learning.length > 0 && (
-                                    <div>
-                                        <h5 className="text-text-muted font-bold uppercase tracking-widest text-base mb-4 flex items-center gap-2">
-                                            <CircleDashed className="-translate-y-0.5" size={14} /> 
-                                            Currently Learning & Exploring
-                                        </h5>
-                                        <div className="flex flex-wrap gap-2">
-                                            {category.learning.map((skill, idx) => (
-                                                <span key={idx} className="px-3 py-1.5 bg-transparent border border-text-main/5 border-dashed rounded-lg text-text-muted/60   text-base hover:text-text-main hover:border-text-main/40 transition-colors cursor-default">
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    );
-                })}
-            </div>
-        </div>
-    );
-};
+          );
+        })}
+      </div>
+    </section>
+  );
+}
 
 export default Skill;

@@ -1,29 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import Giscus from '@giscus/react';
+import Giscus from "@giscus/react";
+import { useTheme } from "@/lib/theme";
 
-const BlogComment = () => {
-  const [giscusTheme, setGiscusTheme] = useState('dark_dimmed');
-
-  useEffect(() => {
-    // Check theme
-    const checkTheme = () => {
-      const isLight = document.documentElement.classList.contains('light');
-      // 'light' or 'dark_dimmed'
-      setGiscusTheme(isLight ? 'light' : 'dark_dimmed'); 
-    };
-
-    checkTheme();
-
-    // Observe the changes in the theme
-    const observer = new MutationObserver(checkTheme);
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => observer.disconnect();
-  }, []);
+function BlogComment() {
+  const { theme } = useTheme();
 
   return (
-    <div className="mt-16 pt-10 border-t border-text-main/10">
-      <h3 className="text-3xl font-bold text-text-main mb-8">Comments</h3>
+    <div className="mt-16 border-t-2 border-line pt-10">
+      <h2 className="mb-8 text-3xl tracking-tight">Comments</h2>
       <Giscus
         id="comments"
         repo="Trchien123/portfolio-website"
@@ -35,12 +18,12 @@ const BlogComment = () => {
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme={giscusTheme}
+        theme={theme === "dark" ? "dark_dimmed" : "light"}
         lang="en"
         loading="lazy"
       />
     </div>
   );
-};
+}
 
 export default BlogComment;

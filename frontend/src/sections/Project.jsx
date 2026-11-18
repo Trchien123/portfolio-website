@@ -1,122 +1,55 @@
-import React, { useState } from 'react';
-import { ExternalLink, FolderGit2, ArrowRight, Folder, ArrowUp } from 'lucide-react';
-import Button from '@/components/Button';
-import { portfolioData } from '@/lib/data';
+import { useState } from "react";
+import PartCard from "@/components/PartCard";
+import SectionHeading from "@/components/drawing/SectionHeading";
+import { Button } from "@/components/ui/button";
+import { portfolioData } from "@/lib/data";
+import Reveal from "@/components/drawing/Reveal";
+import { scrollToSection } from "@/lib/scroll";
 
-const Project = () => {
-    // Access projects from centralized data
-    const { projects } = portfolioData;
+const { projects } = portfolioData;
+const PAGE = 3;
 
-    // State to keep track of projects per page
-    const [visibleCount, setVisibleCount] = useState(3);
+function Project() {
+  const [visibleCount, setVisibleCount] = useState(PAGE);
 
-    // Handle when users click show more, 3 more projects will be shown
-    const handleLoadMore = () => {
-        setVisibleCount((prevCount) => prevCount + 3);
-    };
+  const handleSeeLess = () => {
+    setVisibleCount(PAGE);
+    scrollToSection("projects");
+  };
 
-    // Reset view to 3 projects and scroll back to the header of the project section
-    const handleSeeLess = () => {
-        setVisibleCount(3);
-        const section = document.getElementById('projects');
-        if (section) {
-            section.scrollIntoView({ behavior: 'smooth' });
-        }
-    };
+  return (
+    <section id="projects" aria-labelledby="projects-title" className="border-t border-line px-4 py-20 md:px-10 md:py-28">
+      <SectionHeading id="projects-title" title="Projects" note={`Parts list · ${String(projects.length).padStart(2, "0")} parts\nHover a project to explode it`}>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-4 font-mono text-xs tracking-wider text-muted uppercase" aria-label="Legend">
+          <li className="flex items-center gap-2"><span className="size-3 bg-fill" aria-hidden="true" />Layer used</li>
+          <li className="flex items-center gap-2"><span className="size-3 border-2 border-line" aria-hidden="true" />Not used</li>
+          <li>Bottom → top: Models · Data · APIs · Interface</li>
+        </ul>
+      </SectionHeading>
 
-    return (
-        <div id="projects" className="w-full min-h-fit max-w-368 mx-auto animate-fade-in pb-20 md:pb-40 px-4 md:px-6 lg:px-8 scroll-mt-20">
-            <h2 className="text-4xl md:text-5xl mb-10 flex gap-3" data-aos="fade-up">
-                <Folder className='text-text-button' size={40}/>
-                Projects
-            </h2>
-        
-            {/* 2. THE RESPONSIVE GRID */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                {projects.slice(0, visibleCount).map((project, index) => (
-                    <a 
-                        key={project.id} 
-                        className="group flex flex-col bg-bg-surface/30 border border-text-main/10 rounded-2xl overflow-hidden hover:border-text-button/50 hover:-translate-y-1 transition-all duration-300 shadow-lg hover:cursor-pointer"
-                        data-aos="fade-up"
-                        data-aos-delay={(index % 3) * 100}
-                        href={project.link}
-                    >
-                        
-                        {/* IMAGE SECTION */}
-                        <div className="relative w-full h-48 overflow-hidden">
-                            <div className="absolute inset-0 bg-bg-main/20 group-hover:bg-transparent z-10 transition-colors duration-300"></div>
-                            <img 
-                                src={project.image} 
-                                alt={project.title} 
-                                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
-                            />
-                        </div>
+      <div className="grid border-t border-l border-line md:grid-cols-2 xl:grid-cols-3">
+        {projects.slice(0, visibleCount).map((project, index) => (
+          <Reveal key={project.id} className="flex" delay={(index % PAGE) * 0.1}>
+            <PartCard project={project} index={index} />
+          </Reveal>
+        ))}
+      </div>
 
-                        {/* CONTENT SECTION */}
-                        <div className="p-6 flex flex-col">
-                            <div className="flex justify-between items-start mb-2">
-                                <h3 className="text-2xl font-bold text-text-main group-hover:text-text-button transition-colors">
-                                    {project.title}
-                                </h3>
-                                <FolderGit2 className="text-text-muted/80 translate-y-1.25 group-hover:text-text-main transition-colors" size={20} />
-                            </div>
-                            
-                            <p className="text-text-muted/80 text-base leading-relaxed mb-4 line-clamp-4">
-                                {project.description}
-                            </p>
-                        </div>
-
-                        {/* FOOTER SECTION */}
-                        <div className="p-6 pt-0 mt-auto">
-                            {/* Tech Stack Tags */}
-                            <div className="flex flex-wrap gap-2 mb-6">
-                                {project.tech.map((tech, techIdx) => (
-                                    <span key={techIdx} className="text-sm font-mono text-text-button bg-text-button/10 px-2 py-1 rounded">
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-
-                            {/* The Link Button */}
-                            <a 
-                                href={project.link}
-                                className="flex items-center gap-2 text-sm font-bold text-text-main group-hover:text-text-button transition-colors w-fit"
-                            >
-                                View Project 
-                                <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
-                            </a>
-                        </div>
-                    </a>
-                ))}
-            </div>
-
-            {/* 4. LOAD MORE & SEE LESS BUTTON SECTION */}
-            <div className="flex justify-center mt-12 gap-4">
-                {visibleCount < projects.length ? (
-                    <Button 
-                        variant='outline'
-                        onClick={handleLoadMore}
-                    >
-                        Load More
-                        <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                ) : (
-                    /* Show 'See Less' only if there are more than 3 projects total */
-                    projects.length > 3 && (
-                        <Button 
-                            variant='outline'
-                            onClick={handleSeeLess}
-                            className="border-red-500/50 text-red-400 hover:bg-red-500/50 hover:text-text-muted"
-                        >
-                            See Less
-                            <ArrowUp size={18} className="ml-2 group-hover:-translate-y-1 transition-transform" />
-                        </Button>
-                    )
-                )}
-            </div>
+      {projects.length > PAGE ? (
+        <div className="mt-10 flex justify-center">
+          {visibleCount < projects.length ? (
+            <Button variant="secondary" onClick={() => setVisibleCount((count) => count + PAGE)}>
+              Show more parts ↓
+            </Button>
+          ) : (
+            <Button variant="secondary" onClick={handleSeeLess}>
+              Show fewer ↑
+            </Button>
+          )}
         </div>
-    );
-};
+      ) : null}
+    </section>
+  );
+}
 
 export default Project;

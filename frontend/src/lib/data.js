@@ -25,12 +25,13 @@ import { IoMdMail } from "react-icons/io";
 
 export const portfolioData = {
   hero: {
-    intro: "Hiiii, my name is",
+    intro: "Hi, I'm",
     name: "Huynh Trung Chien.",
+    role: "Full Stack Developer at Bosch Global Software Technologies · Ho Chi Minh City",
     descriptionP1:
-      "I’m an AI Student and Machine Learning enthusiast. I'm interested in working with data, machine learning, and NLP as an AI Engineer.",
+      "I build web applications end to end, from the interface to the APIs and data behind them.",
     descriptionP2:
-      "My job is to build models that are accurate and functional, and follow ethical standards. I translate complex algorithms into ethical practical solutions that meet real business and seamlessly integrate them to live software systems.",
+      "I started out in AI engineering, so I bring machine learning experience to the products I work on.",
     profileImage: ProfileImage,
     cvLink: "/HuynhTrungChien_CV.pdf", // Add CV link here
   },
@@ -49,8 +50,16 @@ export const portfolioData = {
     // Experience Tab
     experience: [
       {
-        period: "Starting April 16, 2026", 
-        role: "Incoming AI Engineer Intern",
+        period: "October 15, 2026 – Present",
+        role: "Full Stack Developer",
+        company: "Bosch Global Software Technologies Vietnam",
+        location: "Ho Chi Minh City, Vietnam",
+        tasks: [],
+        technologies: []
+      },
+      {
+        period: "April 16, 2026 – October 2026",
+        role: "AI Engineer Intern",
         company: "Bosch Global Software Technologies Vietnam",
         location: "Ho Chi Minh City, Vietnam",
         tasks: [
@@ -222,7 +231,7 @@ export const portfolioData = {
       },
       {
         name: "Email",
-        url: "mailto:chien@huynhtrungchien.dev",
+        url: "mailto:huynhtrungchienltt@gmail.com",
         icon: IoMdMail,
         color: "hover:text-[#EA4335] hover:border-[#EA4335]",
       },
@@ -280,7 +289,7 @@ export const portfolioData = {
       link: "https://github.com/Trchien123/ai-ecosystem",
     },
     {
-      id: 5,
+      id: 6,
       title: "VNPT-AI Hackathon",
       description:
         "This is our work for the VNPT AI Hackathon held in Hanoi.",
@@ -344,8 +353,8 @@ export const portfolioData = {
     details: [
       {
         label: "Email",
-        value: "chien@huynhtrungchien.dev",
-        href: "mailto:chien@huynhtrungchien.dev",
+        value: "huynhtrungchienltt@gmail.com",
+        href: "mailto:huynhtrungchienltt@gmail.com",
         icon: Mail,
       },
       {

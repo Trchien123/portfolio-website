@@ -9,49 +9,33 @@ import {
 } from "@/components/ui/pagination";
 import { cn } from "@/lib/utils";
 
-const PhotoPagination = ({
-  handleNext,
-  handlePrev,
-  handlePageChange,
-  page,
-  totalPages,
-}) => {
-  const generatePages = () => {
-    const pages = [];
+// Page numbers to show, with "..." standing in for skipped ranges.
+function getVisiblePages(page, totalPages) {
+  if (totalPages < 4) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+  if (page < 2) {
+    return [1, 2, 3, "...", totalPages];
+  }
+  if (page >= totalPages - 1) {
+    return [1, "...", totalPages - 2, totalPages - 1, totalPages];
+  }
+  return [1, "...", page, "...", totalPages];
+}
 
-    if (totalPages < 4) {
-      // Show all
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (page < 2) {
-        pages.push(1, 2, 3, "...", totalPages);
-      } else if (page >= totalPages - 1) {
-        pages.push(1, "...", totalPages - 2, totalPages - 1, totalPages);
-      } else {
-        pages.push(1, "...", page, "...", totalPages);
-      }
-    }
-
-    return pages;
-  };
-
-  const pagesToShow = generatePages();
+function PhotoPagination({ handleNext, handlePrev, handlePageChange, page, totalPages }) {
+  const isFirst = page === 1;
+  const isLast = page === totalPages;
+  const pagesToShow = getVisiblePages(page, totalPages);
 
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-start">
       <Pagination>
         <PaginationContent>
-          {/* Prvious */}
           <PaginationItem>
             <PaginationPrevious
-              onClick={page === 1 ? undefined : handlePrev}
-              className={cn(
-                "cursor-pointer",
-                "hover:bg-bg-main/10 hover:text-text-button hover:border-text-button/50",
-                page === 1 && "pointer-events-none opacity-50"
-              )}
+              onClick={isFirst ? undefined : handlePrev}
+              className={cn("cursor-pointer text-ink", isFirst && "pointer-events-none opacity-50")}
             />
           </PaginationItem>
 
@@ -66,12 +50,8 @@ const PhotoPagination = ({
                     if (p !== page) handlePageChange(p);
                   }}
                   className={cn(
-                    "cursor-pointer transition-all duration-300 border-transparent",
-                    // 1. ACTIVE STATE (Current Page)
-                    p === page
-                      ? "bg-text-button text-bg-main font-bold hover:bg-text-button/80 hover:text-bg-main"
-                      : // 2. INACTIVE STATE (Other Pages)
-                        "text-text-main/70 hover:bg-text-main/10 hover:text-text-button hover:border-text-main/10"
+                    "cursor-pointer font-mono",
+                    p === page ? "bg-fill text-on-fill hover:bg-fill" : "text-muted hover:text-ink"
                   )}
                 >
                   {p}
@@ -80,21 +60,16 @@ const PhotoPagination = ({
             </PaginationItem>
           ))}
 
-          {/* After */}
           <PaginationItem>
             <PaginationNext
-              onClick={page === totalPages ? undefined : handleNext}
-              className={cn(
-                "cursor-pointer",
-                "hover:bg-text-main/10 hover:text-text-button hover:border-text-button/50",
-                page === totalPages && "pointer-events-none opacity-50"
-              )}
+              onClick={isLast ? undefined : handleNext}
+              className={cn("cursor-pointer text-ink", isLast && "pointer-events-none opacity-50")}
             />
           </PaginationItem>
         </PaginationContent>
       </Pagination>
     </div>
   );
-};
+}
 
 export default PhotoPagination;

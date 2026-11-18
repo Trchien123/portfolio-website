@@ -1,86 +1,73 @@
-import "./index.css";
-import Header from "./components/Header.jsx";
-import Hero from "./sections/Hero.jsx";
-import About from "./sections/About/About.jsx";
-import AOS from "aos";
-import "aos/dist/aos.css";
-import { useEffect, useState } from "react";
-import Skill from "./sections/Skill.jsx";
-import Project from "./sections/Project.jsx";
-import Blog from "./sections/Blog/Blog.jsx";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import BlogDetailPage from "./sections/Blog/BlogDetailPage";
-import BlogListPage from "./sections/Blog/BlogListPage";
+import { lazy, Suspense } from "react";
+import { BrowserRouter as Router, Outlet, Route, Routes } from "react-router-dom";
+import SiteHeader from "./components/SiteHeader";
+import SiteFooter from "./components/SiteFooter";
+import SheetFrame from "./components/drawing/SheetFrame";
 import ScrollToTop from "./components/ScrollToTop";
+import Hero from "./sections/Hero";
+import About from "./sections/About/About";
+import Skill from "./sections/Skill";
+import Project from "./sections/Project";
+import Experience from "./sections/Experience";
+import Blog from "./sections/Blog/Blog";
 import Contact from "./sections/Contact";
-import SignatureSplash from "./components/SignatureSplash";
-import AdminPage from "./sections/AdminPage";
-import BlogSeriesPage from './sections/Blog/BlogSeriesPage.jsx';
 import Chatbot from "./sections/Chatbot";
+import AdminPage from "./sections/AdminPage";
 
-function App() {
-  // Loading Splash Signature
-  const [loading, setLoading] = useState(true);
+// Blog pages load on demand: Markdown, KaTeX and the code highlighter stay
+// out of the home page bundle.
+const BlogListPage = lazy(() => import("./sections/Blog/BlogListPage"));
+const BlogDetailPage = lazy(() => import("./sections/Blog/BlogDetailPage"));
+const BlogSeriesPage = lazy(() => import("./sections/Blog/BlogSeriesPage"));
 
-  // Animation
-  useEffect(() => {
-    if (!loading) {
-      AOS.init({
-        duration: 1000,
-        once: true,
-        anchorPlacement: "top-bottom",
-      });
-    }
-  }, [loading]);
+function SiteLayout({ footer = true }) {
+  return (
+    <div className="p-2 md:p-5">
+      <SheetFrame>
+        <SiteHeader />
+        <main id="main">
+          <Suspense fallback={<p className="min-h-96 px-4 py-20 font-mono text-sm text-muted md:px-10">Loading…</p>}>
+            <Outlet />
+          </Suspense>
+        </main>
+        {footer ? <SiteFooter /> : null}
+      </SheetFrame>
+      <Chatbot />
+    </div>
+  );
+}
 
+function Home() {
   return (
     <>
-      {loading ? (
-        /* Singature Splash */
-        <SignatureSplash onComplete={() => setLoading(false)} />
-      ) : (
-        <Router>
-          <ScrollToTop />
-
-          <div className="min-h-screen">
-            {/* Header */}
-            <Header />
-
-            <Routes>
-              {/* Main Path */}
-              <Route
-                path="/"
-                element={
-                  <main>
-                    <Hero />
-                    <About />
-                    <Skill />
-                    <Project />
-                    <Blog />
-                    <Contact />
-                  </main>
-                }
-              />
-
-              {/* Blog List Page */}
-              <Route path="/blog" element={<BlogListPage />} />
-
-              {/* Blog Detail Page*/}
-              <Route path="/blog/:id" element={<BlogDetailPage />} />
-              
-              {/* Blog Series Page */}
-              <Route path="/blog/series/:seriesName" element={<BlogSeriesPage />} />
-              
-              {/* Admin Page*/}
-              <Route path="/chien-admin-secret" element={<AdminPage />} />
-            </Routes>
-            
-            <Chatbot />
-            
-          </div>
-        </Router>
-      )}
+      <Hero />
+      <Project />
+      <Experience />
+      <About />
+      <Skill />
+      <Blog />
+      <Contact />
     </>
   );
 }
+
+function App() {
+  return (
+    <Router>
+      <ScrollToTop />
+      <Routes>
+        <Route element={<SiteLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/blog" element={<BlogListPage />} />
+          <Route path="/blog/:id" element={<BlogDetailPage />} />
+          <Route path="/blog/series/:seriesName" element={<BlogSeriesPage />} />
+        </Route>
+        <Route element={<SiteLayout footer={false} />}>
+          <Route path="/chien-admin-secret" element={<AdminPage />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+}
+
 export default App;

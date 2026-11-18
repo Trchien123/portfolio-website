@@ -1,45 +1,29 @@
-import React from 'react';
-import { ExternalLink, Award } from 'lucide-react';
-import { portfolioData } from '@/lib/data';
+import { portfolioData } from "@/lib/data";
 
-const Certificate = () => {
-    const { certificates } = portfolioData.about;
+const { certificates } = portfolioData.about;
 
-    return (
-        <div className="animate-fade-in">
-            {/* Grid Layout: 1 column on mobile, 2 columns on tablet/desktop */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {certificates.map((cert) => (
-                    <a 
-                        key={cert.id}
-                        href={cert.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="group relative bg-bg-main/5 border border-text-main/10 rounded-xl p-6 hover:bg-bg-main/10 hover:border-text-button/50 transition-all duration-300 hover:-translate-y-1"
-                    >
-                        {/* Top Row: Date & Icon */}
-                        <div className="flex justify-between items-start mb-4">
-                            <span className="text-text-button text-xs font-bold tracking-wider uppercase bg-text-button/10 px-2 py-1 rounded">
-                                {cert.date}
-                            </span>
-                            <ExternalLink size={18} className="text-text-muted/40 group-hover:text-text-button transition-colors" />
-                        </div>
-
-                        {/* Middle: Title */}
-                        <h4 className="text-lg font-bold text-text-main mb-2 group-hover:text-text-button transition-colors">
-                            {cert.title}
-                        </h4>
-
-                        {/* Bottom: Issuer */}
-                        <div className="flex items-center gap-2 text-sm font-bold text-text-muted/60 uppercase tracking-wide">
-                            <Award size={14} />
-                            {cert.issuer}
-                        </div>
-                    </a>
-                ))}
-            </div>
-        </div>
-    );
-};
+function Certificate() {
+  return (
+    <ol className="border-t border-line">
+      {certificates.map((cert, i) => (
+        <li key={cert.id} className="relative border-b border-line">
+          <div className="group grid gap-1 py-4 transition-colors duration-200 hover:bg-faint md:grid-cols-[3rem_9rem_1fr_auto] md:items-baseline md:gap-6 md:px-2">
+            <span className="font-mono text-sm text-muted">{String(i + 1).padStart(2, "0")}</span>
+            <span className="font-mono text-sm text-muted">{cert.date}</span>
+            <span>
+              <a href={cert.link} target="_blank" rel="noopener noreferrer" className="card-link text-lg font-bold text-ink group-hover:text-dim">
+                {cert.title.trim()}
+              </a>
+              <span className="block text-sm">{cert.issuer}</span>
+            </span>
+            <span className="text-ink transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true">
+              ↗
+            </span>
+          </div>
+        </li>
+      ))}
+    </ol>
+  );
+}
 
 export default Certificate;

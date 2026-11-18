@@ -1,41 +1,422 @@
 @import "tailwindcss";
 
+/* Theme is class-based: <html class="dark"> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------
+   "Drawing of the Stack" tokens. Light = sage paper, dark = dusk sheet.
+   --------------------------------------------------------------- */
+:root {
+  --sheet: #dfe7e5;
+  --sheet-raised: #e9efed;
+  --line: #001a2e;
+  --ink: #000b18;
+  --muted: #2d4253;
+  --faint: rgb(0 26 46 / 0.13);
+  --dim: #006b3d;
+  --fill: #00ff82;
+  --on-fill: #001a2e;
+  --danger: #b91c1c;
+}
+
+.dark {
+  --sheet: #001a2e;
+  --sheet-raised: #072338;
+  --line: #bfcecc;
+  --ink: #ffffff;
+  --muted: #9fb3b1;
+  --faint: rgb(191 206 204 / 0.11);
+  --dim: #00ff82;
+  --danger: #f87171;
+}
+
+@theme inline {
+  --color-sheet: var(--sheet);
+  --color-sheet-raised: var(--sheet-raised);
+  --color-line: var(--line);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-dim: var(--dim);
+  --color-fill: var(--fill);
+  --color-on-fill: var(--on-fill);
+  --color-danger: var(--danger);
+
+}
+
 @theme {
-  /* The bright green (#00ff82) */
-  --color-neon: #00ff82;
+  --font-sans: "Chivo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Chivo Mono", ui-monospace, SFMono-Regular, monospace;
 
-  /* The soft grey-green (#bfcecc) */
-  --color-sage: #bfcecc;
+  /* 11px drawing labels (title-block captions, zone letters) */
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.3;
 
-  /* The deepest background (#000b18) */
-  --color-navy: #000b18;
+  /* Fluid display size for the hero name (56px phone → 132px desktop) */
+  --text-display: clamp(3.5rem, 8vw, 8.25rem);
+  --text-display--line-height: 1.02;
 
-  /* The lighter surface (#001a2e) */
-  --color-dusk: #001a2e;
+  --tracking-tightest: -0.045em;
+  --leading-display: 0.95;
 
-  /* Monsterrat font */
-  --font-spartan: "League Spartan", sans-serif;
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 
-  /* Monsterrat font */
-  --font-montserrat: "Montserrat", sans-serif;
+}
 
-  /* Color background main */
-  --color-bg-main: var(--main-bg);
+@layer base {
+  html {
+    color-scheme: light;
+    background: var(--sheet);
+  }
 
-  /* Color background surface */
-  --color-bg-surface: var(--surface-bg);
+  html.dark {
+    color-scheme: dark;
+  }
 
-  /* Color text main*/
-  --color-text-main: var(--main-text);
+  body {
+    @apply bg-sheet font-sans text-muted antialiased;
+    caret-color: var(--dim);
+    transition: background-color 0.6s var(--ease-out-soft), color 0.6s var(--ease-out-soft);
+  }
 
-  /* Color text muted */
-  --color-text-muted: var(--muted-text);
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-black tracking-tight text-ink;
+  }
 
-  /* Button color */
-  --color-text-button: var(--button-text);
-} 
+  /* Anchor targets clear the sticky header */
+  [id] {
+    scroll-margin-top: 6rem;
+  }
 
-/* Style for the container of the two images */
+  :focus-visible {
+    outline: 2px solid var(--dim);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--fill);
+    color: var(--on-fill);
+  }
+}
+
+@layer utilities {
+  /* Room for y/g descenders under clip-path wipes */
+  .pb-descender {
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+}
+
+@layer components {
+  /* The drafting grid: 48px squares */
+  .drafting-grid {
+    background-image:
+      linear-gradient(var(--faint) 1px, transparent 1px),
+      linear-gradient(90deg, var(--faint) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* Whole-card link: the single link inside a card covers the card */
+  .card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .card-link:focus-visible {
+    outline: none;
+  }
+
+  .card-link:focus-visible::after {
+    outline: 2px solid var(--dim);
+    outline-offset: -2px;
+  }
+
+  /* Reveal choreography (driven by useReveal: data-reveal="in") */
+  [data-reveal] .rv-draw {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  [data-reveal] .rv-wipe {
+    clip-path: inset(0 100% 0 0);
+  }
+  [data-reveal] .rv-up {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  [data-reveal] .rv-fade {
+    opacity: 0;
+  }
+  /* Self-revealing item (Reveal component) */
+  .rv-self[data-reveal="out"] {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  .rv-self[data-reveal="in"] {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s var(--ease-out-soft) var(--d, 0s), transform 0.6s var(--ease-out-soft) var(--d, 0s);
+  }
+
+  [data-reveal="in"] .rv-draw {
+    transform: scaleX(1);
+    transition: transform 1s var(--ease-out-soft) var(--d, 0s);
+  }
+  [data-reveal="in"] .rv-wipe {
+    clip-path: inset(0 0 0 0);
+    transition: clip-path 1s var(--ease-out-soft) var(--d, 0s);
+  }
+  [data-reveal="in"] .rv-up {
+    opacity: 1;
+    transform: none;
+    transition: opacity 0.6s var(--ease-out-soft) var(--d, 0s), transform 0.6s var(--ease-out-soft) var(--d, 0s);
+  }
+  [data-reveal="in"] .rv-fade {
+    opacity: 1;
+    transition: opacity 0.6s var(--ease-out-soft) var(--d, 0s);
+  }
+}
+
+/* ---------------------------------------------------------------
+   Isometric stack (hero + project cards). Slabs: --i = 0 (Models, bottom)
+   to 3 (Interface, top). The stack opens by raising --gap.
+   --------------------------------------------------------------- */
+.iso-stack {
+  --size: 300px;
+  --edge: 24px;
+  --gap: 0px;
+  position: relative;
+  perspective: 2400px;
+}
+
+.iso-stack .iso-plane {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-style: preserve-3d;
+  transform: rotateX(58deg) rotateZ(-40deg);
+}
+
+.iso-stack .slab {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  left: calc(var(--size) / -2);
+  top: calc(var(--size) / -2);
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--i) * var(--gap)));
+  transition: transform 1.4s var(--ease-spring) calc(var(--i) * 0.1s);
+}
+
+.iso-stack .slab > * {
+  position: absolute;
+  background: var(--sheet);
+  border: 2px solid var(--line);
+  transition: background-color 0.25s, border-color 0.25s;
+}
+
+.iso-stack .slab .face {
+  inset: 0;
+  --hatch: color-mix(in oklab, var(--line) 32%, transparent);
+}
+
+.iso-stack .slab {
+  transition-property: transform, opacity;
+}
+
+.iso-stack .slab .side-a {
+  left: 0;
+  bottom: calc(var(--edge) * -1);
+  width: 100%;
+  height: var(--edge);
+  transform-origin: top;
+  transform: rotateX(-90deg);
+  background: color-mix(in oklab, var(--line) 18%, var(--sheet));
+}
+
+.iso-stack .slab .side-b {
+  right: calc(var(--edge) * -1);
+  top: 0;
+  width: var(--edge);
+  height: 100%;
+  transform-origin: left;
+  transform: rotateY(90deg);
+  background: color-mix(in oklab, var(--line) 18%, var(--sheet));
+}
+
+/* One drafting hatch per layer */
+.iso-stack .slab[data-layer="Interface"] .face {
+  background-image:
+    linear-gradient(var(--hatch) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--hatch) 1.5px, transparent 1.5px);
+  background-size: calc(var(--size) / 12) calc(var(--size) / 12);
+}
+
+.iso-stack .slab[data-layer="APIs"] .face {
+  background-image: repeating-linear-gradient(45deg, var(--hatch) 0 1.5px, transparent 1.5px 12px);
+}
+
+.iso-stack .slab[data-layer="Data"] .face {
+  background-image:
+    repeating-linear-gradient(45deg, var(--hatch) 0 1.2px, transparent 1.2px 13px),
+    repeating-linear-gradient(-45deg, var(--hatch) 0 1.2px, transparent 1.2px 13px);
+}
+
+.iso-stack .slab[data-layer="Models"] .face {
+  background-image: radial-gradient(var(--hatch) 1.8px, transparent 2.2px);
+  background-size: 13px 13px;
+}
+
+/* Layer name printed on the plate, like text on an isometric drawing */
+.iso-stack .slab-tag {
+  position: absolute;
+  left: 5%;
+  bottom: 5%;
+  display: flex;
+  align-items: baseline;
+  gap: 0.3em;
+  padding: 0.05em 0.3em 0.12em;
+  border: 2px solid var(--line);
+  background: var(--sheet);
+  color: var(--ink);
+  font-weight: 900;
+  font-size: calc(var(--size) * 0.113);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.iso-stack .slab-tag-id {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.5em;
+  color: var(--muted);
+}
+
+.iso-stack .slab:hover .face {
+  border-color: var(--dim);
+}
+
+/* Selected layer: lifts and turns green; the rest step back */
+.iso-stack .slab[data-active] {
+  transform: translateZ(calc(var(--i) * var(--gap) + var(--gap) * 0.35));
+  transition-delay: 0s;
+}
+
+.iso-stack .slab[data-active] > *,
+.iso-stack .slab[data-active] .slab-tag {
+  background: var(--fill);
+  border-color: var(--on-fill);
+  color: var(--on-fill);
+}
+
+.iso-stack .slab[data-active] .face {
+  background-image: none;
+}
+
+.iso-stack .slab[data-active] .slab-tag-id {
+  color: var(--on-fill);
+}
+
+.iso-stack[data-has-active] .slab:not([data-active]) {
+  opacity: 0.6;
+}
+
+.iso-stack.is-hero .iso-plane {
+  left: 50%;
+  top: 62%;
+}
+
+.iso-stack.is-hero {
+  --size: 200px;
+  --edge: 16px;
+  --gap-open: 56px;
+  height: 380px;
+  max-width: 560px;
+}
+
+/* Tablet and up: larger plates and wider gaps */
+@media (min-width: 768px) {
+  .iso-stack.is-hero {
+    --size: 300px;
+    --edge: 24px;
+    --gap-open: 100px;
+    height: 600px;
+    max-width: none;
+  }
+
+  .iso-stack.is-hero .iso-plane {
+    top: 56%;
+  }
+}
+
+/* Two-column hero: the stack column is narrower, so the stack shrinks */
+@media (min-width: 1280px) {
+  .iso-stack.is-hero {
+    --size: 250px;
+    --edge: 20px;
+    --gap-open: 90px;
+    height: 560px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .iso-stack.is-hero {
+    --size: 300px;
+    --edge: 24px;
+    --gap-open: 100px;
+    height: 600px;
+  }
+}
+
+/* Hero fills the first viewport under the zone row and header */
+@media (min-width: 1280px) {
+  .hero-min-h {
+    min-height: calc(100svh - 7rem);
+  }
+}
+
+.iso-stack.is-small {
+  --size: 120px;
+  --edge: 10px;
+  --gap: 20px;
+}
+
+/* Part cards: the mini stack opens on hover / keyboard focus (not after a mouse click) */
+.part:hover .iso-stack.is-small,
+.part:has(:focus-visible) .iso-stack.is-small {
+  --gap: 36px;
+}
+
+.iso-stack.is-small .slab > * {
+  border-width: 1.5px;
+}
+
+.iso-stack.is-small .slab {
+  transition-duration: 0.6s;
+  transition-delay: calc(var(--i) * 0.04s);
+}
+
+.iso-stack.is-small .slab .side-a,
+.iso-stack.is-small .slab .side-b {
+  display: none;
+}
+
+.iso-stack.is-small .slab .face {
+  background-image: none;
+}
+
+.iso-stack.is-small .slab:not([data-used]) > * {
+  background: var(--sheet);
+}
+
+.iso-stack.is-small .slab[data-used] > * {
+  background: var(--fill);
+  border-color: var(--on-fill);
+}
+
+/* Blog figure helpers used inside Markdown posts */
 .vector-gallery {
   display: flex;
   justify-content: center;
@@ -44,7 +425,6 @@
   margin: 2rem 0;
 }
 
-/* Style for each individual image + label block */
 .vector-item {
   flex: 1;
   min-width: 280px;
@@ -52,7 +432,11 @@
   text-align: center;
 }
 
-/* Center labels inside the gallery items */
+.vector-item img {
+  display: block;
+  margin: 0 auto;
+}
+
 .label-center {
   text-align: center !important;
   width: 100%;
@@ -60,107 +444,69 @@
   margin-top: 0.5rem;
 }
 
-/* Specific styling for the Figure Title */
 .text-center-util {
   text-align: center !important;
   width: 100%;
   margin: 2rem 0;
-  color: var(--color-text-main);
+  color: var(--ink);
 }
 
-/* Ensure images within the gallery are centered */
-.vector-item img {
-  display: block;
-  margin: 0 auto;
-}
-
-:root{
-    /* Dark theme */
-    --main-bg: var(--color-navy);
-    --surface-bg: var(--color-dusk);
-    --main-text: #ffffff;
-    --muted-text: var(--color-sage);
-    --button-text: var(--color-neon);
-}
-
-html.light {
-    /* Light theme */
-    --main-bg: var(--color-sage);
-    --surface-bg: #ffffff;
-    --main-text: var(--color-navy);
-    --muted-text: var(--color-dusk);
-    --button-text: var(--color-navy);
-}
-
-@layer base {
-
-  html {
-    background-color: var(--main-bg);
-    transition: background-color 0.3s ease;
-  }
-
-  body {
-    /* Main background color */
-    background-color: var(--main-bg);
-    
-    /* Gradient from left to right or vice versa */
-    background-image: linear-gradient(to right, var(--main-bg), var(--surface-bg));
-    
-    /* choose the default color to be sage */
-    color: var(--muted-text); 
-
-    font-family: var(--font-montserrat);
-
-    /* Smooth transition */
-    transition: background-color 0.5s ease-in-out, 
-                color 0.5s ease-in-out, 
-                border-color 0.5s ease-in-out,
-                background-image 0.5s ease-in-out;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    font-family: var(--font-spartan);
-    font-weight: 700;
-  }
-}
-
-
-/* Fade in animation for about page */
+/* Tab panel / photo swap fade */
 @layer utilities {
-    .animate-fade-in {
-        animation: fadeIn 0.5s ease-out forwards;
-    }
+  .animate-fade-in {
+    animation: fadeIn 0.3s var(--ease-out-soft) forwards;
+  }
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0 ;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
 
-/* Scroll bar */
-@layer utilities {
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
+::-webkit-scrollbar-track {
+  background: var(--sheet);
+}
 
-    ::-webkit-scrollbar-track {
-        background: var(--color-text-surface); /* Navy with opacity */
-        border-radius: 10px;
-    }
+::-webkit-scrollbar-thumb {
+  background: var(--faint);
+  border: 2px solid var(--sheet);
+}
 
-    ::-webkit-scrollbar-thumb {
-        background: var(--color-text-muted); /* Sage with opacity */
-        border-radius: 10px;
-    }
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dim);
+}
 
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--button-text); /* Neon hover */
-    }
+/* Reduced motion: final states, no animation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] .rv-draw,
+  [data-reveal] .rv-wipe,
+  [data-reveal] .rv-up,
+  [data-reveal] .rv-fade,
+  .rv-self[data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
 }
